@@ -22,6 +22,7 @@ enum {
 	, TBL_SCENE_ENTRIES    		     = 110         // scene count
 	, TBL_ROUTE             		 = 0x00B9F360  // route table
 	, TBL_ROUTE_ENTRIES     		 = 1556        // route count
+	, TBL_SEQUENCEINSTRUMENTSET		 = 0x00BCC4E0  // instrument set table
 	, TBL_SEQUENCE_FILE 		     = 0x00044DF0  // sequence file offset
 	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
 	, TBL_ENTRANCECUTSCENE 		     = 0x00B95394  // entrancecutscene table
@@ -388,6 +389,8 @@ audio(struct rom *rom)
 	int numberofsequences;
 	int index;
 	int start;
+	int sequenceinstrumentpointer;
+	int var;
 	int length;
 	int type;
 	int name;
@@ -401,16 +404,16 @@ audio(struct rom *rom)
 	/*enter audio folder*/
 	dir_enter("audio");
 
-	/*open table for editing*/
-	fp = fopen("sequencepointer.tsv","wb");
-
-	/*print header*/
-	fprintf(fp, "%s", "index\tstart\tlength\ttype");
-	fprintf(fp, "\n");
-
 	/*seek to sequence table header and read sequence number*/
 	rom.seek(TBL_SEQUENCE_POINTER);
 	numberofsequences = rom.read16();
+
+	/*open table for editing*/
+	fp = fopen("sequencetable.tsv","wb");
+
+	/*print header*/
+	fprintf(fp, "%s", "index\tstart\tlength\ttype\tbank");
+	fprintf(fp, "\n");
 
 	/*read the whole table using numberofsequences*/
 	index = 0;
@@ -423,11 +426,24 @@ audio(struct rom *rom)
 		rom.seek_cur(1);
 		type = rom.read8();
 
+
+
 		/*write to table*/
 		fprintf(fp, "0x%04X", index);
-		fprintf(fp, "\t%x", start);
-		fprintf(fp, "\t%x", length);
-		fprintf(fp, "\t%x", type);
+		fprintf(fp, "\t%X", start);
+		fprintf(fp, "\t%X", length);
+		fprintf(fp, "\t%X", type);
+
+
+		/*read and write what bank each sequence uses(i did away with multiple banks per sequence)*/
+		rom.seek(TBL_SEQUENCEINSTRUMENTSET + index*2);
+		sequenceinstrumentpointer =  rom.read16();
+		rom.seek(TBL_SEQUENCEINSTRUMENTSET + sequenceinstrumentpointer + 1);
+		var = rom.read8();
+		fprintf(fp, "\t%X", var);
+
+
+
 		fprintf(fp, "\n");
 
 		/*enter sequences folder to write sequence data and then leave*/
@@ -1040,7 +1056,7 @@ main(int argc, char **argv)
 	rom.dma(TBL_DMA, TBL_DMA_ENTRIES);
 	
 	/* dump rom */
-	systemdir(rom);
+	/*systemdir(rom);
 	object(rom);
 	actor(rom);
 	particle(rom);
@@ -1048,7 +1064,7 @@ main(int argc, char **argv)
 	route(rom);
 	entrancecutscene(rom);
 	message(rom);
-	restrictionflag(rom);
+	restrictionflag(rom);*/
 	audio(rom);
 	
 	/* create .zzrpl */

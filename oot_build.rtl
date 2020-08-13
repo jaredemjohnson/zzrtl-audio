@@ -19,6 +19,7 @@ enum {
 	, TBL_SCENE_ENTRIES    		     = 110         // scene count
 	, TBL_ROUTE             		 = 0x00B9F360  // route table
 	, TBL_ROUTE_ENTRIES     		 = 1556        // route count
+	, TBL_SEQUENCEINSTRUMENTSET		 = 0x00BCC4E0  // instrument set table
 	, TBL_SEQUENCE_FILE 		     = 0x00044DF0  // sequence file offset
 	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
 	, TBL_ENTRANCECUTSCENE 		     = 0x00B95394  // entrancecutscene table
@@ -383,9 +384,15 @@ systemdir(struct rom *rom)
 void
 audio(struct rom *rom)
 {	
+	struct conf *table;
 	FILE *fp;
 	int sequencepointer;
 	int index;
+	int bankid;
+	int sequencebank;
+	int sequenceinstrumentpointer;
+	int numberofsequences;
+	int var;
 	char *data;
 	int sz;
 	int name;
@@ -421,6 +428,7 @@ audio(struct rom *rom)
 		
 		/*advance forward in index and sequence pointer*/
 		sequencepointer = sequencepointer + sz;
+
 		index++;
 
 		/*load name for next cycle*/
@@ -447,6 +455,22 @@ audio(struct rom *rom)
 
 	/*leave the folders*/
 	dir_leave();
+
+	/*open the table and setup for writing*/
+	table = loadfile("sequencetable.tsv", 0, false);
+	numberofsequences = index;
+	sequenceinstrumentpointer = numberofsequences * 2 + 4;
+	index = 1;
+	/*write the audiobanks into the file*/
+	while (index < numberofsequences -1)
+	{
+		sscanf(tsv_col_row(table,"bank",index + 1), "%d", &sequencebank);
+		rom.seek(TBL_SEQUENCEINSTRUMENTSET + sequenceinstrumentpointer);
+		rom.write8(sequencebank);
+		sequenceinstrumentpointer = sequenceinstrumentpointer+2;
+		index++;
+	}
+
 	dir_leave();
 }
 
@@ -1344,11 +1368,11 @@ main(int argc, char **argv)
 	particle(rom);
 	object(rom);
 	scene(rom);
+	audio(rom);
 	route(rom);
 	entrancecutscene(rom);
 	message(rom);
-	restrictionflag(rom);
-	audio(rom);
+	
 	
 	/* write built rom */
 	rom.save("build.z64");
