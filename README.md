@@ -8,7 +8,7 @@ go there for a zzrtl full starter guide.<br>
 oot-debug.z64 and zzrtl.exe not included!
 
 [ simple starter guide ]<br>
--inculde oot-debug.z64, oot-build-complete.rtl, oot-dump-complete.rtl, oot-names.tsv, and zzrtl.exe in the same folder.<br>
+-inculde oot-debug.z64, oot-build.rtl, oot-dump.rtl, oot-names.tsv, and zzrtl.exe in the same folder.<br>
 -open oot-dump-complete.rtl with zzrtl.exe<br>
 -apply changes to the project using tools like Sharp Ocarina, Custom Actor Toolkit, Zelda's Letter.<br>
 -open oot-build-complete.rtl with zzrtl.exe<br>
