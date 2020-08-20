@@ -15,12 +15,24 @@ oot-debug.z64 and zzrtl.exe not included!
 -run build.z64
 
 [ These scripts include ]<br>
+-audiobank editing<br>
+-audiosequence binaries<br>
 -restriction flags<br>
 -entrance cutscenes<br>
 -message binaries (compatible with Zelda's Letter and Ocarina Text Editor)<br>
 -routing (entrance table)<br>
 
 All the tables related to scenes will be dumped to the [scene] folder.
+
+[audiobank editing]<br>
+Inside the [audio] and [banks] folder is a list of audiobanks.
+each audiobank is comprised of instruments folders. 
+Move/copy instrument folders from one bank to another 
+and edit the config file inside the instrument folder 
+to change the instrument's envelope.
+
+there are binary files inside the bank folder that are mostly for debugging. 
+leave them alone.
 
 [message editing]<br>
 overwrite the message binary files in the [message] folder<br>
