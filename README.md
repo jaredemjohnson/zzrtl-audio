@@ -31,8 +31,7 @@ Move/copy instrument folders from one bank to another <br>
 and edit the config file inside the instrument folder <br>
 to change the instrument's envelope.<br>
 <br>
-there are binary files inside the bank folder that are mostly for debugging. <br>
-leave them alone.<br>
+(The binary files inside the bank folder are mostly for debugging. leave them alone.)<br>
 <br>
 [message editing]<br>
 overwrite the message binary files in the [message] folder<br>
