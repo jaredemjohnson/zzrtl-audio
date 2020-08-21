@@ -1,5 +1,5 @@
 # zzrtl-complete
-Complete is an overstatement.
+Audiobanks, sequences, and more scene related tables.
 
 These .rtl scripts are expansions to the sample scritps at:<br>
 https://github.com/z64me/zzrtl<br>
@@ -29,7 +29,7 @@ Inside the [audio] and [banks] folder is a list of audiobanks.<br>
 each audiobank is comprised of instruments folders. <br>
 Move/copy instrument folders from one bank to another <br>
 and edit the config file inside the instrument folder <br>
-to change the instrument's envelope.<br>
+to change the instrument's envelope and pitch.<br>
 <br>
 (The binary files inside the bank folder are mostly for debugging. leave them alone.)<br>
 <br>
