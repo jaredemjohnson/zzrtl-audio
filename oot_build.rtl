@@ -494,38 +494,18 @@ audiobank(struct rom *rom)
 	FILE *fp;
 	FILE *fp2;
 	FILE *fp3;
-	int numberofbanks;
 	int instrumentpointer;
-	int index;
 	int bankpointer;
-	int instrumentindex;
-	int var2;
-	int var3;
+	int drumstructureindex;
 	int *data;
 	int sz;
-	int banksize;
-	int dataoffset;
-	int test;
-	int instrumentnumber;
-	int drums;
 	int var;
-	int length;
-	int type;
+	int var2;
+	int var3;
 	int name;
-	int name2;
-	int atkrate;
-	int atklvl;
-	int envelopeptr;
-	int dcy1rate;
-	int dcy1lvl;
-	int dcy2rate;
-	int dcy2lvl;
-	int release;
-	int splits;
 
-	/*allocate memory for names*/
+	/*allocate memory for name*/
 	name = malloc(256);
-	name2 = malloc(256);
 
 	/*set bankpointer for later (this skips first 3 system-related banks*/
 	bankpointer = TBL_AUDIOBANK_FILE + 0x5F30;
@@ -551,11 +531,8 @@ audiobank(struct rom *rom)
 		dir_enter(list.name());
 		list2 = list2.new(0);
 	
-		/*set the ammount of instruments*/
-		instrumentnumber = list2.max() + 1;
-
 		/*set the instrument pointer to bottom of instrument array*/
-		instrumentpointer = (8 + instrumentnumber * 4)/16*16 + 16;
+		instrumentpointer = (8 + (list2.max()+1) * 4)/16*16 + 16;
 		instrumentpointer = instrumentpointer + 16;
 
 		/*clean the bank header aka write it full of zeros*/
@@ -628,8 +605,10 @@ audiobank(struct rom *rom)
 				data = loadfile("data_1", &sz, 0);
 				rom.write(data, sz);
 
-				/*updates offsets in data-structure*/
-				rom.seek(bankpointer + var2 + 8);
+				/*updates offsets in the header to point to the sample offset and the two data structure offsets.*/
+				rom.seek(bankpointer + var2 + 4);
+				sscanf(tsv_col_row(table,"split1",3), "%X", &var);
+				rom.write32(var);
 				rom.write32(var2 + 96);
 				rom.write32(var2 + 16);
 
@@ -654,7 +633,9 @@ audiobank(struct rom *rom)
 				rom.seek(bankpointer + var2);
 				data = loadfile("data_2", &sz, 0);
 				rom.write(data, sz);
-				rom.seek(bankpointer + var2 + 8);
+				rom.seek(bankpointer + var2 + 4);
+				sscanf(tsv_col_row(table,"release",3), "%X", &var);
+				rom.write32(var);
 				rom.write32(var2 + 96);
 				rom.write32(var2 + 16);
 				var2 = var2 + sz;
@@ -677,7 +658,9 @@ audiobank(struct rom *rom)
 				rom.seek(bankpointer + var2);
 				data = loadfile("data_3", &sz, 0);
 				rom.write(data, sz);
-				rom.seek(bankpointer + var2 + 8);
+				rom.seek(bankpointer + var2 + 4);
+				sscanf(tsv_col_row(table,"dcy1rt",3), "%X", &var);
+				rom.write32(var);
 				rom.write32(var2 + 96);
 				rom.write32(var2 + 16);
 				var2 = var2 + sz;
@@ -696,7 +679,6 @@ audiobank(struct rom *rom)
 			/*leave instrument folder and move to next file*/
 			dir_leave();
 			list2.next();
-
 		}
 
 		/*seeks to current spot in the rom*/
@@ -708,7 +690,8 @@ audiobank(struct rom *rom)
 			/*enters the directory and loads the drum file*/
 			dir_enter("_drums");
 			data = loadfile("drums", &sz,0);
-			
+			table = loadfile("config.tsv",0,0);
+
 			/*find envelope pointer aka end of drum indexes and sets var2 to it*/
 			var2 = 0;
 			while ( (get32(&data[var2]+8) >= 0x1 && get32(&data[var2]+8) <= 0x4 && get32(&data[var2]+9) >= 0x1 && get32(&data[var2]+9) <= 0x4) == 0)
@@ -727,24 +710,36 @@ audiobank(struct rom *rom)
 				var = var + 4;
 			}
 
-			/*writes the envelope*/
-			rom.write32(get32(&data[var]));
-			var++;
-			rom.write32(get32(&data[var]));
-			var++;
-			rom.write32(get32(&data[var]));
-			var++;
-			rom.write32(get32(&data[var]));
-			var++;
+			/*write the envelope*/
+			sscanf(tsv_col_row(table,"atkrate",1), "%d", &var);
+			rom.write16(var);
+			sscanf(tsv_col_row(table,"atklvl",1), "%d", &var);
+			rom.write16(var);
+			sscanf(tsv_col_row(table,"dcy1rt",1), "%d", &var);
+			rom.write16(var);
+			sscanf(tsv_col_row(table,"dcy1lvl",1), "%d", &var);
+			rom.write16(var);
+			sscanf(tsv_col_row(table,"dcy2rt",1), "%d", &var);
+			rom.write16(var);
+			sscanf(tsv_col_row(table,"dcy2lvl",1), "%d", &var);
+			rom.write16(var);
+			rom.write16(0xFFFF);
+			rom.write16(0);
 
 			/*write all the drum chunks*/
+			var = var2 + 4;
+			drumstructureindex = 0;
 			while (var < sz/4)
 			{	
 				/*copies the begining of the data's header*/
 				rom.write32(get32(&data[var]));
 				var++;
-				rom.write32(get32(&data[var]));
+
+				/*writes the sample offset from the config file*/
+				sscanf(tsv_col_row(table,"atklvl",3+ drumstructureindex), "%X", &var3);
+				rom.write32(var3);
 				var = var + 3;
+				drumstructureindex++;
 
 				/*figures out length of data by reading a variable and then writes appropriate offsets.*/
 				if (get32(&data[var]+1) == 0x4)
@@ -787,12 +782,16 @@ audiobank(struct rom *rom)
 				var= var+4;
 			}
 
-			/*close the drum file*/
+			/*close the drum and config files and leaves the drum folder*/
 			free(data);
+			free(table);
 			dir_leave();
 		}
 
-		/*warpsongs are not supported rightnow, so we use the raw-bank dump to fix it.*/
+		/*warpsong bank is not supported rightnow, so we use the raw-bank dump to fix it.
+		note: warpsong is functional to a degree. The ussue is that if the bank-size is too large 
+		hyrule-field music wont continue playing after you cancel a warp. It could be fixed with better 
+		memory management or if there is a way to allow for more memory when loading the bank.*/
 		if (list.index() == 18)
 		{
 			rom.seek(bankpointer);
@@ -808,8 +807,11 @@ audiobank(struct rom *rom)
 		rom.seek(TBL_AUDIOBANK + 16 + list.index()*16);
 		rom.write32(bankpointer-TBL_AUDIOBANK_FILE);
 		rom.write32(instrumentpointer);
-		rom.seek(4);
-		rom.write8(instrumentnumber);
+		rom.write8(2);
+		rom.write8(2);
+		rom.write8(1);
+		rom.seek_cur(1);
+		rom.write8((list2.max()+1));
 		if (dir_exists("drums"))
 			{
 				rom.write8(0x40);
@@ -935,7 +937,7 @@ audioseq(struct rom *rom)
 
 	/*open the table and setup for writing*/
 	table = loadfile("sequencetable.tsv", 0, false);
-	numberofsequences = index;
+	numberofsequences = list.max()+1;
 	sequenceinstrumentpointer = numberofsequences * 2 + 4;
 	index = 1;
 
@@ -949,8 +951,9 @@ audioseq(struct rom *rom)
 		index++;
 	}
 
-	/*leave the audio folder*/
+	/*leave the audio folder and free the list*/
 	dir_leave();
+	list.free();
 }
 
 
@@ -1856,6 +1859,7 @@ main(int argc, char **argv)
 	audioseq(rom);
 	route(rom);
 	entrancecutscene(rom);
+	restrictionflag(rom);
 	message(rom);
 	
 	
@@ -1863,10 +1867,10 @@ main(int argc, char **argv)
 	rom.save("build.z64");
 	
 	/* compress rom */
-	/*rom.compress(codec, 32);
+	rom.compress(codec, 32);
 	
 	/* write compressed rom */
-	/*rom.save(new_string("build-", codec, ".z64", 0));
+	rom.save(new_string("build-", codec, ".z64", 0));
 	
 	/* cleanup */
 	rom.free();

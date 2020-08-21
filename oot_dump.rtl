@@ -476,6 +476,8 @@ audiobank(struct rom *rom)
 	int bankpointer;
 	int data;
 	int instrumentnumber;
+	int sampletablenumber;
+	int sampleoffset;
 	int drums;
 	int sfx;
 	int nameindex;
@@ -516,10 +518,15 @@ audiobank(struct rom *rom)
 		rom.seek(TBL_AUDIOBANK + 16 + index*16);
 		bankpointer = rom.read32();
 		length = rom.read32();
-		rom.seek_cur(4);		
+		rom.seek_cur(2);
+		sampletablenumber = rom.read8();
+		rom.seek_cur(1);		
 		instrumentnumber = rom.read8();
 		drums = rom.read8();
 
+		/*sets sample offset for the bank, used later when writing sample pointers.*/
+		rom.seek(0xBCCDA0 + sampletablenumber*16);
+		sampleoffset = rom.read32();
 
 		/*open the bank folder*/
 		sscanf(tsv_col_row(g_tsv,"audiobank",index + 1), "%s", name2);
@@ -553,6 +560,22 @@ audiobank(struct rom *rom)
 			/*steps back to read the envelope pointer*/
 			rom.seek_cur(-4);
 			var = rom.read32();
+
+			/*open the config file and write the header*/
+			configfile = fopen("config.tsv","wb");
+			fprintf(configfile, "atkrate\tatklvl\tdcy1rt\tdcy1lvl\tdcy2rt\tdcy2lvl\n");
+
+
+
+			/*go to the envelope and add info to file*/
+			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
+			fprintf(configfile, "%d", rom.read16());//attackrate
+			fprintf(configfile, "\t%d", rom.read16());//attacklevel
+			fprintf(configfile, "\t%d", rom.read16());//decay1rate
+			fprintf(configfile, "\t%d", rom.read16());//decay1level
+			fprintf(configfile, "\t%d", rom.read16());//decay2rate
+			fprintf(configfile, "\t%d\n", rom.read16());//decay2level
+
 			
 			/*goes to envelope and writes that below the drum indexes*/
 			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
@@ -567,6 +590,9 @@ audiobank(struct rom *rom)
 			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + drums);
 			var = rom.read32();
 			
+			/*write the second teir column names for the config file*/
+			fprintf(configfile, "length\tsample\t\t\t\t\n");
+
 			/*finds all the unique drum data structures*/
 			instrumentindex = 0;
 			while (var < drums) 
@@ -582,6 +608,11 @@ audiobank(struct rom *rom)
 					/*go to data and copy it to drum file*/
 					instrumentindex = var2;
 					dumpinstrumentstructure(rom,TBL_AUDIOBANK_FILE + bankpointer + var2, datafile, index);
+
+					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
+					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var2);
+					rom.seek_cur(2);
+					fprintf(configfile, "%X\t%X\t\t\t\t\n", rom.read16(),rom.read32()+sampleoffset);
 				}
 				var = var + 16;
 			}
@@ -696,7 +727,7 @@ audiobank(struct rom *rom)
 					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
 					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + dataptr1);
 					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32(),pitch1);
+					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32()+sampleoffset,pitch1);
 				}
 				else
 				{	
@@ -714,7 +745,7 @@ audiobank(struct rom *rom)
 					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
 					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + dataptr2);
 					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32(),pitch2);
+					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32()+sampleoffset,pitch2);
 				}
 				else
 				{	
@@ -733,7 +764,7 @@ audiobank(struct rom *rom)
 					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
 					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + dataptr3);
 					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32(),pitch3);
+					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32()+sampleoffset,pitch3);
 				}
 				else
 				{	
