@@ -1,4 +1,4 @@
-# zzrtl-complete
+# zzrtl-with audio and stuff
 Audiobanks, sequences, and more scene related tables.
 
 These .rtl scripts are expansions to the sample scritps at:<br>
