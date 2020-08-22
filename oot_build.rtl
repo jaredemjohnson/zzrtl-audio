@@ -26,7 +26,7 @@ enum {
 	, TBL_AUDIOBANK_SIZE			 = 0x0002BDC0  //audiobank file-size
 	, TBL_SEQUENCEINSTRUMENTSET		 = 0x00BCC4E0  // instrument set table
 	, TBL_SEQUENCE_FILE 		     = 0x00044DF0  // sequence file offset
-	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
+	, TBL_AUDIOSEQ		 		     = 0x00BCC6A0  // sequence pointer table
 	, TBL_ENTRANCECUTSCENE 		     = 0x00B95394  // entrancecutscene table
 	, TBL_ENTRANCECUTSCENE_ENTRIES   = 34          // entrancecutscene count	
 	, TBL_MESSAGE 					 = 0x00BC24C0  // offset for message table
@@ -95,7 +95,7 @@ enum {
 	, OFS_OVL_KALEIDO_SCOPE_DRAW_LO = 0x00B33220
 };
 
-/* OoT NTSC 1.0
+/* OoT NTSC 1.0 
 enum {
 	TBL_OBJECT               = 0x00B6EF58  // object table
 	, TBL_OBJECT_ENTRIES     = 402         // object count
@@ -107,17 +107,18 @@ enum {
 	, TBL_SCENE_ENTRIES      = 101         // scene count
 	, TBL_ROUTE              = 0x00B6FBF0  // route table
 	, TBL_ROUTE_ENTRIES      = 1556        // route count
+	, TBL_AUDIOSAMPLE				 = 0x00B8A1D0  //audiosample table
 	, TBL_AUDIOBANK 				 = 0x00B896A0  //audiobanktable
 	, TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
 	, TBL_AUDIOBANK_SIZE			 = 0x0001CA50  //audiobank file-size
 	, TBL_SEQUENCEINSTRUMENTSET		 = 0x00B89910  // instrument set table
 	, TBL_SEQUENCE_FILE 		     = 0x00029DE0  // sequence file offset
-	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
-	, TBL_ENTRANCECUTSCENE 		     = 0x00B89AD0  // entrancecutscene table
+	, TBL_AUDIOSEQ 		    		 = 0x00B89AD0  // sequence pointer table
+	, TBL_ENTRANCECUTSCENE 		     = 0x00B65C64  // entrancecutscene table
 	, TBL_ENTRANCECUTSCENE_ENTRIES   = 33          // entrancecutscene count	
 	, TBL_MESSAGE 					 = 0x00B808AC  // offset for message table
 	, TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
-	, TBL_MESSAGE_DATA			     = 0x008E6000  //offset for english text
+	, TBL_MESSAGE_DATA			     = 0x0092D000  //offset for english text
 	, TBL_MESSAGE_TOOL      		 = 1		   //select tool 0 = "ocarina text editor" and 1 = "zelda's letter"	
 	, TBL_RESTRICTIONFLAG   		 = 0x00B6D2B0  //offset for restricitonflag table
 	, TBL_RESTRICTIONFLAG_ENTRIES    = 73	       //restrictionflag count
@@ -915,7 +916,7 @@ audioseq(struct rom *rom)
 		data = loadfile(name,&sz, 0);
 	
 		/*seek to and write sequence table*/
-		rom.seek(TBL_SEQUENCE_POINTER + 16 + list.index()*16);
+		rom.seek(TBL_AUDIOSEQ + 16 + list.index()*16);
 		rom.write32(sequencepointer - TBL_SEQUENCE_FILE); //write start
 		rom.write32(sz); //write length
 
@@ -931,7 +932,7 @@ audioseq(struct rom *rom)
 		if (list.index() + 1 == 87)
 		{
 			list.next();
-			rom.seek(TBL_SEQUENCE_POINTER + 16 + list.index()*16);
+			rom.seek(TBL_AUDIOSEQ + 16 + list.index()*16);
 			rom.write32(40);//write start
 			rom.write32(0); //write length
 		}
@@ -946,7 +947,7 @@ audioseq(struct rom *rom)
 	dir_leave();
 
 	/*write sequence number at start of sequence table*/
-	rom.seek(TBL_SEQUENCE_POINTER);
+	rom.seek(TBL_AUDIOSEQ);
 	rom.write16(index);
 
 	/*open the table and setup for writing*/
