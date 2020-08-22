@@ -29,12 +29,12 @@ enum {
 	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
 	, TBL_ENTRANCECUTSCENE 		     = 0x00B95394  // entrancecutscene table
 	, TBL_ENTRANCECUTSCENE_ENTRIES   = 34          // entrancecutscene count	
-	, TBL_MESSAGE 					 = 0x00BC24C0  // offset for entrancecutscene table
+	, TBL_MESSAGE 					 = 0x00BC24C0  // offset for message table
 	, TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
 	, TBL_MESSAGE_DATA			     = 0x008C6000  //offset for english text
 	, TBL_MESSAGE_TOOL      		 = 1		   //select tool 0 = "ocarina text editor" and 1 = "zelda's letter"	
 	, TBL_RESTRICTIONFLAG   		 = 0x00B9CA10  //offset for restricitonflag table
-	, TBL_RESTRICTIONFLAG_ENTRIES    = 100	       //restrictionflag count
+	, TBL_RESTRICTIONFLAG_ENTRIES    = 73	       //restrictionflag count
 	, TBL_DMA               		 = 0x00012F70  // dma table
 	, TBL_DMA_ENTRIES       		 = 1548        // dma entries
 	, TBL_OVL_GAMESTATE     		 = 0x00B969D0  // ovl_title
@@ -114,13 +114,13 @@ enum {
 	, TBL_SEQUENCE_FILE 		     = 0x00029DE0  // sequence file offset
 	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
 	, TBL_ENTRANCECUTSCENE 		     = 0x00B89AD0  // entrancecutscene table
-	, TBL_ENTRANCECUTSCENE_ENTRIES   = 34          // entrancecutscene count	
+	, TBL_ENTRANCECUTSCENE_ENTRIES   = 33          // entrancecutscene count	
 	, TBL_MESSAGE 					 = 0x00B808AC  // offset for message table
 	, TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
 	, TBL_MESSAGE_DATA			     = 0x008E6000  //offset for english text
 	, TBL_MESSAGE_TOOL      		 = 1		   //select tool 0 = "ocarina text editor" and 1 = "zelda's letter"	
 	, TBL_RESTRICTIONFLAG   		 = 0x00B6D2B0  //offset for restricitonflag table
-	, TBL_RESTRICTIONFLAG_ENTRIES    = 100	       //restrictionflag count
+	, TBL_RESTRICTIONFLAG_ENTRIES    = 73	       //restrictionflag count
 	, TBL_DMA                = 0x00007430  // dma table
 	, TBL_DMA_ENTRIES        = 1526        // dma entries
 	, TBL_OVL_GAMESTATE      = 0x00B672A0  // game state overlay table
@@ -1126,6 +1126,8 @@ restrictionflag(struct rom *rom)
 	int yy;
 	int zz;	
 
+	table = malloc(256);
+
 	/*message the console*/
 	printf("building RESTRICTIONFLAG TABLE...\n");
 
@@ -1189,6 +1191,9 @@ message(struct rom *rom)
 	char *data;
 	int tablename;
  	int dataname;
+
+ 	/*display message*/
+ 	printf("building messages...\n");
 
  	/*set the filenames depending on which tool u are using*/
 	if (TBL_MESSAGE_TOOL == 1)
