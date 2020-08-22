@@ -94,7 +94,7 @@ enum {
 	, OFS_OVL_KALEIDO_SCOPE_DRAW_LO = 0x00B33220
 };
 
- /* OoT NTSC 1.0
+ /* OoT NTSC 1.0 
 enum {
 	TBL_OBJECT               = 0x00B6EF58  // object table
 	, TBL_OBJECT_ENTRIES     = 402         // object count
@@ -526,7 +526,7 @@ audiobank(struct rom *rom)
 		/*display progress*/
 		printf("\rworking on AUDIO BANKS %d/%d:", index, numberofbanks-2);
 
-		/*seek to table entry to read sequence info*/
+		/*seek to table entry to read bank info*/
 		rom.seek(TBL_AUDIOBANK + 16 + index*16);
 		bankpointer = rom.read32();
 		length = rom.read32();
@@ -687,6 +687,10 @@ audiobank(struct rom *rom)
 				if (index > 2)
 				{
 					nameindex++;
+					if  (TBL_AUDIOBANK_FILE != 0x00019030 && nameindex == 57)
+					{
+						nameindex++; //skips the extra unknown instrument in debug for naming folders.
+					}
 					sscanf(tsv_col_row(g_tsv,"instrument",nameindex), "%s", name2);
 				}
 				sprintf(name,"%d - %s",instrumentindex,name2);
