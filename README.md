@@ -1,41 +1,37 @@
-# zzrtl-with audio and stuff
-Audiobanks, sequences, dialogue and more scene related tables.
+# ZZRTL-WAAS
+## ZZRTL With Audio And Stuff
 
-These .rtl scripts are expansions to the sample scritps at:<br>
-https://github.com/z64me/zzrtl<br>
-go there for a zzrtl full starter guide.<br>
+These **.rtl** scripts are expansions to the sample scripts at: https://github.com/z64me/zzrtl
+Go there for a zzrtl full starter guide.
 
-oot-debug.z64 and zzrtl.exe not included!
+**oot-debug.z64** and **zzrtl.exe** not included!
 
-[ simple starter guide ]<br>
--inculde oot-debug.z64, oot-build.rtl, oot-dump.rtl, oot-names.tsv, and zzrtl.exe in the same folder.<br>
--open oot-dump-complete.rtl with zzrtl.exe<br>
--apply changes to the project using tools like Sharp Ocarina, Custom Actor Toolkit, Zelda's Letter.<br>
--open oot-build-complete.rtl with zzrtl.exe<br>
--run build.z64
+## These Scripts Include
+- Audiobank editing
+- Audiosequence Binaries editing
+- Restriction Flags editing
+- Entrance Cutscenes editing
+- Message Binaries editing (compatible with **Zelda's Letter** and **Ocarina Text Editor**)
+- Routing editing (Entrance Table)
 
-[ These scripts include ]<br>
--audiobank editing<br>
--audiosequence binaries<br>
--restriction flags<br>
--entrance cutscenes<br>
--message binaries (compatible with Zelda's Letter and Ocarina Text Editor)<br>
--routing (entrance table)<br>
+## Simple Starting Guide
+1. Include **oot-debug.z64**, **oot-build.rtl**, **oot-dump.rtl**, **oot-names.tsv**, and **zzrtl.exe** in the one same folder.
+2. Drag & drop **oot-dump.rtl** inside **zzrtl.exe**.
+3. Apply changes to the project using tools like **SharpOcarina**, **Custom Actor Toolkit**, **Zelda's Letter**, etc.
+4. To rebuild the ROM with your changes, simply drag & drop **oot-build.rtl** inside **zzrtl.exe**.
+5. Launch your newly modified ROM with either **build.z64** or **build-yaz0.z64**
 
-All the tables related to scenes will be dumped to the [scene] folder.
+### All the tables related to scenes will be dumped to the **scene** folder.
 
-[audiobank editing]<br>
-Inside the [audio] and [banks] folder is a list of audiobanks.<br>
-each audiobank is comprised of instruments folders. <br>
-Move/copy instrument folders from one bank to another <br>
-and edit the config file inside the instrument folder <br>
-to change the instrument's envelope and pitch.<br>
-<br>
-(The binary files inside the bank folder are mostly for debugging. leave them alone.)<br>
-<br>
-[message editing]<br>
-overwrite the message binary files in the [message] folder<br>
-ZELDA'S LETTER: Press ctr-P and select "application: save binaries"<br>
-OCARINA TEXT EDITOR: Go to File->Save to Extracted data.<br>
+## Audiobank Editing
+Inside the **audio** and **banks** folder is a list of audiobanks. Each audiobank is comprised of instruments folders. Move/copy instrument folders from one bank to another and edit the config file inside the **instrument** folder to change the instrument's envelope and pitch.
 
-Enjoy!
+(The binary files inside the **bank** folder are mostly for debugging. leave them alone.)
+
+## Message Editing
+Overwrite the message binary files in the **message** folder.
+
+- For **Zelda's Letter**: Press *CTRL+P* and select **Application: Save Binaries**.
+- For **Ocarina Text Editor**: Go to *File->Save to Extracted data*.
+
+# Enjoy!
