@@ -2,7 +2,8 @@
 ## ZZRTL With Audio And Stuff
 
 These **.rtl** scripts are expansions to the sample scripts at: https://github.com/z64me/zzrtl
-Go there for a zzrtl full starter guide.
+
+Go there for a ZZRTL starter guide.
 
 **oot-debug.z64** and **zzrtl.exe** not included!
 
