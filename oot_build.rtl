@@ -107,6 +107,20 @@ enum {
 	, TBL_SCENE_ENTRIES      = 101         // scene count
 	, TBL_ROUTE              = 0x00B6FBF0  // route table
 	, TBL_ROUTE_ENTRIES      = 1556        // route count
+	, TBL_AUDIOBANK 				 = 0x00B896A0  //audiobanktable
+	, TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
+	, TBL_AUDIOBANK_SIZE			 = 0x0001CA50  //audiobank file-size
+	, TBL_SEQUENCEINSTRUMENTSET		 = 0x00B89910  // instrument set table
+	, TBL_SEQUENCE_FILE 		     = 0x00029DE0  // sequence file offset
+	, TBL_SEQUENCE_POINTER 		     = 0x00BCC6A0  // sequence pointer table
+	, TBL_ENTRANCECUTSCENE 		     = 0x00B89AD0  // entrancecutscene table
+	, TBL_ENTRANCECUTSCENE_ENTRIES   = 34          // entrancecutscene count	
+	, TBL_MESSAGE 					 = 0x00B808AC  // offset for message table
+	, TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
+	, TBL_MESSAGE_DATA			     = 0x008E6000  //offset for english text
+	, TBL_MESSAGE_TOOL      		 = 1		   //select tool 0 = "ocarina text editor" and 1 = "zelda's letter"	
+	, TBL_RESTRICTIONFLAG   		 = 0x00B6D2B0  //offset for restricitonflag table
+	, TBL_RESTRICTIONFLAG_ENTRIES    = 100	       //restrictionflag count
 	, TBL_DMA                = 0x00007430  // dma table
 	, TBL_DMA_ENTRIES        = 1526        // dma entries
 	, TBL_OVL_GAMESTATE      = 0x00B672A0  // game state overlay table
@@ -165,7 +179,7 @@ enum {
 	, OFS_OVL_KALEIDO_SCOPE_INIT_LO = 0x00B0FE50
 	, OFS_OVL_KALEIDO_SCOPE_DRAW_HI = 0x00B0FE58  // draw
 	, OFS_OVL_KALEIDO_SCOPE_DRAW_LO = 0x00B0FE64
-}; */
+}; 
 
 /* valid (fmt, bpp) options for png functions */
 enum n64texconv_fmt
