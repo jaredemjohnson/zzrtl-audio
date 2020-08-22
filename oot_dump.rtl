@@ -10,7 +10,7 @@ char *g_tsv;
  * are targeting, and comment out or delete the others    */
 
 
-  /*OoT debug 
+  /*OoT debug */
 enum {
 	TBL_OBJECT              		 = 0x00B9E6C8  // object table
 	, TBL_OBJECT_ENTRIES 		     = 402         // object count
@@ -95,7 +95,7 @@ enum {
 	, OFS_OVL_KALEIDO_SCOPE_DRAW_LO = 0x00B33220
 };
 
- /* OoT NTSC 1.0 */
+ /* OoT NTSC 1.0 
 enum {
 	TBL_OBJECT               = 0x00B6EF58  // object table
 	, TBL_OBJECT_ENTRIES     = 402         // object count
