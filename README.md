@@ -5,7 +5,7 @@ These **.rtl** scripts are expansions to the sample scripts at: https://github.c
 
 Go there for a ZZRTL starter guide.
 
-**oot-debug.z64** and **zzrtl.exe** not included!
+**oot-debug.z64** and **zzrtl.exe** are not included!
 
 ## These Scripts Include
 - Audiobank editing
