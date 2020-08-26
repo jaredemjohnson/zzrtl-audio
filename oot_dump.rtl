@@ -1099,7 +1099,9 @@ restrictionflag(struct rom *rom)
 void
 message(struct rom *rom)
 { 
+	FILE *fp;
 	int message_data_end;
+	int index;
 	
 	/*display message in console*/
 	printf("dumping messages...\n");
@@ -1110,14 +1112,14 @@ message(struct rom *rom)
 	/*extract tables for both text editors */
 	rom.extract("table.bin",TBL_MESSAGE, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);
 	rom.extract("MessageTable.tbl",TBL_MESSAGE, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);
-	rom.seek(TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8 - 3);
-
+	
 	/*find the length of the english data*/
+	rom.seek(TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8 - 3);
 	message_data_end   = rom.read24();
 
 	/*extract the data*/
 	rom.extract("0_message_data_static.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
-	rom.extract("StringData.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
+    rom.extract("StringData.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
 
 	/*exit the directory*/
 	dir_leave();
