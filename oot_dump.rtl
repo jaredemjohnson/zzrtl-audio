@@ -386,8 +386,12 @@ system_overlay(struct rom *rom)
 		/*build mapselect table*/
 		if (!strcmp(name, "ovl_select"))
 		{
+			rom.extract("ovl_select - copy.bin", start, end);
+			/*open map select table and write header*/
 			fp2 = fopen("mapselect.tsv","wb");
 			fprintf(fp2,"index\tentrance index\n");
+
+			/*find the table entries in the rom and write them to the table*/
 			rom.seek(start + TBL_MAP_SELECT+11);
 			var = 0;
 			while (var < TBL_MAP_SELECT_ENTRIES)
@@ -396,6 +400,7 @@ system_overlay(struct rom *rom)
 				rom.seek_cur(10);
 				var++;
 			}
+			/*close table file*/
 			fclose(fp2);
 		}
 		

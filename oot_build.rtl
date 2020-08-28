@@ -275,15 +275,18 @@ mapselect(struct rom *rom)
 	char *name;
 	int sceneid;
 
+	/*allocate data*/
 	name = malloc(1024);
 	data = malloc(1024);
-	//0x0CC3/0x007D
+	
+	/*message user*/
+	printf("working on map-select...\n");
+	/*enter the ovl_select folder*/
 	dir_enter("system");
 	dir_enter("overlay");
 	dir_enter("ovl_select");
 	data = loadfile("ovl_select - copy.bin",&sz, 0);
 	data2 = fopen("ovl_select_new.bin","wb");
-
 	var = 0;
 	while (var < sz)
 	{
