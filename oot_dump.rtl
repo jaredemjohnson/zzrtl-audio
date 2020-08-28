@@ -22,6 +22,8 @@ enum {
 	, TBL_SCENE_ENTRIES    		     = 110         // scene count
 	, TBL_ROUTE             		 = 0x00B9F360  // route table
 	, TBL_ROUTE_ENTRIES     		 = 1556        // route count
+	, TBL_MAP_SELECT				 = 0x0000142F  // map select table relative to ovl_select file
+	, TBL_MAP_SELECT_ENTRIES		 = 125		   // number of map select entries	
 	, TBL_AUDIOSAMPLE				 = 0x00BCCDA0  //audiosample table
 	, TBL_AUDIOBANK 				 = 0x00BCC270  //audiobanktable
 	, TBL_AUDIOBANK_FILE 			 = 0x00019030  //audiobank file
@@ -243,6 +245,8 @@ system_overlay(struct rom *rom)
 	char *outname;
 	char *name;
 	FILE *fp;
+	FILE *fp2;
+	int   var;
 	int  *entry;
 	int  *Oarr;
 	int  *arr;
@@ -378,6 +382,22 @@ system_overlay(struct rom *rom)
 		
 		/* extract file */
 		rom.extract(outname, start, end);
+
+		/*build mapselect table*/
+		if (!strcmp(name, "ovl_select"))
+		{
+			fp2 = fopen("mapselect.tsv","wb");
+			fprintf(fp2,"index\tentrance index\n");
+			rom.seek(start + TBL_MAP_SELECT+11);
+			var = 0;
+			while (var < TBL_MAP_SELECT_ENTRIES)
+			{
+				fprintf(fp2, "%d\t%X\n", var+1,  rom.read16());
+				rom.seek_cur(10);
+				var++;
+			}
+			fclose(fp2);
+		}
 		
 		/* advance to next */
 		dir_leave();
@@ -1362,7 +1382,8 @@ actor(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("actor");
-	
+	dir_enter("_vanilla");
+
 	/* repeats for every item in the list */
 	index = 0;
 	while (index < TBL_ACTOR_ENTRIES)
@@ -1434,6 +1455,7 @@ actor(struct rom *rom)
 	
 	/* cleanup */
 	dir_leave();
+	dir_leave();
 	printf("success!\n");
 }
 
@@ -1446,6 +1468,7 @@ object(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("object");
+	dir_enter("_vanilla");
 	
 	/* repeats for every item in the list */
 	index = 0;
@@ -1480,6 +1503,7 @@ object(struct rom *rom)
 	}
 	
 	/* cleanup */
+	dir_leave();
 	dir_leave();
 	printf("success!\n");
 }
