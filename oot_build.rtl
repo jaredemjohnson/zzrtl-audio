@@ -274,51 +274,49 @@ mapselect(struct rom *rom)
 	int var3;
 	char *name;
 	int sceneid;
+	int spawnid;
 
 	/*allocate data*/
-	name = malloc(1024);
 	data = malloc(1024);
+	data2 = malloc(1024);
 	
 	/*message user*/
 	printf("working on map-select...\n");
+
 	/*enter the ovl_select folder*/
 	dir_enter("system");
-	dir_enter("overlay");
 	dir_enter("ovl_select");
+
+	/*load ovl file and create new file*/
 	data = loadfile("ovl_select - copy.bin",&sz, 0);
-	data2 = fopen("ovl_select_new.bin","wb");
-	var = 0;
-	while (var < sz)
-	{
-		fprintf(data2, "%c", get8(&data[var]));
-		var++;
-	}
-	fclose(data2);
-	free(data);
 	data2 = fopen("ovl_select.zovl","wb");
-	data = loadfile("ovl_select_new.bin",&sz,0 );
-	table2 = loadfile("mapselect.tsv", 0, 0);
-	dir_leave();
+
+	/*leave ovl-select folder and enter the scene folder*/
 	dir_leave();
 	dir_leave();
 	dir_enter("scene");
-	table = loadfile("route.tsv",0,0);
-	list = list.new(0);
-	/*var = 0;
-		*/
 
+	/*load teh mapselect and rout tables*/
+	table2 = loadfile("mapselect.tsv", 0, 0);
+	table = loadfile("route.tsv",0,0);
+	
+	/*copy the first part of the ovl-select file, which we don't change*/
 	var = 0;
 	while (var < sz && get32(&data[var+4]) != 0x80800BAC)
 	{	
 		fprintf(data2,"%c", get8(&data[var]));
 		var++;
 	}
+
+	/*copies the second part of the file, updateing the offsets the strings and entrance ids.*/
 	pointer2 = var + 4;
 	var3 = 0x9;
 	while (var < sz && get32(&data[var+1]) != get32("1:SP"))
 	{	
+		/*checks if it's the position to write string offset*/
 		if ((var+2)/12*12 == var+2 && (var - (pointer2-4))/12 < TBL_MAP_SELECT_ENTRIES)
 		{
+		/*prints the current offset and adds 0x1A to the offset.*/
 		fprintf(data2, "%c", 0x26 + var3/0x100);
 		fprintf(data2,"%c", var3);
 		var++;
@@ -326,31 +324,86 @@ mapselect(struct rom *rom)
 		}
 		else
 		{
-		fprintf(data2,"%c", get8(&data[var]));
+			/*checks if it's the position to write entrance id*/
+			if ((var+6)/12*12 == var+6 && (var - (pointer2-4))/12 < TBL_MAP_SELECT_ENTRIES)
+			{
+				/*reads entrance id from the table and writes it to the data*/
+				sscanf(tsv_col_row(table2,"entrance index", (var - (pointer2-4))/12 + 1 ), "%03X", &var2);
+				fprintf(data2, "%c%c", var2/0x100, var2);
+				var++;
+			}
+			else
+			{
+				/*if not writing offsets or entrance ids, just copies the plain data.*/
+				fprintf(data2,"%c", get8(&data[var]));
+			}
 		}
 		var++;
 	}
+	/*this is a really ugly variable swap, i should clean up my variables. Basically we're setting up for writing the map entries*/
 	pointer = var;
 	var = pointer2;
 	pointer2 = pointer;
 	var = var + 6;
 	pointer = var;
+
+	/*writes the names of all the scenes to the data*/
 	while ((var - pointer)/12< TBL_MAP_SELECT_ENTRIES)
 	{
+		/*finds the scene's id by cross referencing the entrance index in the routing table. also get's the spawn id*/
 		sscanf(tsv_col_row(table2,"entrance index", (var - pointer)/12 + 1 ), "%X", &var3);
-		list = list.new(0);
 		sscanf(tsv_col_row(table,"scene",var3 + 1), "%X", &sceneid);
-		//printf("\n%X--%X\n", var3,sceneid);
-		while (list.index() < sceneid && list.index() + 1 < list.max())
-		{
-			list.next();
-		}
+		spawnid = tsv_col_row(table,"spawn",var3 + 1);
 
-		name = list.name();
-		sscanf(name, "%s..............", name);
+		/*makes a list in the scene folder*/
+		list = list.new(0);
+
+		/*checks the list for a matching id and get's it's name*/
+		while (list.count() && list.index() < sceneid && list.index() < list.max())
+		{
+			list.next();	
+		}
+		if (list.count() && list.index() == sceneid && list.count())
+		{
+		 name = list.name();
+		}
+		else
+		{
+			/*if there is no matching id in the scene folder we go into vanilla and do the same*/	
+			dir_enter("_vanilla");
+			list = list.new(0);
+			while (list.index() < sceneid && list.index() < list.max())
+			{
+				list.next();
+				
+			}
+
+			if (list.index() == sceneid)
+			{
+				name = list.name();
+			}
+			else
+			{
+				/*if for somereason there is no scene we list it as missing*/
+				name = " - scenemissing";
+			}
+			dir_leave();
+		}
 		var2 = 0;
+		/*we advance through the name past the fist "-"*/
+		while (get8(&name[var2]) != get8("-"))
+		{var2++;}
+		var2 = var2 + 2;
+
+		/*we add the spawn id only if it is greater than 0*/
+		if (strcmp(spawnid, "0"))
+		{
+			strcat(name, "-");
+			strcat(name, spawnid);
+		}
 		var3 = 0;
 
+		/*we write the map-select number and advance the forward depending on how many characters the number is*/
 		fprintf(data2,"%c%d:",0x00,(var - pointer)/12+1);
 		if ((var - pointer)/12 + 1>= 100)
 		{
@@ -369,33 +422,36 @@ mapselect(struct rom *rom)
 		}
 		pointer2 = pointer2 + var3;
 		
+		/*now we write as much of the name as we can fit inside of 0x1A bytes*/
 		while (var3 < 0x1A)
 		{
-			if (get8(&name[var2+4]) != 0x20)
+			if (get8(&name[var2]) != 0x20)
 			{
-			fprintf(data2,"%c", get8(&name[var2+4]));
+			fprintf(data2,"%c", get8(&name[var2]));
 			pointer2++;
 			var3++;
 			}
 			var2++;
 		}
-		list.free();
+		/*we count our advancement*/
 		var = var + 12;
 	}
-
+	/*we write in the extra blank space we have*/
 	while (pointer2 < 0x273C)
 	{
 		fprintf(data2, "%c",0xFF);
 		pointer2++;
 	}
+	/*then we copy the rest of the file as is*/
 	while (pointer2 < sz)
 	{
 		fprintf(data2, "%c", get8(&data[pointer2]));
 		pointer2++;
 	}
 
+	/*clean up and leave the folders*/
+	list.free();
 	dir_leave();
-
 	free(table);
 	free(table2);
 	fclose(data2);
@@ -419,7 +475,7 @@ system_overlay(struct rom *rom)
 	int   ptr;
 	int   i;
 	
-	dir_enter("overlay");
+//	dir_enter("overlay");
 	
 	/* system overlays aligned 0x10 in retail */
 	rom.align(0x10);
@@ -540,7 +596,7 @@ system_overlay(struct rom *rom)
 	
 	/* cleanup */
 	free(Oarr);
-	dir_leave();
+	//dir_leave();
 }
 
 void
@@ -592,6 +648,7 @@ audiobank(struct rom *rom)
 {	
 	struct folder *list;
 	struct folder *list2;
+	struct folder *list3;
 	struct conf *table;
 	FILE *fp;
 	FILE *fp2;
@@ -601,6 +658,7 @@ audiobank(struct rom *rom)
 	int drumstructureindex;
 	int *data;
 	int sz;
+	int done;
 	int var;
 	int var2;
 	int var3;
@@ -615,6 +673,8 @@ audiobank(struct rom *rom)
 	/*enter audio and bank folders*/
 	dir_enter("audio");
 	dir_enter("banks");
+	list3 = list3.new(0);
+	dir_enter("_vanilla");
 
 	/*creates a list of the folders and skips past the first 3 unsupported ones*/
 	list = list.new(0);
@@ -622,7 +682,11 @@ audiobank(struct rom *rom)
 	{
 		list.next();
 	}
-
+	while (list3.count() && list3.index() < 3 && list3.index() < list3.max())
+	{
+		list3.next();
+	}
+	done = 0;
 	/*load data from filename*/
 	while (list.remaining())   
 	{
@@ -630,7 +694,26 @@ audiobank(struct rom *rom)
 		printf("\rworking on AUDIO BANKS %d/%d:", list.index(), 36);
 
 		/*enter the bank folder and open the list of instrument folders*/
-		dir_enter(list.name());
+				/*compares custom index to vanilla*/
+		
+		if (list3.count() && list3.index() <= list.index() && done == 0)
+		{
+			dir_leave();
+			dir_enter(list3.name());	
+			if (list3.index() < list3.max())
+			{
+			list3.next();
+			}
+			else
+				{
+					done = 1;
+				}
+		}
+		else
+		{
+			dir_enter(list.name());	
+		}
+		
 		list2 = list2.new(0);
 	
 		/*set the instrument pointer to bottom of instrument array*/
@@ -927,6 +1010,10 @@ audiobank(struct rom *rom)
 
 		/*move forward to next audiobank and update the bank pointer*/
 		bankpointer = bankpointer + instrumentpointer;
+		if (dir_exists("_vanilla"))
+		{
+			dir_enter("_vanilla");
+		}
 		list.next();
 	}
 	
@@ -954,6 +1041,7 @@ audiobank(struct rom *rom)
 	/*leave the bank and audio folders*/
 	dir_leave();
 	dir_leave();
+	dir_leave();
 
 	/*make new line for next console message*/
 	printf("\n");
@@ -963,6 +1051,7 @@ void
 audioseq(struct rom *rom)
 {	
 	struct folder *list;
+	struct folder *list2;
 	struct conf *table;
 	FILE *fp;
 	int sequencepointer;
@@ -973,6 +1062,7 @@ audioseq(struct rom *rom)
 	int numberofsequences;
 	int var;
 	int *data;
+	int done;
 	int sz;
 	int name;
 	int name2;
@@ -990,15 +1080,36 @@ audioseq(struct rom *rom)
 	/*enter audio and sequences folder*/
 	dir_enter("audio");
 	dir_enter("sequences");
+	list2 = list2.new(".bin");
+	dir_enter("_vanilla");
 
 	/*open a list of .bin files in the sequences folder*/
 	list = list.new(".bin");
+	done = 0;
 
 	/*write each file to the rom*/
 	while (list.remaining())
 	{
 		/*get the file name and load it*/
-		name = list.name();
+		/*compares custom index to vanilla*/
+		dir_leave();
+		if (list2.count() && list2.index() <= index && done == 0)
+		{
+			name = list2.name();
+			if (list2.index() < list2.max())
+			{
+			list2.next();
+			}
+			else
+				{
+					done = 1;
+				}
+		}
+		else
+		{
+			dir_enter("_vanilla");
+			name = list.name();
+		}
 
 		index ++;
 		while (index < list.index())
@@ -1036,6 +1147,11 @@ audioseq(struct rom *rom)
 		sequencepointer = (sequencepointer + sz-1)/16*16 + 16;
 		free(data);
 
+		if (dir_exists("_vanilla"))
+		{
+			dir_enter("_vanilla");
+		}
+
 		/*load name for next cycle*/
 		list.next();
 	}
@@ -1046,7 +1162,8 @@ audioseq(struct rom *rom)
 	rom.write32(0); //write length
 
 	free(data);
-	/*leave the audiobanks folder*/
+	/*leave the sequence folder*/
+	dir_leave();
 	dir_leave();
 
 	/*write sequence number at start of sequence table*/
@@ -1072,6 +1189,7 @@ audioseq(struct rom *rom)
 	/*leave the audio folder and free the list*/
 	dir_leave();
 	list.free();
+	list2.free();
 }
 
 
@@ -1450,6 +1568,7 @@ void
 scene(struct rom *rom)
 {
 	struct folder *list;
+	struct folder *list2;
 	struct folder *room;
 	struct conf *conf;
 	char *room_ptrs;
@@ -1458,6 +1577,7 @@ scene(struct rom *rom)
 	char *b;
 	char *b_end;
 	int start;
+	int done;
 	int end;
 	int sz;
 	int index;
@@ -1477,17 +1597,38 @@ scene(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("scene");
+	list2 = list2.new(0);
+	dir_enter("_vanilla");
 	list = list.new(0);
 	if (!list.count())
 		die("scene folder is empty");
 	index_last = -1;
-	
+	done = 0;
+
 	/* repeats for every item in the list */
 	while (list.remaining())
 	{
 		/* initialize variables */
 		index = list.index();
-		name = list.name();
+		/*compares custom index to vanilla*/
+		dir_leave();
+		if (list2.count() && list2.index() <= index && done == 0)
+		{
+			name = list2.name();
+			if (list2.index() < list2.max())
+			{
+			list2.next();
+			}
+			else
+				{
+					done = 1;
+				}
+		}
+		else
+		{
+			dir_enter("_vanilla");
+			name = list.name();
+		}
 		
 		/* display progress */
 		printf("\r""scene %d/%d: ", index, list.max());
@@ -1635,6 +1776,10 @@ scene(struct rom *rom)
 		
 		/* leave directory */
 		dir_leave();
+		if (dir_exists("_vanilla"))
+		{
+			dir_enter("_vanilla");
+		}
 		
 		/* go to next entry in list */
 		list.next();
@@ -1643,6 +1788,8 @@ scene(struct rom *rom)
 	/* cleanup */
 	free(room_ptrs);
 	list.free();
+	list2.free();
+	dir_leave();
 	dir_leave();
 	printf("success!\n");
 }
@@ -1739,6 +1886,7 @@ object(struct rom *rom)
 	/* cleanup */
 	list2.free();
 	list.free();
+	list2.free();
 	dir_leave();
 	dir_leave();
 	printf("success!\n");

@@ -257,7 +257,7 @@ system_overlay(struct rom *rom)
 	int   ptr;
 	int   i;
 	
-	dir_enter("overlay");
+	//dir_enter("overlay");
 	
 	/* allocate buffer */
 	outname = malloc(64);
@@ -386,7 +386,12 @@ system_overlay(struct rom *rom)
 		/*build mapselect table*/
 		if (!strcmp(name, "ovl_select"))
 		{
+
 			rom.extract("ovl_select - copy.bin", start, end);
+			dir_leave();
+			dir_leave();
+			dir_enter("scene");
+
 			/*open map select table and write header*/
 			fp2 = fopen("mapselect.tsv","wb");
 			fprintf(fp2,"index\tentrance index\n");
@@ -402,6 +407,9 @@ system_overlay(struct rom *rom)
 			}
 			/*close table file*/
 			fclose(fp2);
+			dir_leave();
+			dir_enter("system");
+			dir_enter("ovl_select");
 		}
 		
 		/* advance to next */
@@ -413,7 +421,7 @@ system_overlay(struct rom *rom)
 	/* cleanup */
 	free(outname);
 	free(Oarr);
-	dir_leave();
+	//dir_leave();
 }
 
 void
@@ -541,6 +549,7 @@ audiobank(struct rom *rom)
 	/*enter audio folder*/
 	dir_enter("audio");
 	dir_enter("banks");
+	dir_enter("_vanilla");
 
 	/*find and read the number of audiobanks*/
 	rom.seek(TBL_AUDIOBANK);
@@ -836,7 +845,8 @@ audiobank(struct rom *rom)
 	length = rom.read32();
 	rom.extract(".do_not_delete", TBL_AUDIOBANK_FILE + bankpointer, TBL_AUDIOBANK_FILE + bankpointer + length);
 
-	/*leave the audio and audiobank folders*/
+	/*leave the audio and audiobank and vanilla folders*/
+	dir_leave();
 	dir_leave();
 	dir_leave();
 
@@ -919,12 +929,13 @@ audioseq(struct rom *rom)
 
 		/*enter sequences folder to write sequence data and then leave*/
 		dir_enter("sequences");
+		dir_enter("_vanilla");
 
 		sscanf(tsv_col_row(g_tsv,"sequence",index + 1), "%s", name2);
 		sprintf(name,"%d - %s - %X.bin",index,name2,index);
 		rom.extract(name, TBL_SEQUENCE_FILE + start, TBL_SEQUENCE_FILE + start+length);
 		dir_leave();
-
+		dir_leave();
 		/*advance forward in table*/
 		index ++;
 	}
@@ -1178,6 +1189,7 @@ scene(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("scene");
+	dir_enter("_vanilla");
 	
 	/* repeats for every item in the list */
 	index = 0;
@@ -1284,12 +1296,14 @@ scene(struct rom *rom)
 		
 		/* leave directory */
 		dir_leave();
+
 		
 		/* advance to next entry */
 		index++;
 	}
 	
 	/* cleanup */
+	dir_leave();
 	dir_leave();
 	free(room_name);
 	free(title_buf);
