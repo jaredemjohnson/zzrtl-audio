@@ -268,7 +268,6 @@ mapselect(struct rom *rom)
 	int *data2;
 	int sz;
 	int pointer;
-	int pointer2;
 	int var;
 	int var2;
 	int var3;
@@ -309,49 +308,38 @@ mapselect(struct rom *rom)
 	}
 
 	/*copies the second part of the file, updateing the offsets the strings and entrance ids.*/
-	pointer2 = var + 4;
-	var3 = 0x9;
-	while (var < sz && get32(&data[var+1]) != get32("1:SP"))
+	pointer = var;
+	var3 = 0x08;
+	while ((var - (pointer))/12 < TBL_MAP_SELECT_ENTRIES)
 	{	
-		/*checks if it's the position to write string offset*/
-		if ((var+2)/12*12 == var+2 && (var - (pointer2-4))/12 < TBL_MAP_SELECT_ENTRIES)
-		{
-		/*prints the current offset and adds 0x1A to the offset.*/
-		fprintf(data2, "%c", 0x26 + var3/0x100);
-		fprintf(data2,"%c", var3);
-		var++;
-		var3 = var3 + 0x1A;
-		}
-		else
-		{
-			/*checks if it's the position to write entrance id*/
-			if ((var+6)/12*12 == var+6 && (var - (pointer2-4))/12 < TBL_MAP_SELECT_ENTRIES)
-			{
-				/*reads entrance id from the table and writes it to the data*/
-				sscanf(tsv_col_row(table2,"entrance index", (var - (pointer2-4))/12 + 1 ), "%03X", &var2);
-				fprintf(data2, "%c%c", var2/0x100, var2);
-				var++;
-			}
-			else
-			{
-				/*if not writing offsets or entrance ids, just copies the plain data.*/
-				fprintf(data2,"%c", get8(&data[var]));
-			}
-		}
+		/*get the entrance id*/
+		sscanf(tsv_col_row(table2,"entrance index", (var - (pointer-4))/12 + 1 ), "%03X", &var2);
+
+		/*writes a map-select entry and updates entrance id and string offset*/		
+		fprintf(data2, "%c%c%c%c",0x80,0x80,0x26+var3/0x100,var3);
+		fprintf(data2, "%c%c%c%c",0x80,0x80,0x0B,0xAC);
+		fprintf(data2, "%c%c%c%c",0x00,0x00,var2/0x100, var2);
+	    var3 = var3 + 0x1A;
+		var = var + 12;
+	}
+	//fprintf(data2, "%c", 0xFF);
+	pointer = var;
+	while (var-pointer < 0x6B)
+	{
+		fprintf(data2, "%c", get8(&data[var]));
 		var++;
 	}
+
+
 	/*this is a really ugly variable swap, i should clean up my variables. Basically we're setting up for writing the map entries*/
 	pointer = var;
-	var = pointer2;
-	pointer2 = pointer;
-	var = var + 6;
-	pointer = var;
+	var = 1;
 
 	/*writes the names of all the scenes to the data*/
-	while ((var - pointer)/12< TBL_MAP_SELECT_ENTRIES)
+	while (var < TBL_MAP_SELECT_ENTRIES + 1)
 	{
 		/*finds the scene's id by cross referencing the entrance index in the routing table. also get's the spawn id*/
-		sscanf(tsv_col_row(table2,"entrance index", (var - pointer)/12 + 1 ), "%X", &var3);
+		sscanf(tsv_col_row(table2,"entrance index", var), "%X", &var3);
 		sscanf(tsv_col_row(table,"scene",var3 + 1), "%X", &sceneid);
 		spawnid = tsv_col_row(table,"spawn",var3 + 1);
 
@@ -375,9 +363,7 @@ mapselect(struct rom *rom)
 			while (list.index() < sceneid && list.index() < list.max())
 			{
 				list.next();
-				
 			}
-
 			if (list.index() == sceneid)
 			{
 				name = list.name();
@@ -385,7 +371,7 @@ mapselect(struct rom *rom)
 			else
 			{
 				/*if for somereason there is no scene we list it as missing*/
-				name = " - scenemissing";
+				name = new_string(" - scene-missing",0);
 			}
 			dir_leave();
 		}
@@ -396,22 +382,22 @@ mapselect(struct rom *rom)
 		var2 = var2 + 2;
 
 		/*we add the spawn id only if it is greater than 0*/
-		if (strcmp(spawnid, "0"))
+		if (strcmp(spawnid, "0") && strcmp(name," - scene-missing"))
 		{
 			strcat(name, "-");
 			strcat(name, spawnid);
 		}
-		var3 = 0;
 
+		var3 = 0;
 		/*we write the map-select number and advance the forward depending on how many characters the number is*/
-		fprintf(data2,"%c%d:",0x00,(var - pointer)/12+1);
-		if ((var - pointer)/12 + 1>= 100)
+		fprintf(data2,"%c%d:",0x00,var);
+		if (var >= 100)
 		{
 			var3 = var3 + 5;
 		}
 		else
 		{
-			if ((var - pointer)/12 + 1>= 10)
+			if (var >= 10)
 			{
 				var3 = var3 + 4;
 			}
@@ -420,7 +406,7 @@ mapselect(struct rom *rom)
 				var3 = var3 + 3;
 			}
 		}
-		pointer2 = pointer2 + var3;
+		pointer = pointer + var3;
 		
 		/*now we write as much of the name as we can fit inside of 0x1A bytes*/
 		while (var3 < 0x1A)
@@ -428,25 +414,44 @@ mapselect(struct rom *rom)
 			if (get8(&name[var2]) != 0x20)
 			{
 			fprintf(data2,"%c", get8(&name[var2]));
-			pointer2++;
+			pointer++;
 			var3++;
 			}
 			var2++;
 		}
 		/*we count our advancement*/
-		var = var + 12;
+		var++;
 	}
 	/*we write in the extra blank space we have*/
-	while (pointer2 < 0x273C)
+	while (pointer < 0x273C)
 	{
 		fprintf(data2, "%c",0xFF);
-		pointer2++;
+		pointer++;
 	}
-	/*then we copy the rest of the file as is*/
-	while (pointer2 < sz)
+	/*then we copy the rest of the file copying some english text over things*/
+	while (pointer < sz)
 	{
-		fprintf(data2, "%c", get8(&data[pointer2]));
-		pointer2++;
+		name = "***(Adult)   ***** (Child)    ***********Night          ******Day            ***CUTSC_00****CUTSC_01****CUTSC_02****CUTSC_03****CUTSC_04****CUTSC_05****CUTSC_06****CUTSC_07****CUTSC_08****CUTSC_09****CUTSC_10";
+		fprintf(data2, "%c", get8(&data[pointer]));
+
+		pointer++;
+		if (pointer == 0x28C0)
+		{   
+			var = 0;
+			while (var < 0xD0)
+			{if (get8(&name[var]) == 0x2A)
+			{
+				fprintf(data2,"%c", get8(&data[pointer]));
+			}
+			else
+			{
+			fprintf(data2,"%c", get8(&name[var]));
+			}
+			var++;
+			pointer++;
+			}	
+		}
+		
 	}
 
 	/*clean up and leave the folders*/
