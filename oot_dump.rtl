@@ -63,13 +63,13 @@ debugvariables()
 	; DMA_ITEM_FIELD         		 = 9           // icon_item_field_static
 	; DMA_ITEM_LOCALIZED    		 = 14          // last icon_item_x_static
 	; DMA_CODE             		     = 28
-	; DMA_OVL_TITLE
-	; DMA_OVL_SELECT
-	; DMA_OVL_OPENING
-	; DMA_OVL_FILE_CHOOSE
-	; DMA_OVL_KALEIDO_SCOPE
-	; DMA_OVL_PLAYER_ACTOR
-	; DMA_OVL_MAP_MARK_DATA
+	; DMA_OVL_TITLE					 = 29
+	; DMA_OVL_SELECT				 = 30
+	; DMA_OVL_OPENING				 = 31
+	; DMA_OVL_FILE_CHOOSE			 = 32
+	; DMA_OVL_KALEIDO_SCOPE			 = 33
+	; DMA_OVL_PLAYER_ACTOR			 = 34
+	; DMA_OVL_MAP_MARK_DATA			 = 35
 	
 	; DMA_ACTOR_FIRST      		    = 36          // En_Test
 	; DMA_ACTOR_LAST        	    = 497         // Shot_Sun
@@ -123,7 +123,7 @@ ocarinaoftimevariables()
 	; TBL_ROUTE              = 0x00B6FBF0  // route table
 	; TBL_ROUTE_ENTRIES      = 1556        // route count
 	; TBL_MAP_SELECT				 = 0x000013D0  // map select table relative to ovl_select file
-	; TBL_MAP_SELECT_ENTRIES		 = 125		   // number of map select entries	
+	; TBL_MAP_SELECT_ENTRIES		 = 115		   // number of map select entries	
 	; TBL_AUDIOSAMPLE				 = 0x00B8A1D0  //audiosample table
 	; TBL_AUDIOBANK 				 = 0x00B896A0  //audiobanktable
 	; TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
@@ -151,13 +151,13 @@ ocarinaoftimevariables()
 	; DMA_ITEM_FIELD         = 10          // icon_item_field_static
 	; DMA_ITEM_LOCALIZED     = 14          // last icon_item_x_static
 	; DMA_CODE               = 27
-	; DMA_OVL_TITLE          = 29
-	; DMA_OVL_SELECT
-	; DMA_OVL_OPENING
-	; DMA_OVL_FILE_CHOOSE
-	; DMA_OVL_KALEIDO_SCOPE
-	; DMA_OVL_PLAYER_ACTOR
-	; DMA_OVL_MAP_MARK_DATA
+	; DMA_OVL_TITLE			 = 29
+	; DMA_OVL_SELECT		 = 30
+	; DMA_OVL_OPENING		 = 31
+	; DMA_OVL_FILE_CHOOSE	 = 32
+	; DMA_OVL_KALEIDO_SCOPE	 = 33
+	; DMA_OVL_PLAYER_ACTOR	 = 34
+	; DMA_OVL_MAP_MARK_DATA	 = 35
 	
 	; DMA_ACTOR_FIRST        = 36          // En_Test
 	; DMA_ACTOR_LAST         = 497         // Shot_Sun
@@ -1550,6 +1550,7 @@ main(int argc, char **argv)
 	char *name;
 	FILE *fp;
 
+	/*if config doesn't exist it'll create on for ya*/
 	if (!file_exists("config.tsv"))
 	{
 		printf("created new config file for project\n");

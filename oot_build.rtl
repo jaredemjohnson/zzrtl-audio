@@ -1,4 +1,3 @@
-/*******************************************************
 /**********************************************************
  * <z64.me> zzrtl script for extracting assets from OoT   * 
  * audiobank(), audioseq(), message(), restrictionflag()  *
@@ -66,13 +65,13 @@ debugvariables()
 	;DMA_ITEM_FIELD         		 = 9           // icon_item_field_static
 	;DMA_ITEM_LOCALIZED    			 = 14          // last icon_item_x_static
 	;DMA_CODE             		     = 28
-	;DMA_OVL_TITLE
-	;DMA_OVL_SELECT
-	;DMA_OVL_OPENING
-	;DMA_OVL_FILE_CHOOSE
-	;DMA_OVL_KALEIDO_SCOPE
-	;DMA_OVL_PLAYER_ACTOR
-	;DMA_OVL_MAP_MARK_DATA
+	;DMA_OVL_TITLE					 = 29
+	; DMA_OVL_SELECT				 = 30
+	; DMA_OVL_OPENING				 = 31
+	; DMA_OVL_FILE_CHOOSE			 = 32
+	; DMA_OVL_KALEIDO_SCOPE			 = 33
+	; DMA_OVL_PLAYER_ACTOR			 = 34
+	; DMA_OVL_MAP_MARK_DATA			 = 35
 	
 	;DMA_ACTOR_FIRST      		     = 36          // En_Test
 	;DMA_ACTOR_LAST        	    	 = 497         // Shot_Sun
@@ -157,12 +156,12 @@ ocarinaoftimevariables()
 	;DMA_ITEM_LOCALIZED     		 = 14          // last icon_item_x_static
 	;DMA_CODE               		 = 27
 	;DMA_OVL_TITLE          		 = 29
-	;DMA_OVL_SELECT
-	;DMA_OVL_OPENING
-	;DMA_OVL_FILE_CHOOSE
-	;DMA_OVL_KALEIDO_SCOPE
-	;DMA_OVL_PLAYER_ACTOR
-	;DMA_OVL_MAP_MARK_DATA
+	; DMA_OVL_SELECT				 = 30
+	; DMA_OVL_OPENING				 = 31
+	; DMA_OVL_FILE_CHOOSE			 = 32
+	; DMA_OVL_KALEIDO_SCOPE			 = 33
+	; DMA_OVL_PLAYER_ACTOR			 = 34
+	; DMA_OVL_MAP_MARK_DATA			 = 35
 	
 	;DMA_ACTOR_FIRST        		 = 36          // En_Test
 	;DMA_ACTOR_LAST         		 = 497         // Shot_Sun
