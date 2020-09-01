@@ -8,7 +8,7 @@
 /* global variables */
 char *g_tsv;
 int TBL_OBJECT;int TBL_OBJECT_ENTRIES;int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
-int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;
+int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT_FILE;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;
 int TBL_AUDIOBANK_SIZE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;int TBL_ENTRANCECUTSCENE_ENTRIES;
 int TBL_MESSAGE;int TBL_MESSAGE_TOOL;int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;
 int TBL_AUDIOTABLE_FILE; int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;
@@ -34,7 +34,8 @@ debugvariables()
 	;TBL_SCENE_ENTRIES    		     = 110         // scene count
 	;TBL_ROUTE             		 	 = 0x00B9F360  // route table
 	;TBL_ROUTE_ENTRIES     		 	 = 1556        // route count
-	;TBL_MAP_SELECT				 	 = 0x0000142F  // map select table relative to ovl_select file
+	;TBL_MAP_SELECT_FILE			 = 0x00003060  //map select file
+	;TBL_MAP_SELECT				 	 = 0x00001430  // map select table relative to ovl_select file
 	;TBL_MAP_SELECT_ENTRIES		 	 = 125		   // number of map select entries	
 	;TBL_AUDIOBANK 				 	 = 0x00BCC270  //audiobanktable
 	;TBL_AUDIOBANK_FILE 			 = 0x00019030  //audiobank file
@@ -125,6 +126,9 @@ ocarinaoftimevariables()
 	;TBL_SCENE_ENTRIES      		 = 101         // scene count
 	;TBL_ROUTE             			 = 0x00B6FBF0  // route table
 	;TBL_ROUTE_ENTRIES     			 = 1556        // route count
+	;TBL_MAP_SELECT_FILE			 = 0x00B9E400	  //map select file
+	;TBL_MAP_SELECT				 	 = 0x000013D0  // map select table relative to ovl_select file
+	;TBL_MAP_SELECT_ENTRIES		 	 = 115		   // number of map select entries		
 	;TBL_AUDIOSAMPLE				 = 0x00B8A1D0  //audiosample table
 	;TBL_AUDIOBANK 				     = 0x00B896A0  //audiobanktable
 	;TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
@@ -315,7 +319,7 @@ mapselect(struct rom *rom)
 	
 	/*copy the first part of the ovl-select file, which we don't change*/
 	var = 0;
-	while (var < sz && get32(&data[var+4]) != 0x80800BAC)
+	while (var < TBL_MAP_SELECT)
 	{	
 		fprintf(data2,"%c", get8(&data[var]));
 		var++;
@@ -323,22 +327,29 @@ mapselect(struct rom *rom)
 
 	/*copies the second part of the file, updateing the offsets the strings and entrance ids.*/
 	pointer = var;
-	var3 = 0x08;
+	if (TBL_MAP_SELECT == 0x1430)
+	{var3 = 0x09;}
+	else
+	{var3 = 0x51;}
 	while ((var - (pointer))/12 < TBL_MAP_SELECT_ENTRIES)
 	{	
 		/*get the entrance id*/
 		sscanf(tsv_col_row(table2,"entrance index", (var - (pointer-4))/12 + 1 ), "%03X", &var2);
 
 		/*writes a map-select entry and updates entrance id and string offset*/		
-		fprintf(data2, "%c%c%c%c",0x80,0x80,0x26+var3/0x100,var3);
-		fprintf(data2, "%c%c%c%c",0x80,0x80,0x0B,0xAC);
+		if (TBL_MAP_SELECT == 0x1430)
+		{fprintf(data2, "%c%c%c%c",0x80,0x80,0x26+var3/0x100,var3);
+		fprintf(data2, "%c%c%c%c",0x80,0x80,0x0B,0xAC);}
+		else
+		{fprintf(data2, "%c%c%c%c",0x80,0x80,0x23+var3/0x100,var3);
+		fprintf(data2, "%c%c%c%c",0x80,0x80,0x09,0xE0);}
 		fprintf(data2, "%c%c%c%c",0x00,0x00,var2/0x100, var2);
 	    var3 = var3 + 0x1A;
 		var = var + 12;
 	}
 	//fprintf(data2, "%c", 0xFF);
 	pointer = var;
-	while (var-pointer < 0x6B)
+	while (get32(&data[var]) != 0x20313A53)
 	{
 		fprintf(data2, "%c", get8(&data[var]));
 		var++;
@@ -358,6 +369,7 @@ mapselect(struct rom *rom)
 		spawnid = tsv_col_row(table,"spawn",var3 + 1);
 
 		/*makes a list in the scene folder*/
+
 		list = list.new(0);
 
 		/*checks the list for a matching id and get's it's name*/
@@ -373,6 +385,7 @@ mapselect(struct rom *rom)
 		{
 			/*if there is no matching id in the scene folder we go into vanilla and do the same*/	
 			dir_enter("_vanilla");
+			list.free();
 			list = list.new(0);
 			while (list.index() < sceneid && list.index() < list.max())
 			{
@@ -389,6 +402,7 @@ mapselect(struct rom *rom)
 			}
 			dir_leave();
 		}
+
 		var2 = 0;
 		/*we advance through the name past the fist "-"*/
 		while (get8(&name[var2]) != get8("-"))
@@ -436,12 +450,7 @@ mapselect(struct rom *rom)
 		/*we count our advancement*/
 		var++;
 	}
-	/*we write in the extra blank space we have*/
-	while (pointer < 0x273C)
-	{
-		fprintf(data2, "%c",0xFF);
-		pointer++;
-	}
+
 	/*then we copy the rest of the file copying some english text over things*/
 	while (pointer < sz)
 	{
@@ -449,7 +458,7 @@ mapselect(struct rom *rom)
 		fprintf(data2, "%c", get8(&data[pointer]));
 
 		pointer++;
-		if (pointer == 0x28C0)
+		if (get32(&data[pointer]) == 0x8D313728)
 		{   
 			var = 0;
 			while (var < 0xD0)
@@ -489,6 +498,7 @@ system_overlay(struct rom *rom)
 	int  *entry;
 	int  *Oarr;
 	int  *arr;
+	char *name;
 	int   vram;
 	int   vram_sz;
 	int   ptr;
@@ -560,8 +570,9 @@ system_overlay(struct rom *rom)
 		
 		/* go to table entry (skip first word) */
 		rom.seek(entry[i] + 4);
-		
+		//name = substring(filename, i);
 		/* inject file */
+
 		ovl = rom.inject("*.zovl", compress);
 		
 		/* get overlay vram size */
@@ -610,6 +621,7 @@ system_overlay(struct rom *rom)
 		/* advance to next */
 		dir_leave();
 		conf.free();
+		
 		i++;
 	}
 	
@@ -718,7 +730,7 @@ audiobank(struct rom *rom)
 		if (list3.count() && list3.index() <= list.index() && done == 0)
 		{
 			dir_leave();
-			dir_enter(list3.name());	
+			dir_enter(list3.name());				
 			if (list3.index() < list3.max())
 			{
 			list3.next();
@@ -730,7 +742,7 @@ audiobank(struct rom *rom)
 		}
 		else
 		{
-			dir_enter(list.name());	
+			dir_enter(list.name());			
 		}
 		
 		list2 = list2.new(0);
@@ -879,15 +891,16 @@ audiobank(struct rom *rom)
 
 			/*moves pointer forward */
 			instrumentpointer = var2;
-					
+			//free(table);
 			/*leave instrument folder and move to next file*/
 			dir_leave();
 			list2.next();
+
 		}
 
 		/*seeks to current spot in the rom*/
 		rom.seek(bankpointer + instrumentpointer);
-
+			
 		/*check if there are drums to add*/
 		if (dir_exists("_drums"))
 		{
@@ -895,7 +908,6 @@ audiobank(struct rom *rom)
 			dir_enter("_drums");
 			data = loadfile("drums", &sz,0);
 			table = loadfile("config.tsv",0,0);
-
 			/*find envelope pointer aka end of drum indexes and sets var2 to it*/
 			var2 = 0;
 			while ( (get32(&data[var2]+8) >= 0x1 && get32(&data[var2]+8) <= 0x4 && get32(&data[var2]+9) >= 0x1 && get32(&data[var2]+9) <= 0x4) == 0)
@@ -988,7 +1000,7 @@ audiobank(struct rom *rom)
 
 			/*close the drum and config files and leaves the drum folder*/
 			free(data);
-			free(table);
+			//free(table);
 			dir_leave();
 		}
 
@@ -2251,7 +2263,8 @@ main(int argc, char **argv)
 	}
 	
 	/* mark files (and dma entries) for overwriting */
-	rom.dma_queue(DMA_OVL_TITLE, DMA_OVL_MAP_MARK_DATA); /* sys ovl */
+	rom.dma_queue_one(DMA_OVL_TITLE);
+	rom.dma_queue(DMA_OVL_OPENING, DMA_OVL_MAP_MARK_DATA); /* sys ovl */
 	rom.dma_queue(DMA_ACTOR_FIRST , DMA_ACTOR_LAST ); /* actors, fx */
 	rom.dma_queue(DMA_OBJECT_FIRST, DMA_OBJECT_LAST); /* objects    */
 	rom.dma_queue(DMA_G_PN_FIRST  , DMA_G_PN_LAST  ); /* g_pn_x     */
@@ -2295,8 +2308,17 @@ main(int argc, char **argv)
 	{
 		message(rom);
 	}
-	
-	
+
+	if (!strcmp(tsv_col_row(config, "setting", 1), "false")&& !strcmp(tsv_col_row(config, "setting", 4), "true"))
+	{
+	dir_enter("system");
+	dir_enter("ovl_select");
+	rom.seek(TBL_MAP_SELECT_FILE);
+	rom.inject_dma("ovl_select.zovl",compress, DMA_OVL_SELECT);
+	dir_leave();
+	dir_leave();
+	}
+
 	/* write built rom */
 	rom.save("build.z64");
 	

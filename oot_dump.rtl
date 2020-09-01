@@ -33,7 +33,7 @@ debugvariables()
 	; TBL_SCENE_ENTRIES    		     = 110         // scene count
 	; TBL_ROUTE             		 = 0x00B9F360  // route table
 	; TBL_ROUTE_ENTRIES     		 = 1556        // route count
-	; TBL_MAP_SELECT				 = 0x0000142F  // map select table relative to ovl_select file
+	; TBL_MAP_SELECT				 = 0x00001430  // map select table relative to ovl_select file
 	; TBL_MAP_SELECT_ENTRIES		 = 125		   // number of map select entries	
 	; TBL_AUDIOSAMPLE				 = 0x00BCCDA0  //audiosample table
 	; TBL_AUDIOBANK 				 = 0x00BCC270  //audiobanktable
@@ -412,7 +412,7 @@ system_overlay(struct rom *rom)
 			fprintf(fp2,"index\tentrance index\n");
 
 			/*find the table entries in the rom and write them to the table*/
-			rom.seek(start + TBL_MAP_SELECT+11);
+			rom.seek(start + TBL_MAP_SELECT+10);
 			var = 0;
 			while (var < TBL_MAP_SELECT_ENTRIES)
 			{
@@ -681,9 +681,11 @@ audiobank(struct rom *rom)
 				var = var + 16;
 			}
 			/*close drum file and leave drum folder*/
+			fclose(configfile);
 			fclose(datafile);
 			dir_leave();
 		}
+
 
 		/*check if there are sound effects*/
 		if (sfx > 0)
