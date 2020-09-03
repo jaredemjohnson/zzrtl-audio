@@ -722,11 +722,11 @@ audiobank(struct rom *rom)
 	while (list.remaining())   
 	{
 		/*display progress*/	
-		printf("\rworking on AUDIO BANKS %d/%d:", list.index(), 36);
+	//	printf("\rworking on AUDIO BANKS %d/%d:", list.index(), 36);
 
 		/*enter the bank folder and open the list of instrument folders*/
 				/*compares custom index to vanilla*/
-		
+		printf("\n%s",list.name());
 		if (list3.count() && list3.index() <= list.index() && done == 0)
 		{
 			dir_leave();
@@ -765,7 +765,7 @@ audiobank(struct rom *rom)
 		{
 			/*open the folder for the instrument*/
 			dir_enter(list2.name());
-			
+			printf(list2.name());
 			/*write pointer into header of file*/
 			rom.seek(bankpointer + 8 + list2.index()*4);
 			rom.write32(instrumentpointer);
@@ -1020,6 +1020,7 @@ audiobank(struct rom *rom)
 		instrumentpointer = rom.tell() - bankpointer;
 
 		/*fix the audiobank table*/
+	
 		rom.seek(TBL_AUDIOBANK + 16 + list.index()*16);
 		rom.write32(bankpointer-TBL_AUDIOBANK_FILE);
 		rom.write32(instrumentpointer);
@@ -1036,7 +1037,7 @@ audiobank(struct rom *rom)
 		/*extract a bank build file, just for debugging*/
 		sprintf(name, "%s_build", list.name());
 		rom.extract(name, bankpointer,  bankpointer + instrumentpointer);
-		list2.free();
+		//list2.free();
 		dir_leave();
 
 		/*move forward to next audiobank and update the bank pointer*/
