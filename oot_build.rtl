@@ -722,11 +722,10 @@ audiobank(struct rom *rom)
 	while (list.remaining())   
 	{
 		/*display progress*/	
-	//	printf("\rworking on AUDIO BANKS %d/%d:", list.index(), 36);
+		printf("\rworking on AUDIO BANKS %d/%d:", list.index(), 36);
 
 		/*enter the bank folder and open the list of instrument folders*/
 				/*compares custom index to vanilla*/
-		printf("\n%s",list.name());
 		if (list3.count() && list3.index() <= list.index() && done == 0)
 		{
 			dir_leave();
@@ -1003,9 +1002,9 @@ audiobank(struct rom *rom)
 			//free(table);
 			dir_leave();
 		}
-
-		/*warpsong bank is not supported rightnow, so we use the raw-bank dump to fix it.
-		note: warpsong is functional to a degree. The ussue is that if the bank-size is too large 
+										//**NOTE TO SELF warn if largestbank + warp > magic number**//
+		/*warpsong bank is not supported rightnow, so we use the raw-bank dump to fix it. 
+		note: warpsong is functional to a degree. The issue is that if the bank-size is too large 
 		hyrule-field music wont continue playing after you cancel a warp. It could be fixed with better 
 		memory management or if there is a way to allow for more memory when loading the bank.*/
 		if (list.index() == 18)
@@ -1125,7 +1124,7 @@ audioseq(struct rom *rom)
 		/*get the file name and load it*/
 		/*compares custom index to vanilla*/
 		dir_leave();
-		if (list2.count() && list2.index() <= index && done == 0)
+		if (list2.count() && list2.index() <= list.index() && done == 0)
 		{
 			name = list2.name();
 			if (list2.index() < list2.max())
