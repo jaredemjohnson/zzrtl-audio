@@ -2309,11 +2309,36 @@ main(int argc, char **argv)
 		message(rom);
 	}
 
+	/*this is a patch that lets map-select work on 1.0*/
 	if (!strcmp(tsv_col_row(config, "setting", 1), "false")&& !strcmp(tsv_col_row(config, "setting", 4), "true"))
 	{
+	rom.seek(0xB67394);
+	rom.write16(0x00B9);
+	rom.write16(0xE400);
+	rom.write16(0x00BA);
+	rom.write16(0x1160);
+	rom.write16(0x8080);
+	rom.write16(0x09C0);
+	rom.write16(0x8080);
+	rom.write16(0x3720);
+	rom.write16(0x8080);
+	rom.write16(0x1C14);
+	rom.write16(0x8080);
+	rom.write16(0x1C14);
+	rom.write16(0x8080);
+	rom.write16(0x1C08);
+	rom.seek(0xA94994);
+	rom.write32(0x00000000); 
+	rom.write32(0xAE080014); 
+	rom.write32(0x3484B92C); 
+	rom.write32(0x8E020018);
+	rom.write32(0x240B0000); 
+	rom.write32(0xAC8B0000);
+
 	dir_enter("system");
 	dir_enter("ovl_select");
 	rom.seek(TBL_MAP_SELECT_FILE);
+	
 	rom.inject_dma("ovl_select.zovl",compress, DMA_OVL_SELECT);
 	dir_leave();
 	dir_leave();
