@@ -7,11 +7,11 @@
 /* global variables */
 char *g_tsv;
 int TBL_OBJECT;int TBL_OBJECT_ENTRIES;int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
-int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;
-int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE;
-int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;int TBL_DMA_ENTRIES;
-int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;int VROM_PLAYER;
-int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;
+int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOTABLE_FILE;int TBL_AUDIOTABLE_FILE_SIZE;
+int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;
+int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE; int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;
+int TBL_DMA;int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;
+int VROM_PLAYER; int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;
 int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR;int DMA_OVL_MAP_MARK_DATA;int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;int DMA_OBJECT_FIRST;
 int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;int DMA_SKYBOX_FIRST;int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;int DMA_PRERENDER_LAST;
 int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;int DMA_UNUSED_LAST;int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;int DMA_BLANK_LAST;int ACTID_LINK;
@@ -36,6 +36,8 @@ debugvariables()
 	; TBL_MAP_SELECT				 = 0x00001430  // map select table relative to ovl_select file
 	; TBL_MAP_SELECT_ENTRIES		 = 125		   // number of map select entries	
 	; TBL_AUDIOSAMPLE				 = 0x00BCCDA0  //audiosample table
+	; TBL_AUDIOTABLE_FILE			 = 0x00094870	
+	; TBL_AUDIOTABLE_FILE_SIZE       = 0x00451390
 	; TBL_AUDIOBANK 				 = 0x00BCC270  //audiobanktable
 	; TBL_AUDIOBANK_FILE 			 = 0x00019030  //audiobank file
 	; TBL_SEQUENCEINSTRUMENTSET		 = 0x00BCC4E0  // instrument set table
@@ -526,6 +528,25 @@ dumpinstrumentstructure(struct rom *rom,int pointer, int file, int index)
 			rom.seek_cur(-16);
 		}
 	}
+}
+
+void
+audiotable(struct rom *rom)
+{	
+
+	/*display message in console*/
+	printf("dumping audiotable...\n");
+
+	/*open directory*/
+	dir_enter("audio");
+	dir_enter("audiotable");
+	
+	/*extract tables for both text editors */
+	rom.extract("audiotable.bin",TBL_AUDIOTABLE_FILE, TBL_AUDIOTABLE_FILE+ TBL_AUDIOTABLE_FILE_SIZE);
+	
+	/*exit the directory*/
+	dir_leave();
+	dir_leave();
 }
 
 void
@@ -1620,6 +1641,9 @@ main(int argc, char **argv)
 	{
 		audioseq(rom);
 	}
+	
+	audiotable(rom);
+	
 	route(rom);
 	entrancecutscene(rom);
 	if (!strcmp(tsv_col_row(config, "setting", 7), "true"))
