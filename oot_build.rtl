@@ -455,14 +455,14 @@ mapselect(struct rom *rom)
 	/*then we copy the rest of the file copying some english text over things*/
 	while (pointer < sz)
 	{
-		name = "***(Adult)   ***** (Child)    ***********Night          ******Day            ***CUTSC_00****CUTSC_01****CUTSC_02****CUTSC_03****CUTSC_04****CUTSC_05****CUTSC_06****CUTSC_07****CUTSC_08****CUTSC_09****CUTSC_10";
+		name = "Adult Link   ***Child Link    ***********Night          ******Day            ***Cutscene00**Cutscene01**Cutscene02**Cutscene03**Cutscene04**Cutscene05**Cutscene06**Cutscene07**Cutscene08**Cutscene09**Cutscene10";
 		fprintf(data2, "%c", get8(&data[pointer]));
 
 		pointer++;
 		if (get32(&data[pointer]) == 0x8D313728)
 		{   
 			var = 0;
-			while (var < 0xD0)
+			while (var < 0xD2)
 			{if (get8(&name[var]) == 0x2A)
 			{
 				fprintf(data2,"%c", get8(&data[pointer]));
