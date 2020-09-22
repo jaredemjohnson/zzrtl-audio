@@ -2254,7 +2254,7 @@ main(int argc, char **argv)
 	}
 	else
 	{
-		TBL_MESSAGE_TOOL = 2;
+		TBL_MESSAGE_TOOL = 0;
 	}
 
 	if (!strcmp(tsv_col_row(config, "setting", 1), "true"))
