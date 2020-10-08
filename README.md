@@ -13,7 +13,7 @@ You must use the included **zzrtl-r5b-4.exe**.
 ## These Scripts Include
 - Audiosample editing
 - Audiobank editing
-- Audiosequence Binaries editing
+- Audiosequence Binaries
 - Restriction Flags editing
 - Entrance Cutscenes editing
 - Message Binaries editing (compatible with **Zelda's Letter** and **Ocarina Text Editor**)
