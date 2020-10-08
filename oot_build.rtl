@@ -692,16 +692,13 @@ audiotable(struct rom *rom)
  	int index;
  	int listindex;
  	int messagefix;
-
+ 	int maxsample;
 
  	typelocation = malloc(256);
 
  	/*checks if we should build with cached audio files*/
  	if (!USE_CACHED_AUDIO)
  	{
-	 	/*display message*/
-	 	printf("audiotable... ");
-
 		/*enter directory creating non-vanilla list and enters vanilla folder and makes a vanilla list*/
 		dir_enter("audio");
 		dir_enter("audiotable");
@@ -720,9 +717,17 @@ audiotable(struct rom *rom)
 		/*cycle through all the samples*/
 		index = 0;
 		listindex = 0;
+		if (list.max() > list2.max())
+		{maxsample = list.max();}
+		else
+		{maxsample = list2.max();}
+
 		done = 0;
 		while (list.remaining() || (list2.remaining() && done == 0))
 		{
+			/*display message*/
+	 		printf("\raudiotable %d/%d: ", listindex, maxsample);
+
 			/*checks for non-vanilla samples and enters the sample folder*/
 			if (list2.remaining() && list2.count() && (list.remaining() == 0 || list2.index() <= list.index()) && done == 0)
 			{
@@ -768,13 +773,12 @@ audiotable(struct rom *rom)
 				{
 					fprintf(table, "NULL\tNULL\tNULL\n");
 					listindex++;
-				}
-				
+				}	
 			}
 			listindex ++;
 		}
 
-		//buildfile.save("audiotablealt.bin");
+		/*extracts the buildfile for injecting later in audiodma*/
 		buildfile.extract("audiotable.bin", 0, index);
 		buildfile.free();
 
@@ -819,14 +823,17 @@ dopredictors(struct rom *buildfile, int *predictordata, int *looppredictordata,i
 	sscanf(tsv_col_row(dat3, "precision", 1), "%X", &var);
 	buildfile.write8(var);
 
-	/*sets up to compare predictor to other predictors already in the bank*/
-	pointer = 1;
+	/*loads the predictors*/
 	if (file_exists("predictors.bin"))
 	{dat1 = loadfile("predictors.bin", &sz, 0);}
 	else
-	{dat1 = loadfile("Predictors.bin", &sz, 0);}	
+	{dat1 = loadfile("Predictors.bin", &sz, 0);}
+
+	/*sets up to compare predictor to other predictors already in the bank*/
+	pointer = 1;	
 	test1 = 0;
 	index = 0;
+
 	/*loops through the predictors stored in the bank to if there is a match*/
 	while (index < *predictornumber && test1 == 0)
 	{
@@ -848,20 +855,26 @@ dopredictors(struct rom *buildfile, int *predictordata, int *looppredictordata,i
 	/*checks if there are looppredictors*/
 	if (file_exists("looppredictors.bin") || file_exists("LoopPredictors.bin"))
 	{
-		/*sets up the test for if there are identical looppredictors*/
-		pointer = 1;
+		/*loads the loop predictors file*/
 		if (file_exists("looppredictors.bin"))
 		{dat2 = loadfile("looppredictors.bin", &sz2, 0);}
 		else
 		{dat2 = loadfile("LoopPredictors.bin", &sz2, 0);}
+
+		/*sets up the test for if there are identical looppredictors*/
+		pointer = 1;
 		test3 = 0;
 		index =0;
+
+		/*check if the data is all 0s like n64soundtool will export*/
 		while (test3 ==0 && index < sz2)
 		{
 			if (get8(&dat2[index]) != 0x00)
 			{test3 = 1;}
 			index++;
 		}
+
+		/*if it's not 0s it compares to other looppredictors*/
 		if (test3 == 1)
 		{
 			test2 = 0;
@@ -903,9 +916,11 @@ dopredictors(struct rom *buildfile, int *predictordata, int *looppredictordata,i
 			offset2 = offset2 + (sz+15)/16*16;
 		}
 	}
+
 	/*writes the offsets*/
 	buildfile.write32(offset2);
 	buildfile.write32(offset1);
+
 	/*if it's a new predictor we write the predictor data and adds it to the bank's list of predictors for comparing*/
 	if (test1 == 0)
 	{
@@ -919,46 +934,27 @@ dopredictors(struct rom *buildfile, int *predictordata, int *looppredictordata,i
 			sz++;
 		}
 	}
+
+	/*writes the loop details*/
+	sscanf(tsv_col_row(dat3, "loopstart", 1), "%X", &var);
+	buildfile.write32(var);
+	sscanf(tsv_col_row(dat3, "loopend  ", 1), "%X", &var);
+	buildfile.write32(var);
+	sscanf(tsv_col_row(dat3, "loopcount", 1), "%X", &var);
+	buildfile.write32(var);
+	sscanf(tsv_col_row(dat3, "looptail ", 1), "%X", &var);
+	buildfile.write32(var);
+
 	/*checks if there are looppredictors*/
-	if (file_exists("looppredictors.bin") || file_exists("LoopPredictors.bin"))
+	if (file_exists("looppredictors.bin") || file_exists("LoopPredictors.bin") && (test2 == 0 && test3 != 0))
 	{
-		if (test2 == 0 && test3 != 0)
-		{
-			sscanf(tsv_col_row(dat3, "loopstart", 1), "%X", &var);
-			buildfile.write32(var);
-			sscanf(tsv_col_row(dat3, "loopend  ", 1), "%X", &var);
-			buildfile.write32(var);
-			sscanf(tsv_col_row(dat3, "loopcount", 1), "%X", &var);
-			buildfile.write32(var);
-			sscanf(tsv_col_row(dat3, "looptail ", 1), "%X", &var);
-			buildfile.write32(var);
-			sprintf(name, "%X", buildfile.tell()-bankpointer);
-			*looppredictordata = new_string(*looppredictordata, name, "\t","what","\n", 0);	
-			*looppredictornumber = *looppredictornumber + 1;
-			buildfile.write(dat2, sz2);
-		//	var2 = var2 + sz2 + 16;
-		}
+		sprintf(name, "%X", buildfile.tell()-bankpointer);
+		*looppredictordata = new_string(*looppredictordata, name, "\t","what","\n", 0);	
+		*looppredictornumber = *looppredictornumber + 1;
+		buildfile.write(dat2, sz2);
 	}
-	else
-	{
-
-		sscanf(tsv_col_row(dat3, "loopstart", 1), "%X", &var);
-		buildfile.write32(var);
-		sscanf(tsv_col_row(dat3, "loopend  ", 1), "%X", &var);
-		buildfile.write32(var);
-		sscanf(tsv_col_row(dat3, "loopcount", 1), "%X", &var);
-		buildfile.write32(var);
-		sscanf(tsv_col_row(dat3, "looptail ", 1), "%X", &var);
-		buildfile.write32(var);
-
-		//var2 = var2 + 16;
-	}
-	
-	//
-	//printf("\n%d", var2);
 	free(dat1);
 	free(dat3);
-	
 }
 
 void
@@ -970,7 +966,8 @@ doenvelope(struct rom *buildfile, int *envelopecheck,int *envelopedata, int *env
 	int name;
 
 	name = malloc(256);
-	//printf("\n%s", *envelopecheck);
+
+	/*loops through all the previous envelopes to see if they are different*/
 	test = 0;
 	index = 0;
 	while (index < *envelopenumber && test == 0)
@@ -990,14 +987,15 @@ doenvelope(struct rom *buildfile, int *envelopecheck,int *envelopedata, int *env
 		{test = 0;}
 		index++;
 	}
+	/*if one is the same it writes the offset for that envelope, otherwise it writes a new envelope*/
 	if (test == 1)
 	{
 		sscanf(tsv_col_row(*envelopedata,"offset",index), "%d", &var);
 		buildfile.write32(var);
-		//*instrumentpointer = *instrumentpointer - 16;
 	}
 	else
 	{
+		/*adds the envelope to the list of used envelopes*/
 		*envelopenumber = *envelopenumber + 1;
 		buildfile.write32(buildfile.tell() - bankpointer + 28);
 		buildfile.seek_cur(24);
@@ -1010,6 +1008,7 @@ doenvelope(struct rom *buildfile, int *envelopecheck,int *envelopedata, int *env
 		*envelopedata = new_string(*envelopedata, tsv_col_row(*envelopecheck,"dcy2rt",1),"\t",0);	
 		*envelopedata = new_string(*envelopedata, tsv_col_row(*envelopecheck,"dcy2lvl",1),"\n",0);	
 
+		/*writes the envelepe*/
 		sscanf(tsv_col_row(*envelopecheck,"atkrate",1), "%d", &var);
 		buildfile.write16(var);
 		sscanf(tsv_col_row(*envelopecheck,"atklvl",1), "%d", &var);
@@ -1133,13 +1132,12 @@ audiobank(struct rom *rom)
 	dir_enter("banks");
 	list3 = list3.new(0);
 	dir_enter(VANILLA);
-//	rom.extract("vanilla-audiobank.bin", TBL_AUDIOBANK_FILE, TBL_AUDIOBANK_FILE + TBL_AUDIOBANK_SIZE);
 	rom.extract("audiobank.bin", 0x0, 0x4000000);
 	buildfile = buildfile.new("audiobank.bin");
 	list = list.new(0);
 	maxbank = list.max();
 	if (list3.max() > maxbank)
-		{maxbank = list3.max();}
+	{maxbank = list3.max();}
 	done = 0;
 	index = 0;
 	/*cycle through all the banks*/
@@ -1776,7 +1774,7 @@ audioseq(struct rom *rom)
 		buildfile.write(data, sz);
 
 		/*advance sequence pointer and free the data*/
-		sequencepointer = (sequencepointer + sz-15)/16*16 + 16;
+		sequencepointer = (sequencepointer + sz-1)/16*16 + 16;
 		free(data);
 
 		if (dir_exists(VANILLA))
