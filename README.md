@@ -3,7 +3,7 @@
 
 These **.rtl** scripts are expansions to the sample scripts at: https://github.com/z64me/zzrtl
 
-You must use **zzrtl-r5b-4.exe** to edit audio.
+You must use the included **zzrtl-r5b-4.exe**.
 
 **oot-debug.z64** and **oot-1.0.z64** are not included!
 
