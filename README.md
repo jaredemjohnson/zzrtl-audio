@@ -8,7 +8,7 @@ You must use **zzrtl-r5b-4.exe** to edit audio.
 **oot-debug.z64** and **oot-1.0.z64** are not included!
 
 ## Credit and Thanks
-**z64me** for zzrtl and original scripts, **Zel** created scripts for expandable audio and helped a ton, **Rankaisija** for testing and vanilla folder idea, **ZeldaBoy14** and **Aria Hiroshi 64** for testing. **Dragorn421** for getting me started in zzrtl and working in C,**CloudMax** and **Gamma** for , and **Sauraen** for generous audio guidance.
+**z64me** for zzrtl and original scripts, **Zel** created scripts for expandable audio and helped a ton, **Rankaisija** for testing and vanilla folder idea, **ZeldaBoy14** and **Aria Hiroshi 64** for testing, **Dragorn421** for getting me started in zzrtl and working in C,**CloudMax** and **Gamma** for text help, and **Sauraen** for audio guidance.
 
 ## These Scripts Include
 - Audiosample editing
