@@ -602,7 +602,7 @@ system_overlay(struct rom *rom)
 		//name = substring(filename, i);
 
 		/* inject file */
-		if (!file_exists("*.zovl"))
+		if (!file_exists(new_string(substring(filename, i),".zovl",0)))
 		{dir_enter(VANILLA);}
 			ovl = rom.inject("*.zovl", compress);
 
@@ -610,6 +610,8 @@ system_overlay(struct rom *rom)
 		vram_sz = ovl_vram_sz(ovl, rom.file_sz());
 		
 		/* parse configuration file */
+		if (!file_exists("conf.txt"))
+		{dir_enter(VANILLA);}
 		conf = conf.new("conf.txt", "list");
 		while (*arr)
 		{
@@ -2129,6 +2131,7 @@ message(struct rom *rom)
 	/*seek and write the table into the rom*/
 	rom.seek(TBL_MESSAGE);
 	rom.write(data, sz);
+	free(data);
 
 	/*returns from vanilla*/
 	if (!dir_exists(VANILLA))
@@ -2137,7 +2140,6 @@ message(struct rom *rom)
 	/*check if data exists outsie of vanilla*/
 	if (!file_exists(dataname))
 	{dir_enter(VANILLA);}
-	free(data);
 
 	/*load data from file*/
 	data = loadfile(dataname,&sz, false);
@@ -2145,11 +2147,7 @@ message(struct rom *rom)
 	/*seek and write the data into the rom*/
 	rom.seek(TBL_MESSAGE_DATA);
 	rom.write(data,sz);
-	free(data);
 
-	/*returns from vanilla*/
-	if (!dir_exists(VANILLA))
-	{dir_leave();}
 
 	/*this updates the typface offsets in the code file, the offset is different for zelda's letter and ocarina text editor*/
 	if (TBL_MESSAGE_TOOL == 0 && get32(&data[0]) == 0x30313233)
@@ -2168,6 +2166,11 @@ message(struct rom *rom)
 	rom.seek(VROM_CODE + 0x520F0);
 	rom.write16(0x35EF);
 	rom.write16(get16(&typelocation[1]));
+	
+	free(data);
+	/*returns from vanilla*/
+	if (!dir_exists(VANILLA))
+	{dir_leave();}
 
 	/*if there's multiple languages from zelda's letter we write them in*/
 	if (TBL_MESSAGE_TOOL == 1)
