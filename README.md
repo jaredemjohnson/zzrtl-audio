@@ -48,7 +48,7 @@ Inside the **audio** and **audiotable** folder is a list of **sample folders**. 
 
 ## Custom Audio Sequences
 You can import a midi file into **seq64** and export raw. That data can be placed inside the **sequences** folder, and must be appropriately indexed. eg. "6 - mysequence.bin".
-To change what bank sequence uses, make a copy of **sequencetable.tsv** outside the **vanilla** folder 
+To change what bank sequence uses, make a copy of **sequencetable.tsv** outside the **vanilla** folder and edit the bank number.
 
 ## Message Editing
 Overwrite the message binary files in the **message** folder and ouside the **vanilla** folder.
