@@ -1038,7 +1038,7 @@ dosample(struct rom *buildfile,*var2, sample, sampletable, *predictordata, *loop
 
 	/*finds length in table and writes it, throwing an error if there is no sample*/
 	var = tsv_col_row(sampletable, "length", var3+1);	
-	if (!strcmp(var, "NULL"))
+	if (!tsv_col_row(sampletable, "length", var3+1) || !strcmp(var, "NULL"))
 	{die("sample %s referenced in this bank is missing from audiotable folder!", sample);}
 	sscanf(var, "%X", &var);
 	buildfile.write32(var);
@@ -1055,9 +1055,7 @@ dosample(struct rom *buildfile,*var2, sample, sampletable, *predictordata, *loop
 	{dir_leave();}
 	dir_enter("audiotable");		
 	if (!dir_exists(tsv_col_row(sampletable, "name", var3+1)))
-	{
-	dir_enter(VANILLA);
-	}
+	{dir_enter(VANILLA);}
 	dir_enter(tsv_col_row(sampletable, "name", var3+1));
 
 	/*do the predictors, using pointercheck to update the reading offset*/
@@ -1132,14 +1130,19 @@ audiobank(struct rom *rom)
 	dir_enter("banks");
 	list3 = list3.new(0);
 	dir_enter(VANILLA);
+	list = list.new(0);
+
+	/*creates a huge file that will be used for audiobank injection later*/
 	rom.extract("audiobank.bin", 0x0, 0x4000000);
 	buildfile = buildfile.new("audiobank.bin");
-	list = list.new(0);
+	
+	/*set up for cycling through all the banks*/
 	maxbank = list.max();
 	if (list3.max() > maxbank)
 	{maxbank = list3.max();}
 	done = 0;
 	index = 0;
+
 	/*cycle through all the banks*/
 	while (index <= maxbank)   
 	{
@@ -1147,8 +1150,7 @@ audiobank(struct rom *rom)
 		if (USE_CACHED_AUDIO == 0)
 		{ printf("\raudiobank %d/%d: ", index, maxbank);}
 
-		/*enter the bank folder and open the list of instrument folders*/
-		/*compares custom index to vanilla*/
+		/*enter the bank folder and open the list of instrument folders and compares custom index to vanilla*/
 		invanilla = 1;
 		if (list3.count() && list3.index() <= index && done == 0)
 		{
@@ -1157,14 +1159,13 @@ audiobank(struct rom *rom)
 			dir_enter(list3.name());				
 		}
 		else
-		{
-			dir_enter(list.name());			
-		}
-			list2 = list2.new(".tsv");
-
+		{dir_enter(list.name());}
+		
 		/*check if using cached audio*/
 		if (USE_CACHED_AUDIO == 0)
 		{ 
+			list2 = list2.new(".tsv");
+
 			/*set the instrument pointer to bottom of instrument array*/
 			instrumentpointer = (8 + (list2.max()+1) * 4)/16*16 + 16;
 			instrumentpointer = instrumentpointer + 16;
@@ -1279,6 +1280,7 @@ audiobank(struct rom *rom)
 
 				/*seek to the second sample in instrument index*/
 				buildfile.seek(bankpointer + instrumentpointer + 16);
+
 				/*check if second sample exists*/
 				if (strcmp(tsv_col_row(table,"dcy2rt",2), "NULL"))
 				{
@@ -1330,6 +1332,7 @@ audiobank(struct rom *rom)
 
 				/*seek to the third sample in instrument index*/
 				buildfile.seek(bankpointer + instrumentpointer + 24);
+
 				/*check if sample 3 exists*/
 				if (strcmp(tsv_col_row(table,"split1",3), "NULL"))
 				{
@@ -1561,9 +1564,7 @@ audiobank(struct rom *rom)
 					/*checks if it's sample is original*/			
 					var3 = 0;
 					while (var3 < samplenumber && strcmp(tsv_col_row(table,"sample", sfxnumber + 1),tsv_col_row(structdata, "sample", var3+1)))
-					{
-						var3++;
-					}
+					{var3++;}
 
 					/*if it's sample is original it writes the soundeffect index (honestly i forget why we skip indexes)*/
 					if (var3 != samplenumber)
@@ -1601,9 +1602,7 @@ audiobank(struct rom *rom)
 				table = loadfile("_soundeffects.tsv", 0,0);
 				sfxnumber = 0;
 				while (tsv_col_row(table,"sample", sfxnumber + 2))
-				{
-					sfxnumber++;
-				}
+				{sfxnumber++;}
 			}
 		}
 	
@@ -1687,7 +1686,6 @@ audiobank(struct rom *rom)
 	{dir_enter(VANILLA);}
 	buildfile.extract("audiobank.bin",0, bankpointer);
 	buildfile.free();
-
 	if (!dir_exists(VANILLA))
 	{dir_leave();}
 	dir_leave();
@@ -1718,11 +1716,7 @@ audioseq(struct rom *rom)
 	int sz;
 	int name;
 	int name2;
-
-	/*message console*/
-	if (USE_CACHED_AUDIO == 0)
-	{printf("audioseq... ");}
-
+	
 	/*allocate memory for name and set sequencpointer for later*/
 	name = malloc(256);
 	name2 = malloc(256);
@@ -1734,6 +1728,7 @@ audioseq(struct rom *rom)
 	list2 = list2.new(".bin");
 	dir_enter(VANILLA);
 	
+	/*extracts a huge file that will be used to store audioseq data for later injection*/
 	rom.extract("_audioseq.bin", 0x0, 0x4000000);
 	buildfile = buildfile.new("_audioseq.bin");
 
@@ -1744,6 +1739,10 @@ audioseq(struct rom *rom)
 	/*write each file to the rom*/
 	while (list.remaining())
 	{
+		/*message console*/
+		if (USE_CACHED_AUDIO == 0)
+		{printf("\raudioseq %d/%d: ", list.max()-list.remaining()+1, list.max());}
+
 		/*compares custom index to vanilla*/
 		dir_leave();
 		if (list2.count() && list2.index() <= list.index() && done == 0)
@@ -1788,8 +1787,6 @@ audioseq(struct rom *rom)
 	rom.write32(40);//write start
 	rom.write32(0); //write length
 
-	//free(data);
-
 	/*write sequence number at start of sequence table*/
 	rom.seek(TBL_AUDIOSEQ);
 	rom.write16(index);
@@ -1829,9 +1826,8 @@ audioseq(struct rom *rom)
 	list.free();
 	list2.free();
 	if (USE_CACHED_AUDIO == 0)
-		{ printf("success!\n");}
+	{ printf("success!\n");}
 }
-
 
 void
 route(struct rom *rom)
@@ -1850,15 +1846,15 @@ route(struct rom *rom)
 	/*message console*/
 	printf("route... ");
 
-	/*enter folder*/
+	/*enter folder and check for custom route.tsv*/
 	dir_enter("scene");
-	
 	if (!file_exists("route.tsv"))
-		{dir_enter(VANILLA);}
+	{dir_enter(VANILLA);}
+
 	/* load the table */
 	table = loadfile("route.tsv", 0, false);
 	if (!dir_exists(VANILLA))
-		{dir_leave();}
+	{dir_leave();}
 
 	index_last = -1;
 	index = 0;
@@ -2010,12 +2006,13 @@ restrictionflag(struct rom *rom)
 	dir_enter("scene");
 
 	/*load the table*/
-		if (!file_exists("restrictionflag.tsv"))
-		{dir_enter(VANILLA);}
+	if (!file_exists("restrictionflag.tsv"))
+	{dir_enter(VANILLA);}
+
 	/* load the table */
 	table = loadfile("restrictionflag.tsv", 0, false);
 	if (!dir_exists(VANILLA))
-		{dir_leave();}
+	{dir_leave();}
 	
 	index = 0;
 	index_last = -1;
@@ -2167,6 +2164,7 @@ message(struct rom *rom)
 	rom.write16(get16(&typelocation[1]));
 	
 	free(data);
+
 	/*returns from vanilla*/
 	if (!dir_exists(VANILLA))
 	{dir_leave();}
@@ -2193,6 +2191,7 @@ message(struct rom *rom)
 			rom.write(data,sz);
 			free(data);
 		}
+		/*leave the vanilla folder if we have to*/
 		if (!dir_exists(VANILLA))
 		{dir_leave();}
 	}
@@ -2204,14 +2203,7 @@ message(struct rom *rom)
 /* process a single header, updating room command's contents */
 /* returns non-zero if header or provided offset (ofs) is invalid */
 int
-scene_header_rooms(
-	struct rom *rom
-	, char *room_ptrs
-	, int room_ct
-	, int start
-	, int sz
-	, int ofs
-)
+scene_header_rooms(struct rom *rom, char *room_ptrs, int room_ct, int start, int sz, int ofs)
 {
 	int rseg;
 	char *b;
@@ -2317,6 +2309,7 @@ scene(struct rom *rom)
 	{
 		/* initialize variables */
 		index = list.index();
+
 		/*compares custom index to vanilla*/
 		dir_leave();
 		if (list2.count() && list2.index() <= index && done == 0)
@@ -2522,7 +2515,7 @@ object(struct rom *rom)
 	list = list.new(0);
 	//max_obj = list.max();
 	if (!list.count())
-		die("object folder is empty");
+	{die("object folder is empty");}
 	
 	index_last = -1;
 	done = 0;
@@ -2530,7 +2523,6 @@ object(struct rom *rom)
 	/* repeats for every item in the list */
 	while (list.remaining())
 	{
-
 
 		/* initialize variables */
 		index = list.index();
@@ -2542,13 +2534,9 @@ object(struct rom *rom)
 		{
 			name = list2.name();
 			if (list2.index() < list2.max())
-			{
-			list2.next();
-			}
+			{list2.next();}
 			else
-				{
-					done = 1;
-				}
+			{done = 1;}
 		}
 		else
 		{
@@ -2561,7 +2549,7 @@ object(struct rom *rom)
 		
 		/* ensure we don't exceed table limit */
 		if (index >= TBL_OBJECT_ENTRIES)
-			die("object table limit exceeded");
+		{die("object table limit exceeded");}
 		
 		/* enter directory of list entry */
 		dir_enter(name);
@@ -2637,18 +2625,13 @@ actor(struct rom *rom)
 
 		/*compares custom index to vanilla*/
 		dir_leave();
-
 		if (list2.count() && list2.index() <= index && done == 0)
 		{
 			name = list2.name();
 			if (list2.index() < list2.max())
-			{
-			list2.next();
-			}
+			{list2.next();}
 			else
-				{
-					done = 1;
-				}
+			{done = 1;}
 		}
 		else
 		{
@@ -2717,7 +2700,7 @@ actor(struct rom *rom)
 		vram = conf.get_int("vram");
 		atype = conf.get_int("allocation");
 		if (conf.exists("ivar"))
-			ivar = conf.get_int("ivar");   // ivar override
+		{ivar = conf.get_int("ivar");}  // ivar override
 		else
 			ivar = vram + ivar; // make relative to vram
 		conf.free();
@@ -2745,9 +2728,7 @@ actor(struct rom *rom)
 		/* leave directory */
 		dir_leave();
 		if (dir_exists(VANILLA))
-		{
-			dir_enter(VANILLA);
-		}
+		{dir_enter(VANILLA);}
 		/* go to next entry in list */
 		list.next();
 	}
@@ -2802,13 +2783,9 @@ particle(struct rom *rom)
 		{
 			name = list2.name();
 			if (list2.index() < list2.max())
-			{
-			list2.next();
-			}
+			{list2.next();}
 			else
-				{
-					done = 1;
-				}
+			{done = 1;}
 		}
 		else
 		{
@@ -2890,9 +2867,7 @@ particle(struct rom *rom)
 		/* leave directory */
 		dir_leave();
 		if (dir_exists(VANILLA))
-		{
-			dir_enter(VANILLA);
-		}
+		{dir_enter(VANILLA);}
 		
 		/* go to next entry in list */
 		list.next();
@@ -2906,6 +2881,7 @@ particle(struct rom *rom)
 	printf("success!\n");
 }
 
+/*audio pointer script by Zel*/
 void 
 set_audio_ptr(struct rom *rom, int type) {
     int dmaIndex;
@@ -2928,6 +2904,7 @@ set_audio_ptr(struct rom *rom, int type) {
     }
 }
 
+/*audio inject script by Zel*/
 void audiodma(struct rom *rom)
 {
     /* audio files are aligned to 0x10 in retail */
@@ -2961,6 +2938,7 @@ void audiodma(struct rom *rom)
 
 void extrasystem(struct rom *rom)
 {
+	/*injects the code.bin file*/
 	dir_enter("system");
 	dir_enter("code");
 	if (!file_exists("code.bin"))
@@ -2975,9 +2953,8 @@ void extrasystem(struct rom *rom)
 		{dir_leave();}
 	dir_leave();
 	dir_leave();
-	//*/
 
-
+	/*injects the nintendo_rogo_static*/
 	dir_enter("system");
 	dir_enter("ovl_title");
 	if (!file_exists("nintendo_rogo_static.zobj"))
@@ -2992,8 +2969,6 @@ void extrasystem(struct rom *rom)
 		{dir_leave();}
 	dir_leave();
 	dir_leave();
-
-
 }
 
 int
@@ -3010,16 +2985,19 @@ main(int argc, char **argv)
 	/*load the config file*/
 	config = loadfile("config.tsv",0,0);
 
+	/*check which mesage tool we are using*/
 	if (!strcmp(tsv_col_row(config, "setting", 3), "true"))
 	{TBL_MESSAGE_TOOL = 1;}
 	else
 	{TBL_MESSAGE_TOOL = 0;}
 
+	/*check if we are going to use cached audio*/
 	if (!strcmp(tsv_col_row(config, "setting", 6), "true"))
 	{USE_CACHED_AUDIO = 1;}
 	else
 	{USE_CACHED_AUDIO = 0;}
 
+	/*checks which rom we are using, sets the variables and vanilla folder name and project name*/
 	if (!strcmp(tsv_col_row(config, "setting", 1), "true"))
 	{
 		printf("BUILDING OOT-DEBUG...\n");
@@ -3037,8 +3015,6 @@ main(int argc, char **argv)
 	}
 
 	/* load .zzrpl */
-
-	
 	name = rpl.get_str("baserom");
 	
 	/* set compression codec */
@@ -3046,8 +3022,6 @@ main(int argc, char **argv)
 	
 	/* load base rom */
 	rom = rom.new(name);
-
-
 	
 	/* compressed roms are < 64 mb */
 	if (rom.size() < 0x04000000)
@@ -3060,7 +3034,7 @@ main(int argc, char **argv)
 	rom.dma_compress(DMA_ITEM_FIELD, DMA_ITEM_LOCALIZED, true);
 	rom.dma_compress(DMA_CODE      , TBL_DMA_ENTRIES   , true);
 	rom.dma_compress_one(N_ROGO_DMA , true);
-	
+
 	/* disable compression on skybox palettes (including pre-renders) */
 	i = DMA_SKYBOX_FIRST + 1;
 	while (i <= DMA_PRERENDER_LAST)
@@ -3071,7 +3045,7 @@ main(int argc, char **argv)
 	
 	/* mark files (and dma entries) for overwriting */
 	if (!strcmp(tsv_col_row(config, "setting",5), "true"))
-	{rom.dma_queue(3, 5);}
+	{rom.dma_queue(3, 5);}//audio files
 	rom.dma_queue_one(DMA_OVL_TITLE);
 	rom.dma_queue(DMA_OVL_OPENING, DMA_OVL_MAP_MARK_DATA); /* sys ovl */
 	rom.dma_queue(DMA_ACTOR_FIRST , DMA_ACTOR_LAST ); /* actors, fx */
@@ -3088,12 +3062,13 @@ main(int argc, char **argv)
 	/* finished initializing dma settings */
 	rom.dma_ready();
 
+	/*injects system files including code, which must come before anything else*/
 	extrasystem(rom);
 	
-	
+	/*checks if we are building audio*/
 	if (!strcmp(tsv_col_row(config, "setting",5), "true"))
 	{
-						/* Retail NTSC-1.0 */
+		/*asm hack by Zel that makes audio moveable.*/
 		if (strcmp(tsv_col_row(config, "setting", 1), "true"))
 		{
 			rom.seek(0x00B2E82C); 
@@ -3117,25 +3092,17 @@ main(int argc, char **argv)
 			rom.seek(0x00B5A4D4);
 			rom.write32(0x3C058001);
 			rom.write32(0x8CA56DF8); // Audiotable
-		}//*/
-
+		}
 		audiotable(rom);
 		audiobank(rom);	
 		audioseq(rom);
 		audiodma(rom);
 	}
 
-
 	/*loadsnames*/
 	g_tsv = loadfile("oot_names.tsv", 0, true/*file is optional*/);
-
-
 	
 	/* construct rom */
-	if (!strcmp(tsv_col_row(config, "setting",4), "true"))
-	{
-		mapselect(rom);
-	}
 	systemdir(rom);
 	actor(rom);
 	particle(rom);
@@ -3145,6 +3112,8 @@ main(int argc, char **argv)
 	entrancecutscene(rom);
 	restrictionflag(rom);
 	message(rom);
+	if (!strcmp(tsv_col_row(config, "setting",4), "true"))
+	{mapselect(rom);}
 
 
 	/*patches in ram hack and bug fixes for debug*/
@@ -3230,8 +3199,7 @@ main(int argc, char **argv)
 	{dir_leave();}
 	dir_leave();
 	dir_leave();
-	}//*/
-
+	}
 
 	/* write built rom */
 	rom.save("build.z64");
