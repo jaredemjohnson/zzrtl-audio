@@ -28,11 +28,11 @@ You must use the included **zzrtl-r5b-4.exe**.
 5. Launch your newly modified ROM with either **build.z64** or **build-yaz0.z64**
 
 ### A Few Notes:
-You must use a rom called **oot-debug.z64** or **oot-1.0.z64** to use these scripts
-ZZRTL uses indexed folders and files like "4 - customcontent.bin".
-All .tsv files are editable inside of notepad and *should* look ok.
-Check out **config.tsv** in the root folder customization options.
-ZZRTL skips files and folders starting with  "_" or "." which is useful for temporarily removing content.
+- You must use a rom called **oot-debug.z64** or **oot-1.0.z64** to use these scripts
+- ZZRTL uses indexed folders and files like "4 - customcontent.bin".
+- All .tsv files are editable inside of notepad and *should* look ok.
+- Check out **config.tsv** in the root folder customization options.
+- ZZRTL skips files and folders starting with  "_" or "." which is useful for temporarily removing content.
 
 ## About The Vanilla Folder System
 Assets dumped from ocarina of time are stored inside of **vanilla** folders named "**_vanilla-debug**" or "**_vanilla-1.0**". When you add custom content to the game you should place it **outside** of the **vanilla** folder. When zzrtl rebuilds the game, it checks for custom content first before fetching the **vanilla** content from the **vanilla** folder. Even **tables** such as route.tsv can be kept outside of the **vanilla** folders. You can delete assets from the **vanilla** folders to free up space if needed. You can also dump *oot
