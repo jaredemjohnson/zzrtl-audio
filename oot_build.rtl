@@ -2,10 +2,10 @@
  * <z64.me> zzrtl script for extracting assets from OoT              * 
  * audiobank(), audioseq(), audiotable(), restrictionflag(),         *
  * message(), entrancecutscene(), and mapselect() by Jared Johnson   *
- * audio-file asm hack by zel   									 *
+ * audio-file asm hack by Zel   									 *
  *********************************************************************/
 /*USE THE CONFIG.TSV FILE TO SELECT YOUR ROM*/
-/* global variables */
+/* global variables are initialized before they are set based on each rom*/
 char *g_tsv;
 int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE; int DMA_RAM; int AUDIOBANK_PTR; int AUDIOSEQ_PTR; int AUDIOTABLE_PTR;int VANILLA;int USE_CACHED_AUDIO; int TBL_OBJECT;int TBL_OBJECT_ENTRIES;
 int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
@@ -22,56 +22,56 @@ int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PLAYER_ACTOR_DEST_HI;int OFS_OVL_PL
 int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;int OFS_OVL_KALEIDO_SCOPE_INIT_HI;
 int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
 	
-	/* OoT debug */
+/* OoT debug variables*/
 void
 debugvariables()
 {
 	TBL_OBJECT              		 = 0x00B9E6C8  // object table
-	; N_ROGO 						 = 0x01AA1000 //0938			
-	; N_ROGO_SIZE					 = 0x00002DC0	
-	; N_ROGO_DMA					 = 938
-	;TBL_OBJECT_ENTRIES 		     = 402         // object count
-	;TBL_ACTOR        		         = 0x00B8D440  // actor overlay table
-	;TBL_ACTOR_ENTRIES    		     = 471         // actor overlay count
-	;TBL_PARTICLE          		 	 = 0x00B8CB50  // particle overlay table
-	;TBL_PARTICLE_ENTRIES 		     = 37          // particle overlay count
-	;TBL_SCENE            		     = 0x00BA0BB0  // scene table
-	;TBL_SCENE_ENTRIES    		     = 110         // scene count
-	;TBL_ROUTE             		 	 = 0x00B9F360  // route table
-	;TBL_ROUTE_ENTRIES     		 	 = 1556        // route count
-	;TBL_MAP_SELECT_FILE			 = 0x00003060  //map select file
-	;TBL_MAP_SELECT				 	 = 0x00001430  // map select table relative to ovl_select file
-	;TBL_MAP_SELECT_ENTRIES		 	 = 125		   // number of map select entries	
-	;TBL_AUDIOBANK 				 	 = 0x00BCC270  //audiobanktable
-	;TBL_AUDIOBANK_FILE 			 = 0x00019030  //audiobank file
-	;TBL_AUDIOBANK_SIZE				 = 0x0002BDC0  //audiobank file-size
-	;TBL_SEQUENCEINSTRUMENTSET		 = 0x00BCC4E0  // instrument set table
-	;TBL_SEQUENCE_FILE 		     	 = 0x00044DF0  // sequence file offset
-	;TBL_AUDIOSEQ		 		     = 0x00BCC6A0  // sequence pointer table
-	;TBL_AUDIOTABLE_FILE			 = 0x00094870  //pointer to the audiotable
-	;TBL_ENTRANCECUTSCENE 		     = 0x00B95394  // entrancecutscene table
-	;TBL_ENTRANCECUTSCENE_ENTRIES    = 34          // entrancecutscene count	
-	;TBL_MESSAGE 					 = 0x00BC24C0  // offset for message table
-	;TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
-	;TBL_MESSAGE_DATA			     = 0x008C6000  //offset for english text
-	;TBL_RESTRICTIONFLAG   		 	 = 0x00B9CA10  //offset for restricitonflag table
-	;TBL_RESTRICTIONFLAG_ENTRIES     = 73	       //restrictionflag count
-	;TBL_DMA               			 = 0x00012F70  // dma table
-	;TBL_DMA_ENTRIES       		  	 = 1548        // dma entries
-	;TBL_OVL_GAMESTATE     			 = 0x00B969D0  // ovl_title
-	;TBL_OVL_PLAYER        			 = 0x00BA4340  // ovl_kaleido_scope
-	;TBL_OVL_MAPMARK      		     = 0x00B97298  // ovl_map_mark_data
+	; N_ROGO 						 = 0x01AA1000  // N_Rogo location			
+	; N_ROGO_SIZE					 = 0x00002DC0  // size of N_Rogo file
+	; N_ROGO_DMA					 = 938		   // n rogo dma index
+	; TBL_OBJECT_ENTRIES 		     = 402         // object count
+	; TBL_ACTOR        		         = 0x00B8D440  // actor overlay table
+	; TBL_ACTOR_ENTRIES    		     = 471         // actor overlay count
+	; TBL_PARTICLE         		 	 = 0x00B8CB50  // particle overlay table
+	; TBL_PARTICLE_ENTRIES 		     = 37          // particle overlay count
+	; TBL_SCENE            		     = 0x00BA0BB0  // scene table
+	; TBL_SCENE_ENTRIES    		     = 110         // scene count
+	; TBL_ROUTE            		 	 = 0x00B9F360  // route table
+	; TBL_ROUTE_ENTRIES    		 	 = 1556        // route count
+	; TBL_MAP_SELECT_FILE			 = 0x00003060  // map select file
+	; TBL_MAP_SELECT			 	 = 0x00001430  // map select table relative to ovl_select file
+	; TBL_MAP_SELECT_ENTRIES		 = 125		   // number of map select entries	
+	; TBL_AUDIOBANK 				 = 0x00BCC270  // audiobanktable
+	; TBL_AUDIOBANK_FILE 			 = 0x00019030  // audiobank file
+	; TBL_AUDIOBANK_SIZE			 = 0x0002BDC0  // audiobank file-size
+	; TBL_SEQUENCEINSTRUMENTSET		 = 0x00BCC4E0  // instrument set table
+	; TBL_SEQUENCE_FILE 		     = 0x00044DF0  // sequence file offset
+	; TBL_AUDIOSEQ		 		     = 0x00BCC6A0  // sequence pointer table
+	; TBL_AUDIOTABLE_FILE			 = 0x00094870  // pointer to the audiotable
+	; TBL_ENTRANCECUTSCENE 		     = 0x00B95394  // entrancecutscene table
+	; TBL_ENTRANCECUTSCENE_ENTRIES   = 34          // entrancecutscene count	
+	; TBL_MESSAGE 					 = 0x00BC24C0  // offset for message table
+	; TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
+	; TBL_MESSAGE_DATA			     = 0x008C6000  // offset for english text
+	; TBL_RESTRICTIONFLAG   		 = 0x00B9CA10  // offset for restricitonflag table
+	; TBL_RESTRICTIONFLAG_ENTRIES    = 73	       // restrictionflag count
+	; TBL_DMA               		 = 0x00012F70  // dma table
+	; TBL_DMA_ENTRIES       		 = 1548        // dma entries
+	; TBL_OVL_GAMESTATE     		 = 0x00B969D0  // ovl_title
+	; TBL_OVL_PLAYER        		 = 0x00BA4340  // ovl_kaleido_scope
+	; TBL_OVL_MAPMARK      		     = 0x00B97298  // ovl_map_mark_data
 	
-	;TITLECARD_W          		     = 144         // title card dimensions
-	;TITLECARD_H          		     = 24          // use 72 to include de;fr
-	;VRAM_CODE              		 = 0x8001CE60  // vram start of code
-	;VROM_CODE            		     = 0x00A94000  // vrom start of code
-	;VROM_PLAYER          		     = 0x00C010B0  // vrom start of player_actor
+	; TITLECARD_W          		     = 144         // title card dimensions
+	; TITLECARD_H          		     = 24          // use 72 to include de; fr
+	; VRAM_CODE              		 = 0x8001CE60  // vram start of code
+	; VROM_CODE            		     = 0x00A94000  // vrom start of code
+	; VROM_PLAYER          		     = 0x00C010B0  // vrom start of player_actor
 	
-	;DMA_ITEM_FIELD         		 = 9           // icon_item_field_static
-	;DMA_ITEM_LOCALIZED    			 = 14          // last icon_item_x_static
-	;DMA_CODE             		     = 28
-	;DMA_OVL_TITLE					 = 29
+	; DMA_ITEM_FIELD         		 = 9           // icon_item_field_static
+	; DMA_ITEM_LOCALIZED    		 = 14          // last icon_item_x_static
+	; DMA_CODE             		     = 28
+	; DMA_OVL_TITLE					 = 29
 	; DMA_OVL_SELECT				 = 30
 	; DMA_OVL_OPENING				 = 31
 	; DMA_OVL_FILE_CHOOSE			 = 32
@@ -79,46 +79,46 @@ debugvariables()
 	; DMA_OVL_PLAYER_ACTOR			 = 34
 	; DMA_OVL_MAP_MARK_DATA			 = 35
 	
-	;DMA_ACTOR_FIRST      		     = 36          // En_Test
-	;DMA_ACTOR_LAST        	    	 = 497         // Shot_Sun
-	;DMA_OBJECT_FIRST      			 = 498         // gameplay_keep
-	;DMA_OBJECT_LAST       			 = 879         // object_zl4
-	;DMA_G_PN_FIRST       		     = 880         // g_pn_01
-	;DMA_G_PN_LAST         			 = 936         // g_pn_57
-	;DMA_SKYBOX_FIRST      			 = 941         // vr_fine0_static
-	;DMA_SKYBOX_LAST       			 = 960         // vr_holy1_pal_static
-	;DMA_PRERENDER_FIRST   			 = 961         // vr_MDVR_static
-	;DMA_PRERENDER_LAST   		     = 1004        // vr_FCVR_pal_static
-	;DMA_SCENE_FIRST       			 = 1007        // syotes_scene
-	;DMA_SCENE_LAST       		     = 1517        // test01_room_0
-	;DMA_UNUSED_FIRST      			 = 1518        // bump_texture_static
-	;DMA_UNUSED_LAST      		     = 1530        // anime_texture_6_static
-	;DMA_SOFTSPRITE        			 = 1531        // softsprite_matrix_static
-	;DMA_BLANK_FIRST       			 = 1532        // first blank dma entry
-	;DMA_BLANK_LAST        			 = 1547        // last blank dma entry
+	; DMA_ACTOR_FIRST      		     = 36          // En_Test
+	; DMA_ACTOR_LAST        	     = 497         // Shot_Sun
+	; DMA_OBJECT_FIRST      		 = 498         // gameplay_keep
+	; DMA_OBJECT_LAST       		 = 879         // object_zl4
+	; DMA_G_PN_FIRST       		     = 880         // g_pn_01
+	; DMA_G_PN_LAST         		 = 936         // g_pn_57
+	; DMA_SKYBOX_FIRST      		 = 941         // vr_fine0_static
+	; DMA_SKYBOX_LAST       		 = 960         // vr_holy1_pal_static
+	; DMA_PRERENDER_FIRST   		 = 961         // vr_MDVR_static
+	; DMA_PRERENDER_LAST   		     = 1004        // vr_FCVR_pal_static
+	; DMA_SCENE_FIRST       		 = 1007        // syotes_scene
+	; DMA_SCENE_LAST       		     = 1517        // test01_room_0
+	; DMA_UNUSED_FIRST      		 = 1518        // bump_texture_static
+	; DMA_UNUSED_LAST      		     = 1530        // anime_texture_6_static
+	; DMA_SOFTSPRITE        		 = 1531        // softsprite_matrix_static
+	; DMA_BLANK_FIRST       		 = 1532        // first blank dma entry
+	; DMA_BLANK_LAST        		 = 1547        // last blank dma entry
 	
-	;ACTID_LINK         		     = 0           // link's actor id
+	; ACTID_LINK         		     = 0           // link's actor id
 	
 	// hard-coded function pointers for ovl_player_actor
-	;OFS_OVL_PLAYER_ACTOR_INIT_HI    = 0x00B288F8  // init
-	;OFS_OVL_PLAYER_ACTOR_INIT_LO    = 0x00B28900
-	;OFS_OVL_PLAYER_ACTOR_DEST_HI    = 0x00B28908  // dest
-	;OFS_OVL_PLAYER_ACTOR_DEST_LO    = 0x00B28914
-	;OFS_OVL_PLAYER_ACTOR_MAIN_HI    = 0x00B2891C  // main (update)
-	;OFS_OVL_PLAYER_ACTOR_MAIN_LO    = 0x00B28928
-	;OFS_OVL_PLAYER_ACTOR_DRAW_HI    = 0x00B28930  // draw
-	;OFS_OVL_PLAYER_ACTOR_DRAW_LO    = 0x00B2893C
+	; OFS_OVL_PLAYER_ACTOR_INIT_HI    = 0x00B288F8  // init
+	; OFS_OVL_PLAYER_ACTOR_INIT_LO    = 0x00B28900
+	; OFS_OVL_PLAYER_ACTOR_DEST_HI    = 0x00B28908  // dest
+	; OFS_OVL_PLAYER_ACTOR_DEST_LO    = 0x00B28914
+	; OFS_OVL_PLAYER_ACTOR_MAIN_HI    = 0x00B2891C  // main (update)
+	; OFS_OVL_PLAYER_ACTOR_MAIN_LO    = 0x00B28928
+	; OFS_OVL_PLAYER_ACTOR_DRAW_HI    = 0x00B28930  // draw
+	; OFS_OVL_PLAYER_ACTOR_DRAW_LO    = 0x00B2893C
 	
 	// hard-coded function pointers for ovl_kaleido_scope
-	;OFS_OVL_KALEIDO_SCOPE_INIT_HI   = 0x00B33208  // init
-	;OFS_OVL_KALEIDO_SCOPE_INIT_LO   = 0x00B3320C
-	;OFS_OVL_KALEIDO_SCOPE_DRAW_HI   = 0x00B33218  // draw
-	;OFS_OVL_KALEIDO_SCOPE_DRAW_LO   = 0x00B33220
+	; OFS_OVL_KALEIDO_SCOPE_INIT_HI   = 0x00B33208  // init
+	; OFS_OVL_KALEIDO_SCOPE_INIT_LO   = 0x00B3320C
+	; OFS_OVL_KALEIDO_SCOPE_DRAW_HI   = 0x00B33218  // draw
+	; OFS_OVL_KALEIDO_SCOPE_DRAW_LO   = 0x00B33220
 
-    ;DMA_RAM = 0x80016DA0
-    ;AUDIOBANK_PTR = 0x00B5A4C0
-    ;AUDIOSEQ_PTR = 0x00B5A4AC
-    ;AUDIOTABLE_PTR = 0x00B5A4D4
+    ; DMA_RAM						  = 0x80016DA0 //location of dma table in ram
+    ; AUDIOBANK_PTR 				  = 0x00B5A4C0 //pointer to audiobank entry
+    ; AUDIOSEQ_PTR					  = 0x00B5A4AC //pointer to audioseq entry
+    ; AUDIOTABLE_PTR				  = 0x00B5A4D4 //pointer to audiotable entry
     ;
 }
 
@@ -136,13 +136,13 @@ ocarinaoftimevariables()
 	;TBL_SCENE_ENTRIES      		 = 101         // scene count
 	;TBL_ROUTE             			 = 0x00B6FBF0  // route table
 	;TBL_ROUTE_ENTRIES     			 = 1556        // route count
-	;TBL_MAP_SELECT_FILE			 = 0x00B9E400	  //map select file
+	;TBL_MAP_SELECT_FILE			 = 0x00B9E400  // map select file
 	;TBL_MAP_SELECT				 	 = 0x000013D0  // map select table relative to ovl_select file
 	;TBL_MAP_SELECT_ENTRIES		 	 = 115		   // number of map select entries		
-	;TBL_AUDIOSAMPLE				 = 0x00B8A1D0  //audiosample table
-	;TBL_AUDIOBANK 				     = 0x00B896A0  //audiobanktable
-	;TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
-	;TBL_AUDIOBANK_SIZE				 = 0x0001CA50  //audiobank file-size
+	;TBL_AUDIOSAMPLE				 = 0x00B8A1D0  // audiosample table
+	;TBL_AUDIOBANK 				     = 0x00B896A0  // audiobanktable
+	;TBL_AUDIOBANK_FILE 			 = 0x0000D390  // audiobank file
+	;TBL_AUDIOBANK_SIZE				 = 0x0001CA50  // audiobank file-size
 	;TBL_SEQUENCEINSTRUMENTSET		 = 0x00B89910  // instrument set table
 	;TBL_SEQUENCE_FILE 		     	 = 0x00029DE0  // sequence file offset
 	;TBL_AUDIOTABLE_FILE			 = 0x00079470  // pointer to the audiotable
@@ -151,9 +151,9 @@ ocarinaoftimevariables()
 	;TBL_ENTRANCECUTSCENE_ENTRIES    = 33          // entrancecutscene count	
 	;TBL_MESSAGE 					 = 0x00B808AC  // offset for message table
 	;TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
-	;TBL_MESSAGE_DATA			     = 0x0092D000  //offset for english text
-	;TBL_RESTRICTIONFLAG   		 	 = 0x00B6D2B0  //offset for restricitonflag table
-	;TBL_RESTRICTIONFLAG_ENTRIES     = 73	       //restrictionflag count
+	;TBL_MESSAGE_DATA			     = 0x0092D000  // offset for english text
+	;TBL_RESTRICTIONFLAG   		 	 = 0x00B6D2B0  // offset for restricitonflag table
+	;TBL_RESTRICTIONFLAG_ENTRIES     = 73	       // restrictionflag count
 	;TBL_DMA                		 = 0x00007430  // dma table
 	;TBL_DMA_ENTRIES        		 = 1526        // dma entries
 	;TBL_OVL_GAMESTATE      		 = 0x00B672A0  // game state overlay table
@@ -213,10 +213,11 @@ ocarinaoftimevariables()
 	;OFS_OVL_KALEIDO_SCOPE_DRAW_HI   = 0x00B0FE58  // draw
 	;OFS_OVL_KALEIDO_SCOPE_DRAW_LO   = 0x00B0FE64
 
-	;DMA_RAM 						 = 0x8000B140
-    ;AUDIOBANK_PTR					 = 0x00B2E840
-    ;AUDIOSEQ_PTR					 = 0x00B2E82C
-    ;AUDIOTABLE_PTR					 = 0x00B2E854;
+	;DMA_RAM 						 = 0x8000B140  //dma table location in ram
+    ;AUDIOBANK_PTR					 = 0x00B2E840  //audiobank entry location
+    ;AUDIOSEQ_PTR					 = 0x00B2E82C  //auidoseq entry
+    ;AUDIOTABLE_PTR					 = 0x00B2E854  //audiotable entry
+    ;
 }
 
 /* valid (fmt, bpp) options for png functions */
@@ -291,6 +292,7 @@ split_ptr(struct rom *rom, int ptr, int hi, int lo, int correct)
 	rom.seek(tell);
 }
 
+/*builds a customized map select using mapselect.tsv and scene folder names*/
 void
 mapselect(struct rom *rom)
 {
@@ -517,7 +519,6 @@ mapselect(struct rom *rom)
 	printf("success!\n");
 }
 
-
 void
 system_overlay(struct rom *rom)
 {
@@ -599,19 +600,22 @@ system_overlay(struct rom *rom)
 		
 		/* go to table entry (skip first word) */
 		rom.seek(entry[i] + 4);
-		//name = substring(filename, i);
+
+		/*if there is no custom overlay file we go to vanilla folder*/
+		if (!file_exists(new_string(substring(filename, i),".zovl",0)) && dir_exists(VANILLA))
+		{dir_enter(VANILLA);}
 
 		/* inject file */
-		if (!file_exists(new_string(substring(filename, i),".zovl",0)))
-		{dir_enter(VANILLA);}
-			ovl = rom.inject("*.zovl", compress);
+		ovl = rom.inject("*.zovl", compress);
 
 		/* get overlay vram size */
 		vram_sz = ovl_vram_sz(ovl, rom.file_sz());
 		
-		/* parse configuration file */
-		if (!file_exists("conf.txt"))
+		/*if there is now custom conf file we go to vanilla folder*/
+		if (!file_exists("conf.txt") && dir_exists(VANILLA))
 		{dir_enter(VANILLA);}
+
+		/* parse configuration file */
 		conf = conf.new("conf.txt", "list");
 		while (*arr)
 		{
@@ -659,10 +663,8 @@ system_overlay(struct rom *rom)
 		
 		i++;
 	}
-	
 	/* cleanup */
 	free(Oarr);
-	//dir_leave();
 }
 
 void
@@ -694,17 +696,20 @@ audiotable(struct rom *rom)
 
  	typelocation = malloc(256);
 
+ 	/*checks if we should build with cached audio files*/
  	if (!USE_CACHED_AUDIO)
  	{
 	 	/*display message*/
 	 	printf("audiotable... ");
 
-		/*enter directory creating non-vanilla list2*/
+		/*enter directory creating non-vanilla list and enters vanilla folder and makes a vanilla list*/
 		dir_enter("audio");
 		dir_enter("audiotable");
 		list2 = list2.new(0);
 		dir_enter(VANILLA);
-		//table = fopen("audiotable.bin","wb");
+		list = list.new(0);
+		
+		/*creates a huge file to write data to*/
 		rom.extract("audiotable.bin", 0x0, 0x3000000);
 		buildfile = buildfile.new("audiotable.bin");
 
@@ -716,8 +721,6 @@ audiotable(struct rom *rom)
 		index = 0;
 		listindex = 0;
 		done = 0;
-		list = list.new(0);
-
 		while (list.remaining() || (list2.remaining() && done == 0))
 		{
 			/*checks for non-vanilla samples and enters the sample folder*/
@@ -727,12 +730,11 @@ audiotable(struct rom *rom)
 				dir_enter(list2.name());
 				if (list2.remaining() <= 1)
 				{done = 1;}
-
 			}
 			else
 			{dir_enter(list.name());}
 
-			/*seeks to the audiotable and writes the sample*/
+			/*gets to the sample and writes the sample data to file*/
 			buildfile.seek(index);
 			if (file_exists("sample.bin"))
 			{data = loadfile("sample.bin",&sz, false);}
@@ -740,12 +742,11 @@ audiotable(struct rom *rom)
 			{data = loadfile("RawSound.bin",&sz, false);}
 			buildfile.write(data,sz);	
 
-			/*returns to vanilla if needed and goes to the next list*/
+			/*adds the sample offsets and name to the audiotable.tsv and rounds index up to new size, double checking if it's a vanilla sample or not*/
 			dir_leave();
-
-			/*adds the sample offsets and name to the audiotable.tsv and rounds index up to new size*/
 			if (dir_exists(VANILLA))
 			{
+				/*writes blank samples if there is a gan samples*/
 				while (listindex < list2.index())
 				{
 					fprintf(table, "NULL\tNULL\tNULL\n");
@@ -758,15 +759,17 @@ audiotable(struct rom *rom)
 			else
 			{fprintf(table, "%X\t%X\t%s\n", index, sz, list.name());}
 
+			/*writes blank samples in if there's a gap in sample indexes*/
 			index = (index + sz+15)/16*16;
 			if (list.remaining())
 			{
-				while (listindex < list.index())
+				list.next();
+				while (list.remaining() && listindex + 1 < list.index())
 				{
 					fprintf(table, "NULL\tNULL\tNULL\n");
 					listindex++;
 				}
-				list.next();
+				
 			}
 			listindex ++;
 		}
@@ -1034,14 +1037,12 @@ dosample(struct rom *buildfile,*var2, sample, sampletable, *predictordata, *loop
 	/*gets the number samplenumber*/
 	sscanf(sample, "%d", &var3);
 
-	/*finds length in table and writes it*/
+	/*finds length in table and writes it, throwing an error if there is no sample*/
 	var = tsv_col_row(sampletable, "length", var3+1);	
-	//printf("\n%s", var);
 	if (!strcmp(var, "NULL"))
-	{die("a sample referenced in this bank is missing from!");}
+	{die("sample %s referenced in this bank is missing from audiotable folder!", sample);}
 	sscanf(var, "%X", &var);
 	buildfile.write32(var);
-
 
 	/*finds the sample in the table, and writes the offset*/				
 	var = tsv_col_row(sampletable, "start",var3+1);
