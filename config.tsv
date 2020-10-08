@@ -1,8 +1,8 @@
 configuration_name	setting	configuration_note
 using_oot_debug_rom	true	(true = debug, false = 1.0)
 use_hex_naming_style	false	(true = index in hex when dumping)
-using_zelda's_letter	true	(true = zelda's letter, false = ocarina text editor)
+using_zelda's_letter	false	(true = zelda's letter, false = ocarina text editor)
 use_map_select_hack	true	(english map_select using mapselect.tsv and scene names)
-build/dump audiobank	true	(optional if you don't plan on doing audiobank stuff)
-build/dump audioseq	true	(optional if you don't plan on doing sequence stuff)
-build/dump messages	true	(if you aren't using custom dialogue you can switch this)
+build/dump audio	true	(optional if you don't plan on doing audio stuff)
+build cached audio	false	(locks current audio state to increase build speed)
+extend ram fix bugs	true	(patches the debug rom just like sharp ocarina)

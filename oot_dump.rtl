@@ -1,12 +1,12 @@
-/**********************************************************
- * <z64.me> zzrtl script for extracting assets from OoT   * 
- * audiobank(), audioseq(), message(), restrictionflag()  *
- * entrancecutscene(), and mapselect() by Jared Johnson   *
- **********************************************************/
-/*USE THE CONFIG.TSV FILE*/
+/*********************************************************************
+ * <z64.me> zzrtl script for extracting assets from OoT              * 
+ * audiobank(), audioseq(), audiotable(), restrictionflag(),         *
+ * message(), entrancecutscene(), and mapselect() by Jared Johnson   *
+ *********************************************************************/
+/*USE THE CONFIG.TSV FILE TO SELECT YOUR ROM*/
 /* global variables */
 char *g_tsv;
-int TBL_OBJECT;int TBL_OBJECT_ENTRIES;int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
+int VROM_CODE_SIZE; int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE;int VANILLA;int TBL_OBJECT;int TBL_OBJECT_ENTRIES;int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
 int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOTABLE_FILE;int TBL_AUDIOTABLE_FILE_SIZE;
 int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;
 int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE; int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;
@@ -19,11 +19,14 @@ int OFS_OVL_PLAYER_ACTOR_INIT_HI;int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PL
 int OFS_OVL_PLAYER_ACTOR_MAIN_HI;int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;
 int OFS_OVL_KALEIDO_SCOPE_INIT_HI;int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
 
-	 /*OoT debug */
+/*OoT debug */
 void
 debugvariables() 
 {
 	TBL_OBJECT              		 = 0x00B9E6C8  // object table
+	; N_ROGO 						 = 0x01AA1000 //0938			
+	; N_ROGO_SIZE					 = 0x00002DC0	
+	; N_ROGO_DMA					 = 938
 	; TBL_OBJECT_ENTRIES 		     = 402         // object count
 	; TBL_ACTOR        		         = 0x00B8D440  // actor overlay table
 	; TBL_ACTOR_ENTRIES    		     = 471         // actor overlay count
@@ -60,6 +63,7 @@ debugvariables()
 	; TITLECARD_H          		     = 24          // use 72 to include de; fr
 	; VRAM_CODE              		 = 0x8001CE60  // vram start of code
 	; VROM_CODE            		     = 0x00A94000  // vrom start of code
+	; VROM_CODE_SIZE				 = 0x0013AF30
 	; VROM_PLAYER          		     = 0x00C010B0  // vrom start of player_actor
 	
 	; DMA_ITEM_FIELD         		 = 9           // icon_item_field_static
@@ -131,6 +135,7 @@ ocarinaoftimevariables()
 	; TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
 	; TBL_SEQUENCEINSTRUMENTSET		 = 0x00B89910  // instrument set table
 	; TBL_SEQUENCE_FILE 		     = 0x00029DE0  // sequence file offset
+	;TBL_AUDIOTABLE_FILE			 = 0x00079470  // pointer to the audiotable
 	; TBL_AUDIOSEQ 		    		 = 0x00B89AD0  // sequence pointer table
 	; TBL_ENTRANCECUTSCENE 		     = 0x00B65C64  // entrancecutscene table
 	; TBL_ENTRANCECUTSCENE_ENTRIES   = 33          // entrancecutscene count	
@@ -148,6 +153,7 @@ ocarinaoftimevariables()
 	; TITLECARD_H            = 48          // use 24 for jp only
 	; VRAM_CODE              = 0x800110A0  // vram start of code
 	; VROM_CODE              = 0x00A87000  // vrom start of code
+	; VROM_CODE_SIZE		 = 0x00103D30	
 	; VROM_PLAYER            = 0x00BCDB70  // vrom start of player_actor
 	
 	; DMA_ITEM_FIELD         = 10          // icon_item_field_static
@@ -345,7 +351,7 @@ system_overlay(struct rom *rom)
 		/* enter overlay name directory */
 		name = substring(filename, i);
 		dir_enter(name);
-		
+		dir_enter(VANILLA);
 		/* go to table entry (skip first word) */
 		rom.seek(entry[i] + 4);
 
@@ -407,7 +413,9 @@ system_overlay(struct rom *rom)
 			rom.extract("ovl_select - copy.bin", start, end);
 			dir_leave();
 			dir_leave();
+			dir_leave();
 			dir_enter("scene");
+			dir_enter(VANILLA);
 
 			/*open map select table and write header*/
 			fp2 = fopen("mapselect.tsv","wb");
@@ -425,11 +433,14 @@ system_overlay(struct rom *rom)
 			/*close table file*/
 			fclose(fp2);
 			dir_leave();
+			dir_leave();
 			dir_enter("system");
 			dir_enter("ovl_select");
+			dir_enter(VANILLA);
 		}
 		
 		/* advance to next */
+		dir_leave();
 		dir_leave();
 		fclose(fp);
 		i++;
@@ -438,7 +449,6 @@ system_overlay(struct rom *rom)
 	/* cleanup */
 	free(outname);
 	free(Oarr);
-	//dir_leave();
 }
 
 void
@@ -449,127 +459,454 @@ systemdir(struct rom *rom)
 	dir_leave();
 }
 
-/*this dumps an instrument's data structure to a file. It starts at "pointer" and dumps 
-until it recognizes the next data structure or the beginning of the envelopes*/
-void
-dumpinstrumentstructure(struct rom *rom,int pointer, int file, int index)
-{
-	int var;
-	int test;
-	int var2;
-
-	rom.seek(pointer);
-	var = 0;
-	test =0;
-	while (test == 0)
-	{	
-		/*writes one byte to the file*/
-		fprintf(file, "%c", rom.read8());
-		var++;
-
-		/*now we jump forward looking for special data that will tell us where the data structure ends*/
-		if (var > 24)
-		{
-			/*checks if the next line is an envelope looking for FFFF0000*/
-			rom.seek_cur(12);
-			if (rom.read16() == 0xFFFF)
-			{
-				if (rom.read16() == 0x0000)
-				{
-					if (var/16*16 == var)
-					{
-					test = 1;
-					}
-				}
-				rom.seek_cur(-2);
-			}
-
-			/*checks to see if the next line is a datachunk by looking for 0000000200000002*/
-			rom.seek_cur(2);
-			if (rom.read32() == 2)
-			{
-				if (rom.read32() == 2)
-				{
-					test = 1;
-				}
-				rom.seek_cur(-4);
-			}	
-			/*checks to see if the next line is a datachunk by looking for 0000000000004211*/
-			rom.seek_cur(-4);
-			if (rom.read32() == 0)
-			{
-				if (rom.read32() == 0x4211)
-				{
-					test = 1;
-				}
-				rom.seek_cur(-4);
-			}
-			/*checks to see if the next line is a datachunk by looking for 0000000200000004*/
-			rom.seek_cur(-4);
-			if (rom.read32() == 2)
-			{
-				if (rom.read32() == 4)
-				{
-					test = 1;
-				}
-				rom.seek_cur(-4);
-			}
-			/*this is a fix for the master bank and actor sounds bank as they have a different structure style*/
-			rom.seek_cur(-8);
-			var2 = rom.read32();
-			if (var2 == 0xF0 && index == 1)
-				{
-					test = 1;
-				}
-			if (var2 == 0x190 && index == 0)
-				{
-					test = 1;
-				}
-			rom.seek_cur(-16);
-		}
-	}
-}
-
 void
 audiotable(struct rom *rom)
 {	
+	FILE *fp;
+	FILE *data;
+	FILE *data2;
+	FILE *table;
+	struct folder *list;
+	struct folder *list2;
+	int maxlist;
+	int index;
+	int index2;
+	int var;
+	int var2;
+	int name;
+	int name2;
+	int sz;
+	int sz2;
 
-	/*display message in console*/
-	printf("dumping audiotable...\n");
+	/*allocate name memory (may not be necessary)*/
+	name = malloc(256);
+	name2 = malloc(256);
 
 	/*open directory*/
 	dir_enter("audio");
 	dir_enter("audiotable");
-	
-	/*extract tables for both text editors */
-	rom.extract("audiotable.bin",TBL_AUDIOTABLE_FILE, TBL_AUDIOTABLE_FILE+ TBL_AUDIOTABLE_FILE_SIZE);
-	
-	/*exit the directory*/
+	dir_enter(VANILLA);
+
+	/*open audiosample-table for writing and enter delete me folder*/
+	table = fopen("audiotable.tsv", "wb");
+	dir_enter("_deleteme");
+
+	/*print the start of the sample-table file*/
+	fprintf(table, "start\tlength\tname\n");
+
+	/*start a list of the files and dump them into indexes*/
+	list = list.new(".bin");
+	index = 0;
+	maxlist = list.remaining();
+	while (list.remaining())
+	{
+		/*display message in console*/
+		printf("\raudiotable...%d/%d: ", maxlist-list.remaining(), maxlist-1);
+
+		/*open the sample and predictors*/
+		data = loadfile(list.name(),&sz, 0);
+		sprintf(name, "_%s", list.name());
+		data2 = loadfile(name,&sz2, 0);
+
+		/*fix the name for writing*/
+		sscanf(list.name(), "%d- %s", &var, name);
+		sprintf(name2, "%d-%s",index, name);
+		
+		/*add sample offset, length, and name to sampletable*/
+		fprintf(table, "%X\t%X\t%s\n", list.index(), sz,name2);
+		
+		/*leave deleteme and create a folder for the sample*/
+		dir_leave();
+		dir_enter(name2);
+
+		/*extract the binary for the sample*/
+		rom.extract("RawSound.bin", TBL_AUDIOTABLE_FILE + list.index(), TBL_AUDIOTABLE_FILE + list.index()+sz);
+
+		/*open the predictors file for writing*/
+		fp = fopen("Predictors.bin", "wb");
+
+		/*extract the predictors by looking for the loop-predictors or end of file(skips first byte which is precision)*/
+		var = 1;
+		while ((var < sz2 -16 && get32(&data2[var+ 8]) != 0xFFFFFFFF) || var < 18)
+		{
+			fprintf(fp, "%c", get8(&data2[var]));
+			var ++;
+		}
+		fclose(fp);
+
+		/*write the loop-info as well as precision from first byte*/
+		fp = fopen("config.tsv", "wb");
+		fprintf(fp, "precision\tloopstart\tloopend  \tloopcount\tlooptail \n");
+		fprintf(fp, "%08X\t%08X\t%08X\t%08X\t", get8(&data2[0]),get32(&data2[var]),  get32(&data2[var+4]), get32(&data2[var+8]));
+		fprintf(fp,"%08X\n",get32(&data2[var+12]));
+		fclose(fp);
+
+		/*if there is a loop write the loop-predictors*/
+		if (get32(&data2[var+ 8]) == 0xFFFFFFFF)
+		{	
+			fp = fopen("LoopPredictors.bin","wb");
+			var = var + 16;
+			while (var < sz2)
+			{
+				fprintf(fp, "%c", get8(&data2[var]));
+				var++;
+			}
+			fclose(fp);		
+		}
+		
+		/*advance the index, free data, and go back to deletemefolder for next sample data*/
+		list.next();
+		index ++;
+		free(data);
+		free(data2);
+		dir_leave();
+		dir_enter("_deleteme");
+		
+
+	}
+	/*leave deleteme and close the audiotable.tsv for writing and open it for reading*/
+	dir_leave();
+	list.free();
+	fclose(table);
+	table = loadfile("audiotable.tsv", 0, 0);
+	printf("success!\n");
+
+	/*now we are going to fix the audiobanks to have the correct index*/
+	/*exit the directory and enter the banks*/
+	dir_leave();
+	dir_leave();
+	dir_enter("banks");
+	dir_enter(VANILLA);
+
+	/*loops through all the banks*/
+	list = list.new(0);
+	maxlist = list.remaining();
+	while (list.remaining())
+	{
+		/*print message*/
+		printf("\rfixing audiobank...%d/%d: ", maxlist-list.remaining(), maxlist-1);
+			
+		/*enter the specific bank's folder*/
+		dir_enter(list.name());
+		
+		/*loop through all the instrument files in the bank*/
+		list2 = list2.new(".tsv");
+		while (list2.remaining())
+		{
+			/*opens the instrument file for reading and later for writing over*/
+			data = loadfile(list2.name(),&sz,0);
+			//sprintf(name, "_%s", list2.name());
+			fp = fopen(list2.name(), "wb");
+
+			/*copies the first part of the instrument*/
+			name2 = tsv_col_row(data,"dcy1rt",2);
+			var = 0;
+			while (var < sz && get32(name2) != get32(&data[var]))
+			{
+				fprintf(fp, "%c", get8(&data[var]));
+				var++;
+			}
+
+			/*checks if sample one is full and then finds the sample index, else writes NULL*/
+			if (strcmp(name2, "NULL"))
+			{
+				/*compares the sample offset from file to audiotable.tsv*/
+				sscanf(name2, "%X", &var2);
+				name = tsv_col_row(table, "start", 1);
+				sscanf(name, "%X", &var);
+				index =0;
+				while (var < var2)
+				{
+					index++;
+					name = tsv_col_row(table, "start", index + 1);
+					sscanf(name, "%X", &var);
+				}
+				/*writes the new sample index to the instrument file*/
+				sprintf(name, "%d", index);
+				sprintf(name, "%s", name);
+				fprintf(fp, "%s\t%s\t", name, tsv_col_row(data,"dcy1lvl",2));
+			}
+			else
+			{
+				fprintf(fp, "NULL\tNULLNULL\t");
+			}
+			/*checks if sample two is full and then finds the sample index, else writes NULL*/
+			name2 = tsv_col_row(data,"dcy2rt",2);
+			if (strcmp(name2, "NULL"))
+			{
+
+				/*compares the sample offset from file to audiotable.tsv*/
+				sscanf(name2, "%X", &var2);
+				name = tsv_col_row(table, "start", 1);
+				sscanf(name, "%X", &var);
+				index =0;
+				while (var < var2)
+				{
+					index++;
+					name = tsv_col_row(table, "start", index + 1);
+					sscanf(name, "%X", &var);
+				}
+
+				/*writes the new sample index to the instrument file*/
+				sprintf(name, "%d", index);
+				sprintf(name, "%s", name);
+				fprintf(fp, "%s\t%s\t", name, tsv_col_row(data,"dcy2lvl",2));
+			}
+			else
+			{
+				fprintf(fp, "NULL\tNULLNULL\t");
+			}
+			/*checks if there is sample three and then finds the sample index, else writes NULL*/
+			name2 = tsv_col_row(data,"split1",3);
+			if (strcmp(name2, "NULL"))
+			{
+				/*compares the sample offset from file to audiotable.tsv*/
+				sscanf(name2, "%X", &var2);
+				name = tsv_col_row(table, "start", 1);
+				sscanf(name, "%X", &var);
+				index =0;
+				while (var < var2)
+				{
+					index++;
+					name = tsv_col_row(table, "start", index + 1);
+					sscanf(name, "%X", &var);
+				}
+
+				/*writes the new sample index to the instrument file*/
+				sprintf(name, "%d", index);
+				sprintf(name, "%s", name);
+				fprintf(fp, "%s\t%s", name, tsv_col_row(data,"split2",3));
+			}
+			else
+			{
+				fprintf(fp, "NULL\tNULLNULL\t");
+			}
+
+			/*advances to next instrument and frees the data*/
+			list2.next();
+			free(data);
+			fclose(fp);
+		}
+
+		/*checks if there's drums to update*/
+		if (file_exists("_drums.tsv"))
+		{
+			/*opens the drum file for reading and editing*/
+			data = loadfile("_drums.tsv",&sz,0);
+			fp = fopen("_drums.tsv", "wb");
+
+			/*copies the beginning of the drum file */
+			name2 = tsv_col_row(data,"atkrate",3);
+			var = 0;
+			while (var < sz && get32(name2) != get32(&data[var]))
+			{
+				fprintf(fp, "%c", get8(&data[var]));
+				var++;
+			}
+			
+			/*updates each sample's index in the drum file*/
+			index2 = 0;
+			while (tsv_col_row(data,"atkrate",index2 + 4) || tsv_col_row(data,"atklvl",index2 + 4))
+			{
+				/*compares the sample offset from file to audiotable.tsv*/
+				name2 = tsv_col_row(data,"atkrate",index2 + 3);
+				sscanf(name2, "%X", &var2);
+				name = tsv_col_row(table, "start", 1);
+				sscanf(name, "%X", &var);
+				index =0;
+				while (var < var2)
+				{
+					index ++;
+					name = tsv_col_row(table, "start", index + 1);
+					sscanf(name, "%X", &var);
+				}
+
+				/*writes the new sample index to the instrument file*/
+				sprintf(name, "%d", index);
+				sprintf(name, "%s", name);
+				fprintf(fp, "%s\t%s\t%s\t\t\t\n", name, tsv_col_row(data,"atklvl",index2 + 3),tsv_col_row(data,"dcy1rt",index2 + 3));
+				index2 ++;
+			}
+			free(data);
+			fclose(fp);
+
+		}
+		/*checks if there are sound effects*/
+		if (file_exists("_soundeffects.tsv"))
+		{
+			/*opens the soundeffect file for reading and writing*/
+			data = loadfile("_soundeffects.tsv",&sz,0);
+			fp = fopen("_soundeffects.tsv", "wb");
+
+			/*copies the beginning of the sfx file */		
+			name2 = tsv_col_row(data,"sample",1);
+			var = 0;
+			while (var < sz && get32(name2) != get32(&data[var]))
+			{
+				fprintf(fp, "%c", get8(&data[var]));
+				var++;
+			}
+
+			/*updates each sample's index in the sfx file*/
+			index2 = 0;	
+			while (tsv_col_row(data,"sample",index2 + 2) || tsv_col_row(data,"pitch",index2 + 2))
+			{
+				/*compares the sample offset from file to audiotable.tsv*/
+				name2 = tsv_col_row(data,"sample",index2 + 1);
+				sscanf(name2, "%X", &var2);
+				name = tsv_col_row(table, "start",  1);
+				sscanf(name, "%X", &var);
+				index =0;
+				while (var < var2)
+				{
+					index++;
+					name = tsv_col_row(table, "start", index + 1);
+					sscanf(name, "%X", &var);
+				}
+
+				/*writes the new sample index to the instrument file*/
+				sprintf(name, "%d", index);
+				sprintf(name, "%s", name);
+				fprintf(fp, "%s\t%s\n", name, tsv_col_row(data,"pitch",index2 + 1));
+				index2 ++;
+			}
+			free(data);
+			fclose(fp);
+		}
+		/*leave the bank and advance to next bank*/
+		dir_leave();
+		list.next();
+	}
+	/*linebreak for messaging and leaves to the root folder*/
+	printf("success!\n");
+	dir_leave();
 	dir_leave();
 	dir_leave();
 }
 
+void
+dumppredictors(struct rom *rom, int file, int bankpointer)
+{
+	int start;
+	int size;
+	int var;
+
+	/*stores offset to return to after function*/
+	start = rom.tell();
+
+	/*gets the precision unk for the sample and tosses that in with predicotrs ;)*/
+	rom.seek_cur(-8);
+	fprintf(file, "%c", rom.read8());
+	/*gets the predictor offset*/
+	rom.seek_cur(11);
+	var = rom.read32();
+
+	/*goes to predicotr data and finds size*/
+	rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
+	rom.seek_cur(4);
+	size = rom.read32()*32 + 8;
+
+	/*returns to start and copies all the predictor data*/
+	rom.seek_cur(-8);
+	var = 0;
+	while (var < size)
+	{
+		fprintf(file,"%c", rom.read8());
+		var++;
+	}
+	/*gets offset for loop-info and goes there*/
+	rom.seek(start);
+	var = rom.read32();
+	rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
+
+	/*checks if there are looppredictors by seeing if the loop info is 0'd*/
+	size = 32;
+	var = rom.read32();
+	rom.seek_cur(4);
+	var = var + rom.read32() + rom.read32();
+	if (var == 0)
+	{
+		size = 16;
+	}
+	else
+	{
+		size = 48;
+	}
+	/*copies the loop info and maybe the loop predictors*/
+	rom.seek_cur(-16);
+	var = 0;
+	while (var < size)
+	{
+		fprintf(file,"%c", rom.read8());
+		var++;
+	}
+	/*return to starting position*/
+	rom.seek(start);
+
+}
+
+void
+dosample(struct rom *rom, sample, samplelength, *samplelist, *samplenum, name2, bankpointer)
+{
+	FILE *datafile;
+	int var;
+	int samplename;
+
+	/*check if sample already has been dumped*/
+	//printf("\nweherenow\n");
+	samplename = malloc(256);
+	
+	sprintf(samplename, "%X", sample);
+	var = 0;
+	//printf("\n%s - %s\n", samplename, strcmp(tsv_col_row(*samplelist, "sample", var+1)));
+		
+	while (var < *samplenum && strcmp(tsv_col_row(*samplelist, "sample", var+1), samplename))
+	{
+		var++;
+	}
+
+	/*if there's no similar sample, dump the sample and predicotrs and add to the list*/
+	if (var == *samplenum)
+	{
+		*samplenum = *samplenum + 1;
+		*samplelist = new_string(*samplelist,samplename,"\t",0);
+		sprintf(samplename, "%X", samplelength);
+		*samplelist = new_string(*samplelist,samplename,"\t",name2,"\n",0);
+		sprintf(samplename, "_%d- %s -%d.bin",sample,name2,sample+samplelength);
+		datafile = fopen(samplename, "wb");
+		dumppredictors(rom, datafile, bankpointer);
+		fclose(datafile);
+		sprintf(samplename,"%d- %s -%d.bin",sample,name2,sample+samplelength);
+		rom.extract(samplename, TBL_AUDIOTABLE_FILE + sample, TBL_AUDIOTABLE_FILE + sample + samplelength);
+	}
+}
 void
 audiobank(struct rom *rom)
 {	
 	FILE *configfile;
 	FILE *datafile;
+	int *samplelist;
+	int samplenum;
 	int numberofbanks;
 	int index;
 	int instrumentindex;
 	int bankpointer;
-	int data;
 	int instrumentnumber;
 	int sampletablenumber;
 	int sampleoffset;
+	int sample;
+	int samplename;
+	int samplelength;
 	int drums;
 	int sfx;
 	int nameindex;
 	int instrumentpointer;
 	int name;
 	int name2;
+	int name3;
 	int var;
 	int var2;
+	int sfxnum;
 	int length;
 	int pitch1;
 	int pitch2;
@@ -581,15 +918,19 @@ audiobank(struct rom *rom)
 	/*allocate memory for name*/
 	name = malloc(256);
 	name2 = malloc(256);
-
+	name3 = malloc(256);
+	samplename = malloc(256);
+	
 	/*enter audio folder*/
 	dir_enter("audio");
 	dir_enter("banks");
-	dir_enter("_vanilla");
+	dir_enter(VANILLA);
 
-	/*find and read the number of audiobanks*/
+	/*find and read the number of audiobanks and create the header for the samplelist*/
 	rom.seek(TBL_AUDIOBANK);
 	numberofbanks = rom.read16();
+	samplelist = new_string("sample\tlength\tname\n",0);
+	samplenum = 0;
 
 	/*dump all the audiobanks until index is at the last bank*/ 
 	index = 0;
@@ -597,7 +938,7 @@ audiobank(struct rom *rom)
 	while (index < numberofbanks - 1)
 	{
 		/*display progress*/
-		printf("\rworking on AUDIO BANKS %d/%d:", index, numberofbanks-2);
+		printf("\raudiobank %d/%d: ", index, numberofbanks-2);
 
 		/*seek to table entry to read bank info*/
 		rom.seek(TBL_AUDIOBANK + 16 + index*16);
@@ -608,144 +949,31 @@ audiobank(struct rom *rom)
 		rom.seek_cur(1);		
 		instrumentnumber = rom.read8();
 		drums = rom.read8();
-
+		sfxnum = rom.read16();
+	
 		/*sets sample offset for the bank, used later when writing sample pointers.*/
 		rom.seek(TBL_AUDIOSAMPLE + sampletablenumber*16);
 		sampleoffset = rom.read32();
 
 		/*open the bank folder*/
-		sscanf(tsv_col_row(g_tsv,"audiobank",index + 1), "%s", name2);
-		sprintf(name,"%d-%s-%X",index,name2,index);
+		if (g_tsv)
+		{
+			sscanf(tsv_col_row(g_tsv,"audiobank",index + 1), "%s", name2);
+			sprintf(name,"%d-%s-%X",index,name2,index);
+		}
+		else
+		{name2 = "sample";
+		sprintf(name,"%d",index);}
+		
 		dir_enter(name);
 
-		rom.extract(name, TBL_AUDIOBANK_FILE + bankpointer, TBL_AUDIOBANK_FILE + bankpointer + length);
+		/*extracts vanilla data. this is mainly useful for debugging issues in the audio-system*/
+		rom.extract("_vanilla.bin", TBL_AUDIOBANK_FILE + bankpointer, TBL_AUDIOBANK_FILE + bankpointer + length);
 
 		/*checks if there's drums and sfx*/
 		rom.seek(TBL_AUDIOBANK_FILE + bankpointer);
 		drums = rom.read32();
 		sfx = rom.read32();
-		if (drums>0 && index !=1)
-		{
-			/*enter the drums folder and open the drums file*/
-			dir_enter("_drums");
-			datafile = fopen("drums", "wb");
-
-			/*seeks to drum-index pointer list and reads first drum index*/
-			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + drums);
-			var = rom.read32();
-			
-			/* writes all the drum indexes*/
-			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
-			while (var < drums) 
-			{
-			fprintf(datafile, "%c", rom.read8());
-			var++;
-			}
-
-			/*steps back to read the envelope pointer*/
-			rom.seek_cur(-4);
-			var = rom.read32();
-
-			/*open the config file and write the header*/
-			configfile = fopen("config.tsv","wb");
-			fprintf(configfile, "atkrate\tatklvl\tdcy1rt\tdcy1lvl\tdcy2rt\tdcy2lvl\n");
-
-
-
-			/*go to the envelope and add info to file*/
-			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
-			fprintf(configfile, "%d", rom.read16());//attackrate
-			fprintf(configfile, "\t%d", rom.read16());//attacklevel
-			fprintf(configfile, "\t%d", rom.read16());//decay1rate
-			fprintf(configfile, "\t%d", rom.read16());//decay1level
-			fprintf(configfile, "\t%d", rom.read16());//decay2rate
-			fprintf(configfile, "\t%d\n", rom.read16());//decay2level
-
-			
-			/*goes to envelope and writes that below the drum indexes*/
-			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
-			var = 0;
-			while(var<16)
-			{
-				fprintf(datafile, "%c", rom.read8());
-				var++;
-			}
-
-			/*sets var to 1st drum index pointer*/
-			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + drums);
-			var = rom.read32();
-			
-			/*write the second teir column names for the config file*/
-			fprintf(configfile, "length\tsample\t\t\t\t\n");
-
-			/*finds all the unique drum data structures*/
-			instrumentindex = 0;
-			while (var < drums) 
-			{
-				/*goes to the drum index and finds the data-structure offset*/
-				rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
-				rom.seek_cur(4);
-				var2 = rom.read32();
-
-				/*checks if it's a unique structure*/
-				if (instrumentindex < var2)
-				{
-					/*go to data and copy it to drum file*/
-					instrumentindex = var2;
-					dumpinstrumentstructure(rom,TBL_AUDIOBANK_FILE + bankpointer + var2, datafile, index);
-
-					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
-					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var2);
-					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t\t\t\t\n", rom.read16(),rom.read32()+sampleoffset);
-				}
-				var = var + 16;
-			}
-			/*close drum file and leave drum folder*/
-			fclose(configfile);
-			fclose(datafile);
-			dir_leave();
-		}
-
-
-		/*check if there are sound effects*/
-		if (sfx > 0)
-		{
-			/*enters sfx folder*/
-			dir_enter("_sfx");
-
-			/*writes all the sound effets to file by reading till the end of the soundbank*/
-			var = 0;
-			while (sfx + var*8 < length)
-			{
-				/*go to the index and get the pointer to the data-sructure*/
-				rom.seek(TBL_AUDIOBANK_FILE + bankpointer + sfx + var*8);
-				var2 = rom.read32();
-				/*check if it's a valid pointer before creating a file*/
-				if (var2 > 0 && var2 < length)
-				{
-					
-					/*create file and with indexed name*/
-					sprintf(name, "soundeffect-%d", var);
-					datafile = fopen(name,"wb");
-
-					/*write the index to the header of the file in a 16 byte format, the last 8 bytes are zeroed just to make it more readable*/
-					rom.seek_cur(-4);
-					fprintf(datafile, "%c%c%c%c", rom.read8(),rom.read8(),rom.read8(),rom.read8());
-					fprintf(datafile, "%c%c%c%c", rom.read8(),rom.read8(),rom.read8(),rom.read8());
-					fprintf(datafile, "%c%c%c%c", 9,9,9,9);
-					fprintf(datafile, "%c%c%c%c", 9,9,9,9);
-
-					/*dump the sound effect structure to the file and close the file*/
-					dumpinstrumentstructure(rom,TBL_AUDIOBANK_FILE + bankpointer + var2, datafile, index);
-					fclose(datafile);
-				}
-				/*advance one sound effect index*/
-				var++;
-			}
-			/*leave the sound effect folder*/
-			dir_leave();
-		}
 
 		/*read each instrument and create files and config table*/
 		instrumentindex = 0;
@@ -758,21 +986,24 @@ audiobank(struct rom *rom)
 			/*if instrument isn't blank*/
 			if (instrumentpointer > 0)		
 			{
-				/*sets the name of the instrument and enters the folder*/
-				if (index > 2)
+				/*advances the naming scheme forward, skipping one instrument in 1.0*/
+				nameindex++;
+				if  (TBL_AUDIOBANK_FILE != 0x00019030 && nameindex == 57)
 				{
-					nameindex++;
-					if  (TBL_AUDIOBANK_FILE != 0x00019030 && nameindex == 57)
-					{
-						nameindex++; //skips the extra unknown instrument in debug for naming folders.
-					}
-					sscanf(tsv_col_row(g_tsv,"instrument",nameindex), "%s", name2);
+					nameindex++; 
 				}
-				sprintf(name,"%d - %s",instrumentindex,name2);
-				dir_enter(name);
+
+				/*sets the name of the instrument and enters the folder*/
+				if (g_tsv)
+				{
+				sscanf(tsv_col_row(g_tsv,"instrument",nameindex), "%s", name2);
+				sprintf(name3,"%d - %s.tsv",instrumentindex,name2);
+				}
+				else
+				{sprintf(name3,"%d - instrument.tsv",instrumentindex);}
 
 				/*open the config file and write the header*/
-				configfile = fopen("config.tsv","wb");
+				configfile = fopen(name3,"wb");
 				fprintf(configfile, "split1\tsplit2\tsplit3\trelease\tatkrate\tatklvl\tdcy1rt\tdcy1lvl\tdcy2rt\tdcy2lvl\n");
 
 				/*go to the instrument description and read it*/
@@ -805,76 +1036,225 @@ audiobank(struct rom *rom)
 				fprintf(configfile, "\t%d\n", rom.read16());//decay2level
 
 				/*write the second teir column names for the config file*/
-				fprintf(configfile, "length1\tsample1\tpitch1  \tlength2\tsample2\tpitch2  \tlength3\tsample3\tpitch3  \n");
+				fprintf(configfile, "sample1\tpitch1  \tsample2\tpitch2  \tsample3\tpitch3  \n");
+				
+				/*got to the samples folder*/	
+				dir_leave();
+				dir_leave();
+				dir_leave();
+				dir_enter("audiotable");
+				dir_enter(VANILLA);
+				dir_enter("_deleteme");
 				
 				/*check if data exists before creating the data file*/
 				if (dataptr1)
 				{
-					/*open the data file and dump instrument structure inside before closing the file*/
-					datafile = fopen("data_1", "wb");
-					dumpinstrumentstructure(rom,TBL_AUDIOBANK_FILE + bankpointer + dataptr1, datafile, index);
-					fclose(datafile);
-
 					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
 					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + dataptr1);
 					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32()+sampleoffset,pitch1);
+					samplelength = rom.read16();
+					sample = rom.read32()+sampleoffset;
+					fprintf(configfile, "%X\t%X\t",sample,pitch1);
+
+					dosample(rom, sample, samplelength, &samplelist, &samplenum, name2, bankpointer);
 				}
 				else
 				{	
 					/*if there's no data file write in zeroes into the config file*/
-					fprintf(configfile, "0000\t0000\t00000000\t");
+					fprintf(configfile, "NULL\tNULLNULL\t");
 				}
 				/*check if data exists before creating the data file*/
 				if (dataptr2)
 				{
-					/*open the data file and dump instrument structure inside before closing the file*/
-					datafile = fopen("data_2", "wb");
-					dumpinstrumentstructure(rom,TBL_AUDIOBANK_FILE + bankpointer + dataptr2, datafile,index);
-					fclose(datafile);
-					
 					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
 					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + dataptr2);
 					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32()+sampleoffset,pitch2);
+					samplelength = rom.read16();
+					sample = rom.read32()+sampleoffset;
+					fprintf(configfile, "%X\t%X\t", sample,pitch2);
+
+					dosample(rom, sample, samplelength, &samplelist, &samplenum, name2, bankpointer);
 				}
 				else
 				{	
 					/*if there's no data file write in zeroes into the config file*/
-					fprintf(configfile, "0000\t0000\t00000000\t");
+					fprintf(configfile, "NULL\tNULLNULL\t");
 				}
 
 				/*check if data exists before creating the data file*/
 				if (dataptr3)
 				{
-					/*open the data file and dump instrument structure inside before closing the file*/
-					datafile = fopen("data_3", "wb");
-					dumpinstrumentstructure(rom,TBL_AUDIOBANK_FILE + bankpointer + dataptr3, datafile,index);
-					fclose(datafile);
-					
 					/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
 					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + dataptr3);
 					rom.seek_cur(2);
-					fprintf(configfile, "%X\t%X\t%X\t", rom.read16(),rom.read32()+sampleoffset,pitch3);
+					samplelength = rom.read16();
+					sample = rom.read32()+sampleoffset;
+					fprintf(configfile, "%X\t%X\t", sample,pitch3);
+
+					dosample(rom, sample, samplelength, &samplelist, &samplenum, name2, bankpointer);
+			
 				}
 				else
 				{	
 					/*if there's no data file write in zeroes into the config file*/
-					fprintf(configfile, "0000\t0000\t00000000\t");
+					fprintf(configfile, "NULL\tNULLNULL\t");
 				}
+				dir_leave();
+				dir_leave();
+				dir_leave();
+				dir_enter("banks");
+				dir_enter(VANILLA);
+				dir_enter(name);
 
 				/*close the instrument config file and leave the folder*/
 				fclose(configfile);
-				dir_leave();
 			}
 
 			/*count up the instruments*/
 			instrumentindex++;
 		}
+		/*checks if there are drums and then writes them*/
+		if (drums>0 && index !=1)
+		{
+
+			/*seeks to drum-index pointer list and reads first drum index*/
+			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + drums);
+			var = rom.read32();
+			
+			/* writes all the drum indexes*/
+			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
+			while (var < drums) 
+			{
+			rom.seek_cur(1);
+			var++;
+			}
+
+			/*steps back to read the envelope pointer*/
+			rom.seek_cur(-4);
+			var = rom.read32();
+
+			/*open the config file and write the header*/
+			configfile = fopen("_drums.tsv","wb");
+			fprintf(configfile, "atkrate\tatklvl\tdcy1rt\tdcy1lvl\tdcy2rt\tdcy2lvl\n");
+
+			/*go to the envelope and add info to file*/
+			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
+			fprintf(configfile, "%d", rom.read16());//attackrate
+			fprintf(configfile, "\t%d", rom.read16());//attacklevel
+			fprintf(configfile, "\t%d", rom.read16());//decay1rate
+			fprintf(configfile, "\t%d", rom.read16());//decay1level
+			fprintf(configfile, "\t%d", rom.read16());//decay2rate
+			fprintf(configfile, "\t%d\n", rom.read16());//decay2level
+
+			/*sets var to 1st drum index pointer*/
+			rom.seek(TBL_AUDIOBANK_FILE + bankpointer + drums);
+			var = rom.read32();
+			
+			/*write the second teir column names for the config file*/
+			fprintf(configfile, "sample\tpitch\tunknown\t\t\t\n");
+
+			/*leave audiobank and go to sample folder*/
+			dir_leave();
+			dir_leave();
+			dir_leave();
+			dir_enter("audiotable");
+			dir_enter(VANILLA);
+			dir_enter("_deleteme");
+
+			/*finds all the unique drum data structures*/
+			instrumentindex = 0;
+			while (var < drums) 
+			{
+				/*goes to the drum index and finds the data-structure offset*/
+				rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var);
+				pitch2 = rom.read32();
+				var2 = rom.read32();
+				pitch1 = rom.read32();
+
+				/*seek to the data pointer and write the sample's length, address, and pitch to the file*/
+				rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var2);
+				rom.seek_cur(2);
+				samplelength = rom.read16();
+				sample = rom.read32()+sampleoffset;	
+				fprintf(configfile, "%X\t%X\t%X\t\t\t\n",sample,pitch1,pitch2);
+
+				dosample(rom, sample, samplelength, &samplelist, &samplenum, "drumsample", bankpointer);
+			
+				var = var + 16;
+			}
+
+			/*return to the banks*/
+			dir_leave();
+			dir_leave();
+			dir_leave();
+			dir_enter("banks");
+			dir_enter(VANILLA);
+			dir_enter(name);
+	
+			/*close drum file */
+			fclose(configfile);
+			
+		}
+		/*check if there are sound effects*/
+		if (sfx > 0)
+		{
+			/*enters sfx folder*/
+			configfile = fopen("_soundeffects.tsv","wb");
+			fprintf(configfile, "sample\tpitch\n");
+
+			/*go to audiotable to write the sample data*/
+			dir_leave();
+			dir_leave();
+			dir_leave();
+			dir_enter("audiotable");
+			dir_enter(VANILLA);
+			dir_enter("_deleteme");
+
+			/*writes all the sound effects to file by reading till the end of the soundbank*/
+			var = 0;
+			while (var < sfxnum)
+			{
+				/*go to the index and get the pointer to the data-sructure*/
+				rom.seek(TBL_AUDIOBANK_FILE + bankpointer + sfx + var*8);
+				var2 = rom.read32();
+				pitch1 = rom.read32();
+
+				/*check if it's a valid pointer before creating a file*/
+				if (var2 > 0 && var2 < length)
+				{
+					/*write the sample and pitch to the sfx file*/
+					rom.seek(TBL_AUDIOBANK_FILE + bankpointer + var2);
+					rom.seek_cur(2);
+					samplelength = rom.read16();
+					sample = rom.read32()+sampleoffset;
+					fprintf(configfile, "%X\t%X\n",sample, pitch1);
+
+					dosample(rom, sample, samplelength, &samplelist, &samplenum, "soundeffectsample", bankpointer);
+			
+				}
+				else
+				{
+					fprintf(configfile, "%X\t%X\n",sample, pitch1);
+				}
+
+				/*advance one sound effect index*/
+				var++;
+			}
+
+			/*close the sfx file and return to the bank folder*/
+			fclose(configfile);
+			dir_leave();
+			dir_leave();
+			dir_leave();
+			dir_enter("banks");
+			dir_enter(VANILLA);
+			dir_enter(name);	
+		}
 
 		/*leave the audiobank folder and advance to next bank*/
 		dir_leave();
 		index++;
+		//printf("\n%s\n", samplelist);
 	}
 
 	/*extract final bank for building. I'm not sure what this data-does but it should be placed at the end of the data-banks before empty space*/
@@ -889,7 +1269,7 @@ audiobank(struct rom *rom)
 	dir_leave();
 
 	/*keep console update on a new line*/
-	printf("\n");
+	printf("success!\n");
 }
 
 
@@ -908,7 +1288,7 @@ audioseq(struct rom *rom)
 	int name2;
 
 	/*message console*/
-	printf("working on AUDIO SEQUENCES...\n");
+	printf("audioseq... ");
 
 	/*allocate memory for name*/
 	name = malloc(256);
@@ -916,6 +1296,9 @@ audioseq(struct rom *rom)
 
 	/*enter audio folder*/
 	dir_enter("audio");
+	/*enter sequences folder to write sequence data and then leave*/
+	dir_enter("sequences");
+	dir_enter(VANILLA);
 
 	/*seek to sequence table header and read sequence number*/
 	rom.seek(TBL_AUDIOSEQ);
@@ -925,21 +1308,18 @@ audioseq(struct rom *rom)
 	fp = fopen("sequencetable.tsv","wb");
 
 	/*print header*/
-	fprintf(fp, "%s", "index\tstart\tlength\ttype\tbank\tsequencename\tnameofbank");
-	fprintf(fp, "\n");
+	fprintf(fp, "%s", "index\tstart\tlength\ttype\tbank\n");
 
 	/*read the whole table using numberofsequences*/
 	index = 0;
 	while (index < numberofsequences)
 	{
 		/*seek to table entry to read sequence info*/
-		rom.seek(TBL_AUDIOSEQ+ 16 + index*16);
+		rom.seek(TBL_AUDIOSEQ + 16 + index*16);
 		start = rom.read32();
 		length = rom.read32();
 		rom.seek_cur(1);
 		type = rom.read8();
-
-
 
 		/*write to table*/
 		fprintf(fp, "0x%04X", index);
@@ -950,36 +1330,30 @@ audioseq(struct rom *rom)
 
 		/*read and write what bank each sequence uses(i did away with multiple banks per sequence)*/
 		rom.seek(TBL_SEQUENCEINSTRUMENTSET + index*2);
-		sequenceinstrumentpointer =  rom.read16();
+		sequenceinstrumentpointer = rom.read16();
 		rom.seek(TBL_SEQUENCEINSTRUMENTSET + sequenceinstrumentpointer + 1);
 		var = rom.read8();
-		fprintf(fp, "\t%X", var);
-		sscanf(tsv_col_row(g_tsv,"sequence",index+1), "%s", name2);
-		sprintf(name,"%d-%s-%X",index,name2,index);
-		fprintf(fp, "\t%s", name);
-		sscanf(tsv_col_row(g_tsv,"audiobank",var+1), "%s", name2);
-		sprintf(name,"%d-%s-%X",var,name2,var);
-		fprintf(fp, "\t%s", name);
+		fprintf(fp, "\t%X\n", var);
 
+		/*get the name of the sequence and dump the file*/
+		if (g_tsv)
+		{sscanf(tsv_col_row(g_tsv,"sequence",index + 1), "%s", name2);
+		sprintf(name,"%d - %s - %X.bin",index,name2,index);}
+		else
+		{sprintf(name,"%d - sequence.bin",index);}
 
-
-		fprintf(fp, "\n");
-
-		/*enter sequences folder to write sequence data and then leave*/
-		dir_enter("sequences");
-		dir_enter("_vanilla");
-
-		sscanf(tsv_col_row(g_tsv,"sequence",index + 1), "%s", name2);
-		sprintf(name,"%d - %s - %X.bin",index,name2,index);
 		rom.extract(name, TBL_SEQUENCE_FILE + start, TBL_SEQUENCE_FILE + start+length);
-		dir_leave();
-		dir_leave();
+
 		/*advance forward in table*/
 		index ++;
 	}
+
 	/*close table and leave folder*/
+	dir_leave();
+	dir_leave();
 	fclose(fp);
 	dir_leave();
+	printf("success!\n");
 }
 
 void
@@ -996,10 +1370,11 @@ route(struct rom *rom)
 	int var;
 
 		/*message console*/
-	printf("building ROUTING TABLE...\n");
+	printf("route... ");
 
 	/*enter folder*/
 	dir_enter("scene");
+	dir_enter(VANILLA);
 		
 	/* open route.txt for writing */
 	fp = fopen("route.tsv", "wb");
@@ -1043,6 +1418,8 @@ route(struct rom *rom)
 	/*close file and leave folder*/
 	fclose(fp);
 	dir_leave();
+	dir_leave();
+	printf("success!\n");
 }
 
 void
@@ -1058,10 +1435,11 @@ entrancecutscene(struct rom *rom)
 	int sep;
 
 	/*message console*/
-	printf("building ENTRANCE CUTSCENE TABLE...\n");
+	printf("entrancecutscene... ");
 
 	/*enter scene folder*/
 	dir_enter("scene");
+	dir_enter(VANILLA);
 
 	/*set up age array*/
 	agestr = int_array(3, "child", "adult", "both");
@@ -1105,6 +1483,8 @@ entrancecutscene(struct rom *rom)
 	/*close file and exit folder*/
 	fclose(fp);
 	dir_leave();
+	dir_leave();
+	printf("success!\n");
 }
 
 
@@ -1115,16 +1495,19 @@ restrictionflag(struct rom *rom)
 	FILE *fp;
 	int index;
 	int variable;
+	int name1;
+	int name2;
 	int sceneid;
 	int xx;
 	int yy;
 	int zz;
 
 	/*message the console*/
-	printf("building RESTRICTIONFLAG TABLE...\n");
+	printf("restrictionflag... ");
 	
 	/* open directory and open entrancecutscene.txt for writing */
 	dir_enter("scene");
+	dir_enter(VANILLA);
 	fp = fopen("restrictionflag.tsv", "wb");
 		
 	/* print table header */
@@ -1148,18 +1531,30 @@ restrictionflag(struct rom *rom)
 		/* print table entry (uses bit-test for flags)*/
 		fprintf(fp, "0x%04X", index);
 		fprintf(fp, "\t%X", sceneid);
-		fprintf(fp, "\t%s", (xx & (1 << 0)) ? "on" : "off");
-		fprintf(fp, "\t%s", (xx & (1 << 2)) ? "on" : "off");
-		fprintf(fp, "\t%s", (xx & (1 << 4)) ? "on" : "off");
-		fprintf(fp, "\t%s", (xx & (1 << 6)) ? "on" : "off");
-		fprintf(fp, "\t%s", (yy & (1 << 0)) ? "on" : "off");
-		fprintf(fp, "\t%s", (yy & (1 << 2)) ? "on" : "off");
-		fprintf(fp, "\t%s", (yy & (1 << 4)) ? "on" : "off");
-		fprintf(fp, "\t%s", (yy & (1 << 6)) ? "on" : "off");	
-		fprintf(fp, "\t%s", (zz & (1 << 0)) ? "on" : "off");
-		fprintf(fp, "\t%s", (zz & (1 << 2)) ? "on" : "off");
-		fprintf(fp, "\t%s", (zz & (1 << 4)) ? "on" : "off");
-		fprintf(fp, "\t%s", (zz & (1 << 6)) ? "on" : "off");		
+		if (xx & (1 << 1)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (xx & (1 << 0)) ? name1 : name2);
+		if (xx & (1 << 3)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (xx & (1 << 2)) ? name1 : name2);
+		if (xx & (1 << 5)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (xx & (1 << 4)) ? name1 : name2);
+		if (xx & (1 << 7)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (xx & (1 << 6)) ? name1 : name2);
+		if (yy & (1 << 1)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (yy & (1 << 0)) ? name1 : name2);
+		if (yy & (1 << 3)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (yy & (1 << 2)) ? name1 : name2);
+		if (yy & (1 << 5)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (yy & (1 << 4)) ? name1 : name2);
+		if (yy & (1 << 7)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (yy & (1 << 6)) ? name1 : name2);	
+		if (zz & (1 << 1)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (zz & (1 << 0)) ? name1 : name2);
+		if (zz & (1 << 3)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (zz & (1 << 2)) ? name1 : name2);
+		if (zz & (1 << 5)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (zz & (1 << 4)) ? name1 : name2);
+		if (zz & (1 << 7)) {name1 = "three"; name2 = "two";}else{name1 = "true"; name2 = "false";}
+		fprintf(fp, "\t%s", (zz & (1 << 6)) ? name1 : name2);		
 		fprintf(fp, "\n");
 		
 		/* advance to next entry */
@@ -1168,6 +1563,8 @@ restrictionflag(struct rom *rom)
 	/*close file and leave directory */
 	fclose(fp);
 	dir_leave();
+	dir_leave();
+	printf("success!\n");
 }
 
 void
@@ -1178,10 +1575,11 @@ message(struct rom *rom)
 	int index;
 	
 	/*display message in console*/
-	printf("dumping messages...\n");
+	printf("message... ");
 
 	/*open directory*/
 	dir_enter("messages");
+	dir_enter(VANILLA);
 	
 	/*extract tables for both text editors */
 	rom.extract("table.bin",TBL_MESSAGE, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);
@@ -1197,6 +1595,8 @@ message(struct rom *rom)
 
 	/*exit the directory*/
 	dir_leave();
+	dir_leave();
+	printf("success!\n");
 }
 
 
@@ -1227,7 +1627,7 @@ scene(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("scene");
-	dir_enter("_vanilla");
+	dir_enter(VANILLA);
 	
 	/* repeats for every item in the list */
 	index = 0;
@@ -1237,12 +1637,10 @@ scene(struct rom *rom)
 		printf("\r""scene %d/%d: ", index, TBL_SCENE_ENTRIES - 1);
 		
 		/* create and enter directory */
-		dir_enter(
-			dir_mkname(
-				index
-				, tsv_col_row(g_tsv, "scene", index + 1)
-			)
-		);
+		if (g_tsv)
+		{dir_enter(dir_mkname(index, tsv_col_row(g_tsv, "scene", index + 1)));}
+		else
+		{dir_enter(dir_mkname(index,"scene"));}
 		
 		/* go to table entry */
 		rom.seek(TBL_SCENE + index * 20);
@@ -1327,9 +1725,9 @@ scene(struct rom *rom)
 		
 		/* write table settings to conf.txt */
 		fp = fopen("conf.txt", "wb");
-		fprintf(fp, "unk-a: %d\n", unk_a);
-		fprintf(fp, "unk-b: %d\n", unk_b);
-		fprintf(fp, "shader: %d\n", rinit);
+		fprintf(fp, "unk-a %d\n", unk_a);
+		fprintf(fp, "unk-b %d\n", unk_b);
+		fprintf(fp, "shader %d\n", rinit);
 		fclose(fp);
 		
 		/* leave directory */
@@ -1361,6 +1759,7 @@ particle(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("particle");
+	dir_enter(VANILLA);
 	
 	/* repeats for every item in the list */
 	index = 0;
@@ -1369,13 +1768,12 @@ particle(struct rom *rom)
 		/* display progress */
 		printf("\r""particle %d/%d: ", index, TBL_PARTICLE_ENTRIES - 1);
 		
+
 		/* create and enter directory */
-		dir_enter(
-			dir_mkname(
-				index
-				, tsv_col_row(g_tsv, "particle", index + 1)
-			)
-		);
+		if (g_tsv)
+		{dir_enter(dir_mkname(index, tsv_col_row(g_tsv, "particle", index + 1)));}
+		else
+		{dir_enter(dir_mkname(index,"particle"));}
 		
 		/* go to table entry */
 		rom.seek(TBL_PARTICLE + index * 28);
@@ -1421,6 +1819,7 @@ particle(struct rom *rom)
 	
 	/* cleanup */
 	dir_leave();
+	dir_leave();
 	printf("success!\n");
 }
 
@@ -1439,7 +1838,7 @@ actor(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("actor");
-	dir_enter("_vanilla");
+	dir_enter(VANILLA);
 
 	/* repeats for every item in the list */
 	index = 0;
@@ -1471,7 +1870,7 @@ actor(struct rom *rom)
 		else if (naddr)
 			name = rom.raw((naddr - VRAM_CODE) + VROM_CODE);
 		else
-			name = 0;
+			name = "blank";
 		
 		/* create and enter directory */
 		dir_enter(dir_mkname(index, name));
@@ -1525,7 +1924,7 @@ object(struct rom *rom)
 	
 	/* enter and parse folder */
 	dir_enter("object");
-	dir_enter("_vanilla");
+	dir_enter(VANILLA);
 	
 	/* repeats for every item in the list */
 	index = 0;
@@ -1534,13 +1933,12 @@ object(struct rom *rom)
 		/* display progress */
 		printf("\r""object %d/%d: ", index, TBL_OBJECT_ENTRIES - 1);
 		
+		
 		/* create and enter directory */
-		dir_enter(
-			dir_mkname(
-				index
-				, tsv_col_row(g_tsv, "object", index + 1)
-			)
-		);
+		if (g_tsv)
+		{dir_enter(dir_mkname(index, tsv_col_row(g_tsv, "object", index + 1)));}
+		else
+		{dir_enter(dir_mkname(index,"object"));}
 		
 		/* go to table entry */
 		rom.seek(TBL_OBJECT + index * 8);
@@ -1566,6 +1964,32 @@ object(struct rom *rom)
 }
 
 int
+extrasystem(struct rom *rom)
+{
+	FILE *fp;
+	int *data;
+	int var;
+
+	dir_enter("system");
+
+	dir_enter("code");
+	dir_enter(VANILLA);
+	rom.extract("code.bin", VROM_CODE, VROM_CODE + VROM_CODE_SIZE);
+	dir_leave();
+	dir_leave();
+
+
+	/*dumps n_rogo*/
+	dir_enter("ovl_title");
+	dir_enter(VANILLA);
+	rom.extract("nintendo_rogo_static.zobj", N_ROGO, N_ROGO + N_ROGO_SIZE);
+	dir_leave();
+	dir_leave();
+	dir_leave();
+	
+}
+
+int
 main(int argc, char **argv)
 {
 	struct rom *rom;
@@ -1583,9 +2007,9 @@ main(int argc, char **argv)
 		fprintf(fp, "use_hex_naming_style\tfalse\t(true = index in hex when dumping)\n");
 		fprintf(fp, "using_zelda's_letter\ttrue\t(true = zelda's letter, false = ocarina text editor)\n");
 		fprintf(fp, "use_map_select_hack\ttrue\t(english map_select using mapselect.tsv and scene names)\n");
-		fprintf(fp, "build/dump audiobank\ttrue\t(optional if you don't plan on doing audiobank stuff)\n");
-		fprintf(fp, "build/dump audioseq\ttrue\t(optional if you don't plan on doing sequence stuff)\n");
-		fprintf(fp, "build/dump messages\ttrue\t(if you aren't using custom dialogue you can switch this)\n");
+		fprintf(fp, "build/dump audio\ttrue\t(optional if you don't plan on doing audio stuff)\n");
+		fprintf(fp, "build cached audio\tfalse\t(locks current audio state to increase build speed)\n");
+		fprintf(fp, "extend ram fix bugs\ttrue\t(patches the rom just like sharp ocarina)");
 		fclose(fp);
 	}
 
@@ -1595,17 +2019,19 @@ main(int argc, char **argv)
 	/* name of rom */
 	/* NOTE: the rom of the given name must exist *
 	 *       in the same directory as this .rtl   */
-	
-	//printf("\n%s\n", );
 	if (!strcmp(tsv_col_row(config, "setting", 1), "true"))
 	{
+		printf("DUMPING OOT-DEBUG...\n");
 		debugvariables();
 		name = "oot-debug.z64";
+		VANILLA = "_vanilla-debug";
 	}
 	else
 	{
+		printf("DUMPING OOT-1.0...\n");
 		ocarinaoftimevariables();
 		name = "oot-1.0.z64";
+		VANILLA = "_vanilla-1.0";
 	}
 	
 	/* initialize name lists */
@@ -1627,7 +2053,9 @@ main(int argc, char **argv)
 	/* dma table (dmadata) offset and number of entries */
 	rom.dma(TBL_DMA, TBL_DMA_ENTRIES);
 	
-	/* dump rom */
+	/* dump rom skipping audio if selected*/
+	extrasystem(rom);
+	
 	systemdir(rom);
 	object(rom);
 	actor(rom);
@@ -1636,33 +2064,25 @@ main(int argc, char **argv)
 	if (!strcmp(tsv_col_row(config, "setting", 5), "true"))
 	{
 		audiobank(rom);
-	}
-	if (!strcmp(tsv_col_row(config, "setting", 6), "true"))
-	{
+		audiotable(rom);
 		audioseq(rom);
 	}
-	
-	audiotable(rom);
-	
 	route(rom);
 	entrancecutscene(rom);
-	if (!strcmp(tsv_col_row(config, "setting", 7), "true"))
-	{
-		message(rom);
-	}
+	message(rom);
 	restrictionflag(rom);
-
-
-
 	
 	/* create .zzrpl */
 	name = rom.filename();
-	fp = fopen("project.zzrpl", "wb");
+	if (!strcmp(tsv_col_row(config, "setting", 1), "true"))
+	{fp = fopen("project-debug.zzrpl", "wb");}
+	else
+	{fp = fopen("project-1.zzrpl", "wb");}
 	fprintf(fp, "zzrtl                   v0.01\n");
 	fprintf(fp, "baserom                 \"%s\"\n", name);
 	/* zzplayas support */
 	fprintf(fp, "ZZPLAYAS_VROM_CODE      \"'%s'+0x%08X\"\n", name, VROM_CODE);
-	fprintf(fp, "ZZPLAYAS_VROM_PLAYER    \"'system/overlay/ovl_player_actor/ovl_player_actor.zovl'\"\n");
+	fprintf(fp, "ZZPLAYAS_VROM_PLAYER    \"'system/ovl_player_actor/%s/ovl_player_actor.zovl'\"\n", VANILLA);
 	fclose(fp);
 	
 	/* cleanup */
