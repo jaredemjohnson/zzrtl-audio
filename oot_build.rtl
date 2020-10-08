@@ -2129,7 +2129,6 @@ message(struct rom *rom)
 	/*seek and write the table into the rom*/
 	rom.seek(TBL_MESSAGE);
 	rom.write(data, sz);
-	free(data);
 
 	/*returns from vanilla*/
 	if (!dir_exists(VANILLA))
@@ -2138,6 +2137,7 @@ message(struct rom *rom)
 	/*check if data exists outsie of vanilla*/
 	if (!file_exists(dataname))
 	{dir_enter(VANILLA);}
+	free(data);
 
 	/*load data from file*/
 	data = loadfile(dataname,&sz, false);
