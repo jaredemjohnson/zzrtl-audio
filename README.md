@@ -18,6 +18,7 @@ You must use **zzrtl-r5b-4.exe** to edit audio.
 - Entrance Cutscenes editing
 - Message Binaries editing (compatible with **Zelda's Letter** and **Ocarina Text Editor**)
 - Routing editing (Entrance Table)
+- Custom map select for Debug *AND* 1.0
 
 ## Simple Starting Guide
 1. Include **oot-debug.z64**, **oot-build.rtl**, **oot-dump.rtl**, **oot-names.tsv**, and **zzrtl.exe** in the one same folder.
