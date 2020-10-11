@@ -511,6 +511,7 @@ mapselect(struct rom *rom)
 
 	/*clean up and leave the folders*/
 	list.free();
+
 	dir_leave();
 	free(table);
 	free(table2);
@@ -2342,9 +2343,25 @@ scene(struct rom *rom)
 		
 		/* parse conf */
 		conf = conf.new("conf.txt", "list");
-		unk_a = conf.get_int("unk-a");
-		unk_b = conf.get_int("unk-b");
-		rinit = conf.get_int("shader");
+		if (conf.exists("unk-a"))
+		{unk_a = conf.get_int("unk-a");}
+		else
+		{if (conf.exists("unk-a:"))
+		{unk_a = conf.get_int("unk-a:");}
+		else
+		{unk_a = conf.get_int("unk_a");}
+		}
+		if (conf.exists("unk-b"))
+		{unk_b = conf.get_int("unk-b");}
+		else
+		{if (conf.exists("unk-b:"))
+		{unk_b = conf.get_int("unk-b:");}
+		else
+		{unk_b = conf.get_int("unk_b");}}
+		if (conf.exists("shader"))
+		{rinit = conf.get_int("shader");}
+		else
+		{rinit = conf.get_int("shader:");}
 		conf.free();
 		
 		/* attempt to inject file */
@@ -3165,7 +3182,7 @@ main(int argc, char **argv)
 	}
 
 	/*this is a patch that makes map-select work on 1.0*/
-	if (!strcmp(tsv_col_row(config, "setting", 1), "false") && !strcmp(tsv_col_row(config, "setting", 4), "true"))
+	if (!strcmp(tsv_col_row(config, "setting", 1), "false"))
 	{
 	rom.seek(0xB67394);
 	rom.write16(0x00B9);
@@ -3189,7 +3206,9 @@ main(int argc, char **argv)
 	rom.write32(0x8E020018);
 	rom.write32(0x240B0000); 
 	rom.write32(0xAC8B0000);
-	dir_enter("system");
+	}
+	if (!strcmp(tsv_col_row(config, "setting", 4), "true"))
+	{dir_enter("system");
 	dir_enter("ovl_select");
 	if (!file_exists("ovl_select.zovl"))
 	{dir_enter(VANILLA);}
