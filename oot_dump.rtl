@@ -1837,9 +1837,11 @@ actor(struct rom *rom)
 	int naddr;
 	
 	/* enter and parse folder */
+	dir_enter("actor");
 	dir_enter(ACTOR_FOLDER);
 	dir_leave();
 	dir_enter(VANILLA);
+
 
 	/* repeats for every item in the list */
 	index = 0;
@@ -1987,7 +1989,6 @@ extrasystem(struct rom *rom)
 	dir_leave();
 	dir_leave();
 	dir_leave();
-	
 }
 
 int
@@ -2026,7 +2027,7 @@ main(int argc, char **argv)
 		debugvariables();
 		name = "oot-debug.z64";
 		VANILLA = "_vanilla-debug";
-		ACTOR_FOLDER = "custom-debug";
+		ACTOR_FOLDER = "_custom-debug";
 
 	}
 	else
