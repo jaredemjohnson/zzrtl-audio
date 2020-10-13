@@ -6,21 +6,21 @@
  *********************************************************************/
 /*USE THE CONFIG.TSV FILE TO SELECT YOUR ROM*/
 /* global variables are initialized before they are set based on each rom*/
-char *g_tsv;
-int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE; int DMA_RAM; int AUDIOBANK_PTR; int AUDIOSEQ_PTR; int AUDIOTABLE_PTR;int VANILLA;int USE_CACHED_AUDIO; int TBL_OBJECT;int TBL_OBJECT_ENTRIES;
-int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
-int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT_FILE;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;
-int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_AUDIOBANK_SIZE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;
-int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE;int TBL_MESSAGE_TOOL;int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;
-int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;int TBL_AUDIOTABLE_FILE; int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;
-int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;int VROM_PLAYER;int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;
-int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR;
-int DMA_OVL_MAP_MARK_DATA;int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;int DMA_OBJECT_FIRST;int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;
-int DMA_SKYBOX_FIRST;int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;int DMA_PRERENDER_LAST;int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;
-int DMA_UNUSED_LAST;int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;int DMA_BLANK_LAST;int ACTID_LINK;int OFS_OVL_PLAYER_ACTOR_INIT_HI;
-int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PLAYER_ACTOR_DEST_HI;int OFS_OVL_PLAYER_ACTOR_DEST_LO;int OFS_OVL_PLAYER_ACTOR_MAIN_HI;
-int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;int OFS_OVL_KALEIDO_SCOPE_INIT_HI;
-int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
+	char *g_tsv;
+	int ACTOR_FOLDER; int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE; int DMA_RAM; int AUDIOBANK_PTR; int AUDIOSEQ_PTR; int AUDIOTABLE_PTR;int VANILLA;int USE_CACHED_AUDIO; int TBL_OBJECT;int TBL_OBJECT_ENTRIES;
+	int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
+	int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT_FILE;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;
+	int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_AUDIOBANK_SIZE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;
+	int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE;int TBL_MESSAGE_TOOL;int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;
+	int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;int TBL_AUDIOTABLE_FILE; int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;
+	int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;int VROM_PLAYER;int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;
+	int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR;
+	int DMA_OVL_MAP_MARK_DATA;int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;int DMA_OBJECT_FIRST;int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;
+	int DMA_SKYBOX_FIRST;int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;int DMA_PRERENDER_LAST;int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;
+	int DMA_UNUSED_LAST;int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;int DMA_BLANK_LAST;int ACTID_LINK;int OFS_OVL_PLAYER_ACTOR_INIT_HI;
+	int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PLAYER_ACTOR_DEST_HI;int OFS_OVL_PLAYER_ACTOR_DEST_LO;int OFS_OVL_PLAYER_ACTOR_MAIN_HI;
+	int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;int OFS_OVL_KALEIDO_SCOPE_INIT_HI;
+	int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
 	
 /* OoT debug variables*/
 void
@@ -297,13 +297,17 @@ void
 mapselect(struct rom *rom)
 {
 	struct folder *list;
+	struct folder *list2;
 	struct conf *table;
 	struct conf *table2;
+	struct conf *nametable;
 	FILE *data;
 	int *data2;
 	int sz;
 	int pointer;
+	int index;
 	int var;
+	int done;
 	int var2;
 	int var3;
 	char *name;
@@ -315,7 +319,7 @@ mapselect(struct rom *rom)
 	data2 = malloc(1024);
 	
 	/*message user*/
-	printf("mapselect... ");
+	printf("mapselect...");
 
 	/*enter the ovl_select folder*/
 	dir_enter("system");
@@ -336,6 +340,7 @@ mapselect(struct rom *rom)
 	dir_leave();
 	dir_leave();
 	dir_enter("scene");
+	
 
 	/*load the mapselect and rout tables*/
 	if (!file_exists("mapselect.tsv"))
@@ -348,7 +353,59 @@ mapselect(struct rom *rom)
 	table = loadfile("route.tsv",0,0);
 	if (!dir_exists(VANILLA))
 	{dir_leave();}
+
+	/*creates the header for nametable and opens lists of scene folders*/
+	nametable = new_string("index\tname\n",0);
+	list2 = list2.new(0);
+	dir_enter(VANILLA);
+	list = list.new(0);
+	dir_leave();
+
+	/*cycles through all the scenes, writing their names to the scene folder*/
+	index = 0;
+	done = 0;
+	while (index < list.max() || index < list2.max())
+	{	
 	
+		/*checks the list for a matching id and get's it's name*/
+		if (list2.count() && list2.index() == index && done == 0)
+		{
+			name = list2.name();
+			if (list2.index() < list2.max())
+			{list2.next();}
+			else
+			{done = 1;}
+
+		}
+		else
+		{
+			while (list.index() < index)
+			{list.next();}
+			if (list.index() == index)
+			{
+			dir_enter(VANILLA);
+			name = list.name();
+			list.next();
+			}
+			else
+			{name = "0 - !Scene Missing!";}
+		}
+
+		nametable = new_string(nametable, "null\t", name,"\n", 0);
+
+		/* leave directory */
+		if (!dir_exists(VANILLA))
+		{dir_leave();}
+
+		index++;
+		/* go to next entry in list */
+	}
+		
+
+
+	list.free();
+	list2.free();
+
 	/*copy the first part of the ovl-select file, which we don't change*/
 	var = 0;
 	while (var < TBL_MAP_SELECT)
@@ -356,6 +413,7 @@ mapselect(struct rom *rom)
 		fprintf(data2,"%c", get8(&data[var]));
 		var++;
 	}
+
 
 	/*copies the second part of the file, updateing the offsets the strings and entrance ids.*/
 	pointer = var;
@@ -379,6 +437,7 @@ mapselect(struct rom *rom)
 	    var3 = var3 + 0x1A;
 		var = var + 12;
 	}
+
 	//fprintf(data2, "%c", 0xFF);
 	pointer = var;
 	while (get32(&data[var]) != 0x20313A53)
@@ -395,54 +454,33 @@ mapselect(struct rom *rom)
 	/*writes the names of all the scenes to the data*/
 	while (var < TBL_MAP_SELECT_ENTRIES + 1)
 	{
+
 		/*finds the scene's id by cross referencing the entrance index in the routing table. also get's the spawn id*/
 		sscanf(tsv_col_row(table2,"entrance index", var), "%X", &var3);
 		sscanf(tsv_col_row(table,"scene",var3 + 1), "%X", &sceneid);
 		spawnid = tsv_col_row(table,"spawn",var3 + 1);
 
 		/*makes a list in the scene folder*/
-
-		list = list.new(0);
-
-		/*checks the list for a matching id and get's it's name*/
-		while (list.count() && list.index() < sceneid && list.index() < list.max())
-		{
-			list.next();	
-		}
-		if (list.count() && list.index() == sceneid && list.count())
-		{
-		 name = list.name();
-		}
+		if  (tsv_col_row(nametable, "name", sceneid + 1))
+		{name = tsv_col_row(nametable, "name", sceneid + 1);}
 		else
-		{
-			/*if there is no matching id in the scene folder we go into vanilla and do the same*/	
-			dir_enter(VANILLA);
-			list.free();
-			list = list.new(0);
-			while (list.index() < sceneid && list.index() < list.max())
-			{
-				list.next();
-			}
-			if (list.index() == sceneid)
-			{
-				name = list.name();
-			}
-			else
-			{
-				/*if for somereason there is no scene we list it as missing*/
-				name = new_string(" - scene-missing",0);
-			}
-			dir_leave();
-		}
+		{name = "!Scene Missing!";}
 
 		var2 = 0;
-		/*we advance through the name past the fist "-"*/
-		while (get8(&name[var2]) != get8("-"))
+		/*we advance through the name to get the actual name*/
+		while (get8(&name[var2]) != get8(" ") && var2 < 5)
 		{var2++;}
-		var2 = var2 + 2;
-
+		var2++;
+		if (get8(&name[var2]) == get8("-") || get8(&name[var2+1]) == get8("-") || get8(&name[var2+2]) == get8("-"))
+		{while (get8(&name[var2]) != get8("-"))
+		{var2++;}
+		var2++;
+		if (get8(&name[var2]) == get8(" "))
+		{var2++;}
+		}
+		
 		/*we add the spawn id only if it is greater than 0*/
-		if (strcmp(spawnid, "0") && strcmp(name," - scene-missing"))
+		if (strcmp(spawnid, "0") && strcmp(name,"!scene missing!"))
 		{
 			strcat(name, "-");
 			strcat(name, spawnid);
@@ -452,36 +490,30 @@ mapselect(struct rom *rom)
 		/*we write the map-select number and advance the forward depending on how many characters the number is*/
 		fprintf(data2,"%c%d:",0x00,var);
 		if (var >= 100)
-		{
-			var3 = var3 + 5;
-		}
+		{var3 = var3 + 5;}
 		else
 		{
 			if (var >= 10)
-			{
-				var3 = var3 + 4;
-			}
+			{var3 = var3 + 4;}
 			else
-			{
-				var3 = var3 + 3;
-			}
+			{var3 = var3 + 3;}
 		}
 		pointer = pointer + var3;
 		
 		/*now we write as much of the name as we can fit inside of 0x1A bytes*/
 		while (var3 < 0x1A)
 		{
-			if (get8(&name[var2]) != 0x20)
-			{
 			fprintf(data2,"%c", get8(&name[var2]));
 			pointer++;
 			var3++;
-			}
+			
 			var2++;
 		}
 		/*we count our advancement*/
 		var++;
+
 	}
+
 
 	/*then we copy the rest of the file copying some english text over things*/
 	while (pointer < sz)
@@ -510,11 +542,10 @@ mapselect(struct rom *rom)
 	}
 
 	/*clean up and leave the folders*/
-	list.free();
-
 	dir_leave();
 	free(table);
 	free(table2);
+	free(nametable);
 	fclose(data2);
 	free(data);
 	printf("success!\n");
@@ -1944,7 +1975,7 @@ entrancecutscene(struct rom *rom)
 	index_last = 0;
 
 	/* parse every row */
-	while (index < TBL_ENTRANCECUTSCENE_ENTRIES)
+	while (tsv_col_row(table,"entry",index + 1))
 	{
 		/* retrieve variables */
 		sscanf(tsv_col_row(table,"entry",index + 1), "%X", &entrance);
@@ -2609,6 +2640,7 @@ actor(struct rom *rom)
 {
 	struct folder *list;
 	struct folder *list2;
+	struct folder *list3;
 	struct conf *conf;
 	char *name;
 	char *ovl;
@@ -2620,6 +2652,7 @@ actor(struct rom *rom)
 	int ivar;
 	int atype;
 	int done;
+	int done2;
 	
 	/* actors aligned 0x10 in retail */
 	rom.align(0x10);
@@ -2627,7 +2660,11 @@ actor(struct rom *rom)
 	/* enter and parse folder */
 	dir_enter("actor");
 	list2 = list2.new(0);
+	dir_enter(ACTOR_FOLDER);
+	list3 = list3.new(0);
+	dir_leave();
 	done = 0;
+	done2 = 0;
 	dir_enter(VANILLA);
 	list = list.new(0);
 	if (!list.count())
@@ -2652,8 +2689,20 @@ actor(struct rom *rom)
 		}
 		else
 		{
-			dir_enter(VANILLA);
-			name = list.name();
+			if (list3.count() && list3.index() <= index && done2 == 0)
+			{
+				dir_enter(ACTOR_FOLDER);
+				name = list3.name();
+				if (list3.index() < list3.max())
+				{list3.next();}
+				else
+				{done2 = 1;}
+			}
+			else
+			{
+				dir_enter(VANILLA);
+				name = list.name();
+			}
 		}
 		
 		/* display progress */
@@ -2744,8 +2793,9 @@ actor(struct rom *rom)
 		
 		/* leave directory */
 		dir_leave();
-		if (dir_exists(VANILLA))
-		{dir_enter(VANILLA);}
+		if (!dir_exists(VANILLA))
+		{dir_leave();}
+		dir_enter(VANILLA);
 		/* go to next entry in list */
 		list.next();
 	}
@@ -3020,6 +3070,7 @@ main(int argc, char **argv)
 		printf("BUILDING OOT-DEBUG...\n");
 		debugvariables();
 		VANILLA = "_vanilla-debug";
+		ACTOR_FOLDER = "_custom-debug";
 		rpl = rpl.new("project-debug.zzrpl", "list");
 
 	}
@@ -3028,6 +3079,7 @@ main(int argc, char **argv)
 		printf("BUILDING OOT-1.0...\n");
 		ocarinaoftimevariables();
 		VANILLA = "_vanilla-1.0";
+		ACTOR_FOLDER = "_custom-1.0";
 		rpl = rpl.new("project-1.zzrpl", "list");
 	}
 
@@ -3050,7 +3102,6 @@ main(int argc, char **argv)
 	/* mark files for compression */
 	rom.dma_compress(DMA_ITEM_FIELD, DMA_ITEM_LOCALIZED, true);
 	rom.dma_compress(DMA_CODE      , TBL_DMA_ENTRIES   , true);
-	rom.dma_compress_one(N_ROGO_DMA , true);
 
 	/* disable compression on skybox palettes (including pre-renders) */
 	i = DMA_SKYBOX_FIRST + 1;
@@ -3120,6 +3171,8 @@ main(int argc, char **argv)
 	g_tsv = loadfile("oot_names.tsv", 0, true/*file is optional*/);
 	
 	/* construct rom */
+		if (!strcmp(tsv_col_row(config, "setting",4), "true"))
+	{mapselect(rom);}
 	systemdir(rom);
 	actor(rom);
 	particle(rom);
@@ -3129,8 +3182,6 @@ main(int argc, char **argv)
 	entrancecutscene(rom);
 	restrictionflag(rom);
 	message(rom);
-	if (!strcmp(tsv_col_row(config, "setting",4), "true"))
-	{mapselect(rom);}
 
 
 	/*patches in ram hack and bug fixes for debug*/
@@ -3180,7 +3231,8 @@ main(int argc, char **argv)
 		rom.seek(0x00AB33D0);
 		rom.write32(0);
 	}
-
+	if (!strcmp(tsv_col_row(config, "setting", 4), "true"))
+	{
 	/*this is a patch that makes map-select work on 1.0*/
 	if (!strcmp(tsv_col_row(config, "setting", 1), "false"))
 	{
@@ -3207,8 +3259,8 @@ main(int argc, char **argv)
 	rom.write32(0x240B0000); 
 	rom.write32(0xAC8B0000);
 	}
-	if (!strcmp(tsv_col_row(config, "setting", 4), "true"))
-	{dir_enter("system");
+
+	dir_enter("system");
 	dir_enter("ovl_select");
 	if (!file_exists("ovl_select.zovl"))
 	{dir_enter(VANILLA);}
