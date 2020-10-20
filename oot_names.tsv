@@ -1,472 +1,472 @@
-index	inhex	scene	object	actor	particle (TODO)	sequence	audiobank	instruments
-0	0x0000	Dungeon - Inside the Deku Tree	(intentionally blank)	Player		master_sequence	master_bank	step_ground
-1	0x0001	Dungeon - Dodongo's Cavern	gameplay_keep - Global Gameplay Objects	Empty - (unused)		nature_ambiance	actor_sounds	step_sand
-2	0x0002	Dungeon - Inside Jabu-Jabu's Belly	gameplay_field_keep - Global Field Objects	Stalfos		hyrule_field_master	nature_sounds	step_concrete
-3	0x0003	Dungeon - Forest Temple	gameplay_dangeon_keep - Global Dungeon Objects	Empty - (unused)		hyrule_field_day_one	main_orchestra	step_dirt
-4	0x0004	Dungeon - Fire Temple	(unused)	Shop Inventory Data		hyrule_field_day_two	deku_tree	step_water
-5	0x0005	Dungeon - Water Temple	(unused)	Empty - (unused)		hyrule_field_day_three	hylian_troupe	step_carpet
-6	0x0006	Dungeon - Spirit Temple	Aria (unused)	Empty - (unused)		hyrule_field_day_four	title_screen	step_iron
-7	0x0007	Dungeon - Shadow Temple	Octorok	En_Part		hyrule_field_day_five	jabujabus_belly	step_grass
-8	0x0008	Dungeon - Bottom of the Well	Guay	Flame		hyrule_field_day_six	kakariko_guitar	synth_pad
-9	0x0009	Dungeon - Ice Cavern	Poe	Wooden Door		hyrule_field_day_seven	harp_strings	slide
-10	0x000A	Dungeon - Ganon's Tower	Great Fairy	Treasure Chest		hyrule_field_day_eight	fire_temple	drop
-11	0x000B	Dungeon - Gerudo Training Ground	Floormaster & Wallmaster	Great Fairy		hyrule_field_day_nine	dodongos_cavern	tap_wood
-12	0x000C	Dungeon - Thieves' Hideout	Dodongo	Proximity-Activated Firewall		hyrule_field_day_ten	forest_temple	ice_slide
-13	0x000D	Dungeon - Inside Ganon's Castle	Keese	Graveyard Poe & Composer Brothers		hyrule_field_day_eleven	lon_lon_ranch	ice_slide_loop
-14	0x000E	Misc - Tower Escape Interior	Treasure Chest	Octorok		hyrule_field_day_twelve	goron_city	slide_loop
-15	0x000F	Misc - Tower Escape Interior (Second Phase)	Dancing Flame (unused)	Spiderweb		hyrule_field_battle_one	kokiri_forest	high_howling_wind
-16	0x0010	Game - Treasure Box Shop	(unused)	Bomb Field Model		hyrule_field_battle_two	spirit_temple	water_running
-17	0x0011	Boss - Gohma	(unused)	Wallmaster		hyrule_field_battle_three	horse_race	water_turn_on
-18	0x0012	Boss - King Dodongo	Shabom	Dodongo		hyrule_field_battle_four	warp_songs	water_stop
-19	0x0013	Boss - Barinade	Cucco	Keese		hyrule_field_battle_five	legend_of_hyrule	water_splash
-20	0x0014	Boss - Phantom Ganon	Adult Link	Adult Epona		hyrule_field_sunset_one	minigame_shop	water_bubble
-21	0x0015	Boss - Volvagia	Child Link	Collectible Items (Visible)		hyrule_field_sunset_two	zoras_domain	drop_underwater
-22	0x0016	Boss - Morpha	Tektites	En_Arrow		hyrule_field_sunset_three	shop_theme	land_wood
-23	0x0017	Boss - Twinrova	Leever	Empty - (unused)		hyrule_field_sunset_four	ice_cavern	land_grass
-24	0x0018	Boss - Bongo Bongo	Peahat	Navi & Healing Fairy		dodongos_cavern	shadow_temple	sword_hit
-25	0x0019	Boss - Ganondorf	King Dodongo	Friendly Cucco		kakariko_village_strings	water_temple	cut_plant
-26	0x001A	Misc - Tower Escape Exterior	Epona	Empty - (unused)		battle_theme	piano_unused	swort_hit
-27	0x001B	PR - Market Entrance Day	Lizalfos & Dinolfos	Tektite		boss_battle	gerudo_valley	high_cut
-28	0x001C	PR - Market Entrance Night	Gohma	Leever		inside_the_deku_tree_and_grottos	potion_shop	put_away
-29	0x001D	PR - Market Entrance Ruins	Child Zelda	Peahat		castletown_market	koume_and_kotakes_theme	draw_sword
-30	0x001E	PR - Back Alley Day	Gohma Larva	Butterfly		opening	organ	swing_stick
-31	0x001F	PR - Back Alley Night	Baby Dodongo	Empty - (unused)		inside_a_house	inside_ganons_castle	swing_sword
-32	0x0020	PR - Market Day	Dark Link	Bug		game_over	battle_2	sword_hit
-33	0x0021	PR - Market Night	Biri	Fish		boss_clear	ending_orchestra_1	pull_bow
-34	0x0022	PR - Market Ruins	Tailpasaran	Empty - (unused)		item_get	ending_orchestra_2	spend_money
-35	0x0023	PR - Temple of Time Exterior Day	Kakariko Rooftop Man [Early] (unused)	Room Transition Plane		ganondorf_appears	fanfare_orchestra	water_sound
-36	0x0024	PR - Temple of Time Exterior Night	Skulltulas	En_Scene_Change		get_heart_container	kaepora_gaebora	drop_crate
-37	0x0025	PR - Temple of Time Exterior Ruins	Torch Slug	Lizalfos & Dinalfos		prelude_of_light	extra_space_unsupported	chomp
-38	0x0026	House - Know-It-All	Stingers	Flagpole		jabu_jabus_belly		empty_bow
-39	0x0027	House - Twins	Generic Horse	King Dodongo		kakariko_village_guiltar		poe_disappear
-40	0x0028	House - Mido	Bazaar Proprietor [Early] (unused)	Gohma		fairy_fountain		step_stone
-41	0x0029	House - Saria	NPC Animations I	Child Zelda (Cutscene 05 & 06)		zeldas_theme		whip
-42	0x002A	House - Carpenter Boss	Kokiri Forest Objects	En_Viewer		fire_temple		magic
-43	0x002B	House - Alley Green Man	Dodongo's Cavern Objects	Gohma Larva		open_treasure_chest		stop_carpet
-44	0x002C	Shop - Bazaar	Fire Temple Objects	Bg_Pushbox		forest_temple		disonant_harp
-45	0x002D	Shop - Kokiri	Ganondorf's Horse	Shabom		castle_courtyard		door_open
-46	0x002E	Shop - Goron	Zora [Early] (unused)	Door Shutter		ganons_organ		bell_synth
-47	0x002F	Shop - Zora	Hyrule Field Objects (Child)	Baby Dodongo		lon_lon_ranch		explosion
-48	0x0030	Shop - Potion Kakariko	Moblins	King Dodongo's Fire		goron_city		gallop
-49	0x0031	Shop - Potion Market	Bomb Flower	Empty - (unused)		hyrule_field_morning_day_one		naying
-50	0x0032	Shop - Bombchu	Stalfos	Boomerang Field Model		spiritual_stone_get		creek
-51	0x0033	Shop - Mask	Mido I [Early] (unused)	Dark Link		bolero_of_fire		ocarina
-52	0x0034	House - Link	NPC Animations II	Biri		minuet_of_forest		ocarina
-53	0x0035	House - Alley Dog Lady	Red-Haired Kokiri Girl [Early]	Tailpasaran		serenade_of_water		heavy_slide
-54	0x0036	House - Stable	Inside the Deku Tree Objects	Empty - (unused)		requiem_of_spirit		dirt_slide
-55	0x0037	House - Impa	Phantom Ganon	Skulltula		nocturne_of_shadow		explosion
-56	0x0038	House - Laboratory	Armos	Torch Slug		miniboss_battle		drawbridge
-57	0x0039	House - Tent	Deku Babas	Directional Sign & Square Sign [Early]		heart_piece_get		high_laugh
-58	0x003A	House - Dampe	(unused)	Land Stinger		temple_of_time		empty_bow
-59	0x003B	Fountain - Great Fairy Upgrades	Impa's Masked Head [Early] (unused)	Sound Effects I		escape_the_ranch		howling_wind
-60	0x003C	Fountain - Normal	Laughing Man [Early] (unused)	Generic Horse		kokiri_forest		wolfos_cry
-61	0x003D	Fountain - Great Fairy Spells	Hylian Woman in Purple Dress [Early] (unused)	En_Ossan		learn_new_song		water_splash
-62	0x003E	Misc - Grottos	Hylian Man in Blue Shirt & Orange Pants [Early] (unused)	Deku Tree's Jaw		lost_woods		step_dirt
-63	0x003F	Grave - Redead	Hylian Woman in White Shirt & Orange Pants [Early] (unused)	Dead Dodongo's Jaw		spirit_temple		sparkle_bell
-64	0x0040	Grave - Fountain	Jabu-Jabu	Fire Temple Breakable Hammer Block		horse_race		heavy_land
-65	0x0041	Grave - Royal Family's Tomb	Old Hylian Man [Early] (unused)	Fire Temple Hammer-Activated Elevator Pillar		horse_race_goal		creaky_door
-66	0x0042	Game - Shooting Gallery	Old Hylian Man's Head [Early] (unused)	Ganondorf's Horse		ingo_loses		squishy_slash
-67	0x0043	World - Temple of Time	Hylian Man in Purple Shirt & Green Pants [Early] (unused)	Fire Temple Fire-Powered Elevator Block		get_medalion		blue_light
-68	0x0044	World - Chamber of Sages	Carpenter Boss's Wife [Early] (unused)	Fire Temple Rotating Fire Spinner		ocarina_sarias_song		teleport
-69	0x0045	World - Castle Maze Day	Hylian Woman in Blue Shirt & White Dress [Early] (unused)	Fire Temple Flame-Spouting Statue		ocarina_eponas_song		electric_shock
-70	0x0046	World - Castle Maze Night	Zelda's Horse	Fire Temple Clover Platform		ocarina_zeldas_lullaby		water_drips
-71	0x0047	Misc - Cutscene Map	Opening Cutscene Animations	Fire Temple Fire-Powered Mini-Boss Room Face Elevator		ocarina_suns_song		underwater_bubble
-72	0x0048	World - Windmill & Dampe's Grave	Warp Circle & Rupee Prism	Sheik		ocarina_song_of_time		fire_crackle
-73	0x0049	World - Fishing Pond	Heart Container [Early] (unused)	Circle of Flames		ocarina_song_of_storms		ice_blow
-74	0x004A	World - Zelda's Courtyard	Mad Scrub	Drawbridge		flying_theme		loud_noise
-75	0x004B	Game - Bombchu Bowling	Saria [Early] (unused)	Moblin		great_deku_trees_theme		shutting_door
-76	0x004C	House - Ranch & Silo	Red-Haired Kokiri Boy I [Early] (unused)	Bomb Flower		windmill_hut		fire
-77	0x004D	House - Guard	Gerudo Training Ground Objects	Adult Zelda (Cutscenes)		legend_of_hyrule_long_version		roll_noise
-78	0x004E	House - Witch	Fado [Early] (unused)	Hookshot Elevator		minigame_shop		town_chatter
-79	0x004F	Boss - Beast Ganon	Kokiri Girl in Brown Band's Head [Early] (unused)	Kokiri Girl [Early] (unused)		sheiks_theme		high_electricity
-80	0x0050	House - Skulltula	Kokiri Boy in Green Cap's Head [Early] (unused)	Bg_Ydan_Hasi		zoras_domain		dodongo_cry
-81	0x0051	World - Hyrule Field	Kokiri Girl in Green Band's Head [Early] (unused)	Deku Tree Spiked Log & Dropdown Ladder		zelda_turns_around		pan_flute
-82	0x0052	World - Kakariko Village	Kokiri Boy in Mint Cap's Head [Early] (unused)	Phantom Ganon		zeldas_theme_orchestra		accordion
-83	0x0053	World - Graveyard	Kokiri Shop Proprietor's Head [Early] (unused)	Empty - (unused)		master_sword		harp
-84	0x0054	World - Zora's River	Kokiri Girl in Green Cap's Head [Early] (unused)	Armos		ganondorfs_theme		malon
-85	0x0055	World - Kokiri Forest	Fado's Head [Early] (unused)	Deku Baba		shop_theme		faded_ocarina
-86	0x0056	World - Sacred Forest Meadow	Bari	Deku Nut Effect		legend_of_hyrule_short_version		bell
-87	0x0057	World - Lake Hylia	Soldier [Early] (unused)	Spin Attack Effects		pointer_to_fairy_fountain_title_screen		chirp
-88	0x0058	World - Zora's Domain	Soldier (Courtyard) [Early] (unused)	Dodongo's Cavern Elevator Platform		ice_cavern		harp
-89	0x0059	World - Zora's Fountain	Water Temple Objects	Bombable Wall		door_of_time		swoosh
-90	0x005A	World - Gerudo Valley	Phantom Ganon's Horse & Objects	Jabu-Jabu		kaepora_gaebora		heavy_drop
-91	0x005B	World - Lost Woods	Shooting Gallery & Bazaar Proprietors	Zelda's Horse		shadow_temple		knock
-92	0x005C	World - Desert Colossus	Forest Temple Room 13 (Twisted)	Dodongo's Cavern Bombable Stairs		water_temple		dodongo_cry
-93	0x005D	World - Gerudo's Fortress	Bubbles	Blue Warp & Rupee-Shaped Prism		ganons_rainbow_bridge		ice_blow
-94	0x005E	World - Haunted Wasteland	Temple of Time Objects	Torch Stand (Generic)		seal_of_the_six_sages		monster_growl
-95	0x005F	World - Hyrule Castle	Flying Floor Tile	Heart Container		gerudo_valley		money_sound
-96	0x0060	World - Death Mountain Trail	Adult Zelda	Mad Scrub		potion_shop		chomp
-97	0x0061	World - Death Mountain Crater	Warp Pad Base	Rotating Ring		koume_&_kotakes_theme		damage
-98	0x0062	World - Goron City	Light Warp Pad	Statue Eye Targets		castle_collapsing		frog
-99	0x0063	World - Lon Lon Ranch	Shadow Warp Pad	Bari		inside_ganons_castle		magic_cry
-100	0x0064	World - Ganon's Tower	Fire Warp Pad	Bg_Mizu_Movebg		ganondorf_battle		magic_charge
-101	0x0065	Test - Jungle Gym	Water Warp Pad	Water Temple Water		ganons_last_stand		flutter
-102	0x0066	Test - Strongbox Warp	Spirit Warp Pad	Hookshot Field Model		ending_ocarina_of_time		monster_cry
-103	0x0067	Test - Depth Test	Forest Warp Pad	Phantom Ganon's Horse		end_credits_one		tap
-104	0x0068	Test - Stalfos Miniboss	Ocarina Pedestal [Early] (unused)	Forest Temple Twisting Corridor		end_credits_two		voice_fast
-105	0x0069	Test - Stalfos Boss	Shadow Temple Objects	Bubble		end_credits_three		laughing
-106	0x006A	Test - Obsolete	Lake Hylia Objects	Temple of Time Window Light Rays		end_credits_four		deku_scare
-107	0x006B	Test - Hedge Maze	Ice Cavern Objects	Flying Floor Tile		boss_battle_two		deku_caught
-108	0x006C	Test - SRD Grass Test	Dampé's Relay Race Objects	Master Sword		timed_minigame		broken_pot
-109	0x006D	Test - Treasure Room	Big Poe & Poe Guide	Phantom Ganon's Lightning		blank_end		fire
-110	0x006E		Sharp & Flat	Warp Pad & Ocarina Pedestal				monster_shriek
-111	0x006F		Forest Temple Room 13 (Straight)	Metal Bars				step_dirt
-112	0x0070		Forest Temple Room 14 (Straight)	Door of Time Collision Model				dirty_step
-113	0x0071		Forest Temple Room 14 (Twisted)	Hammer-Activated Steps				howling_wind
-114	0x0072		Forest Temple Objects	Brown Bird (unused)				witch_hurt
-115	0x0073		Forest Temple Textures	Empty - (unused)				motor_sound
-116	0x0074		Zora's Fountain Objects	Empty - (unused)				lizalfos_attack
-117	0x0075		[Blank] (unused)	Empty - (unused)				ice_monster_hit
-118	0x0076		Flagpole	Empty - (unused)				ganondorf_laugh
-119	0x0077		Brown Bird (unused)	Trees & Bushes				attack_shout
-120	0x0078		(unused)	Empty - (unused)				magic_strong
-121	0x0079		(unused)	Empty - (unused)				electric_shock
-122	0x007A		(unused)	Empty - (unused)				ganondorf_flying
-123	0x007B		(unused)	Empty - (unused)				magic_charging
-124	0x007C		Bushes & Trees	Grey Rectangular Block (unused)				disonant_harp
-125	0x007D		(unused)	Grey Rectangular Stone Block (unused)				thunder
-126	0x007E		(unused)	Empty - (unused)				crazy_wail
-127	0x007F		(unused)	Empty - (unused)				attack_hah
-128	0x0080		(unused)	Blade Trap				annoyed_moan
-129	0x0081		Rectangular Stone Blocks (Light Grey) (unused)	Arrow-Deflecting Trap (unused)				water_splash
-130	0x0082		Rectangular Stone Blocks (Dark Grey) (unused)	Orange Pot (unused)				step_water
-131	0x0083		(unused)	Empty - (unused)				explosion
-132	0x0084		(unused)	Talon				big_monster_cry
-133	0x0085		Blade Trap	Dampé				worried_crying
-134	0x0086		Orange Pot (unused)	Forest Temple Bow Room Platform				scary_laugh
-135	0x0087		Impa	Forest Temple Sun Elevator				underwater_bubble
-136	0x0088		Talon	Forest Temple Rotating Pre-Boss Room				annoyed_groan
-137	0x0089		Dampé & Ghost	Forest Temple Collapsing Checkerboard Ceiling				goron_sound
-138	0x008A		Sheik	Beamos				ice_slide_loop
-139	0x008B		Beamos	Demo_Effect				bongo
-140	0x008C		Barinade	Demo_Kankyo				wolfos_cry
-141	0x008D		Bottom of the Well Objects	Fire Temple Big Fire Wall				deku_cry
-142	0x008E		[todo]	Floormaster				chirp
-143	0x008F		Goddesses' Flame of Creation	Soldier (Castle Hedge Maze)				tap
-144	0x0090		[Blank] (unused)	Redead & Gibdo				chirp_alt
-145	0x0091		Goddess Light Dome	En_Po_sisters				cricket
-146	0x0092		Light Beam & Rubble	Golden Gauntlets Rock				chirp_strong
-147	0x0093		Golden Goddesses	Bg_Po_Event				crow_caw
-148	0x0094		Jagged-Edged Light Ring	Group of Bugs, Fish, Butterflies				cucco_sound
-149	0x0095		Triforce & Beam of Light	Skullwalltula				cucco_high
-150	0x0096		Inside Jabu-Jabu's Belly Objects	Volvagia (Flying)				bird_sing
-151	0x0097		Soldiers	Object_Kankyo				cucco_sing
-152	0x0098		Redead & Gibdo	Darunia				owl
-153	0x0099		Poe Sisters & Objects	Flare Dancer				hawk
-154	0x009A		Golden Gauntlets Boulder	Child Epona				chirp_tiny
-155	0x009B		Ganondorf (Cutscenes)	Grotto Hole				wolfos_cry
-156	0x009C		Volvagia (Flying)	Graveyard Objects				rushing_water
-157	0x009D		Darunia	Gravestone				howling_wind
-158	0x009E		Flare Dancer	Farore's Wind Effect				high_howling_wind
-159	0x009F		Medallions [Early] (unused)	Din's Fire Effect				heavy_rain
-160	0x00A0		Child Epona	Empty - (unused)				deep_thunder
-161	0x00A1		Graveyard Objects	Child Ruto				ice_blow
-162	0x00A2		Gravestone	Volvagia (Whack-a-Mole)				flute
-163	0x00A3		Child Ruto	Flare Dancer's Fireball				oboe
-164	0x00A4		Torches	Dead Hand				clarinet
-165	0x00A5		Volvagia (Whack-a-Mole)	Dead Hand's Hands				bassoon
-166	0x00A6		Dead Hand & Hands	Rauru				horn
-167	0x00A7		Rauru	Enemy Spawner				trumpet
-168	0x00A8		Time Block Disappearance Effect	Darunia				trombone
-169	0x00A9		[Blank] (unused)	Impa				tuba
-170	0x00AA		Item Model - Small Key	Treasure Chest Glow				glockenspiel
-171	0x00AB		Mirror Shield's Light Reflection	Flare Dancer Core				strings
-172	0x00AC		Jelly Platform	Volvagia's Sinking Platform				strings
-173	0x00AD		Item Model - Spiritual Stones	Volvagia's Rock Attack				pizzicato
-174	0x00AE		Gerudo Valley Objects	Bg_Haka_Megane				piano
-175	0x00AF		Goron City Objects	Invisible Wall				harp
-176	0x00B0		Boss Doors	Charon's Boat				marimba
-177	0x00B1		Death Mountain Crater Objects	Spinning Scythes				pad
-178	0x00B2		Shop Shelves	Empty - (unused)				pad
-179	0x00B3		Nabooru	Soldier (Castle Gate, Zelda's Courtyard, Kakariko Village)				koto
-180	0x00B4		Morpha	Falling Boulder Spawner				ocarina
-181	0x00B5		Shellblade	Flaming Debris				bassoon
-182	0x00B6		Item Model - Music Notes (unused)	Stunnable Jelly Platform				oboe
-183	0x00B7		Item Model - Recovery Heart	Reflectable Ray of Light				pizz_strings
-184	0x00B8		Item Model - Compass	Gerudo Valley Objects				ocarina
-185	0x00B9		Item Model - Big Key	Goron City Objects				strings
-186	0x00BA		Item Model - Medallions	Barinade				strings
-187	0x00BB		Item Model - Deku Nut	Shadow Temple Flaming Skull Vase				piano
-188	0x00BC		Saria	Shadow Temple Guillotine				piano
-189	0x00BD		Item Model - Heart Container & Piece of Heart	Shadow Temple Coffin Lid				wind
-190	0x00BE		Item Model - Quivers	Bg_Haka_Zou				synth_strings
-191	0x00BF		Item Model - Bomb Bags	Death Mountain Crater Smoke Plume				creeking
-192	0x00C0		Ingo	Shooting Gallery Items				creeking
-193	0x00C1		Kotake & Koume	Shooting Gallery Proprietor				harmonica
-194	0x00C2		Death Mountain Trail Objects	Shop Shelves				guitar
-195	0x00C3		Mido II [Early] (unused)	Nabooru				guitar
-196	0x00C4		Red-Haired Kokiri Boy II [Early] (unused)	Morpha				ocarina
-197	0x00C5		NPC Animations III	Shellblade				glockenspiel
-198	0x00C6		Item Model - Empty Bottle	Big Octorok				accordion
-199	0x00C7		Item Model - Deku Stick	Wilted Deku Baba				accordion
-200	0x00C8		Item Model - Dungeon Map & Stone of Agony	Inside Jabu-Jabu's Belly Objects				harp
-201	0x00C9		Goron, Medigoron, Biggoron	Saria (Cutscenes)				harp
-202	0x00CA		Adult Ruto	Generic Goron (Cutscenes)				harp
-203	0x00CB		Item Model - Deku Shield	Ingo				harp
-204	0x00CC		Deku Tree Sprout	Kotake & Koume				strings
-205	0x00CD		Item Model - Magic Jars	Dodongo's Cavern Boulder Blockade				ocarina
-206	0x00CE		Item Model - Bomb	Empty - (unused)				choir
-207	0x00CF		Goron [Early] (unused)	Bombable Wall & Cracked Floor (Fire Temple)				choir
-208	0x00D0		Adult Malon	Bombable Wall (Death Mountain Trail)				glockenspiel
-209	0x00D1		Item Model - Wallets	Drifting Ice Platform				strings
-210	0x00D2		Ingo's Horse & Archery Range Horse	Adult Ruto				strings
-211	0x00D3		Twinrova	Deku Tree Sprout				pizz_strings
-212	0x00D4		Like Like	Water Current				chants
-213	0x00D5		Parasitic Tentacle & Tentacle Obstruction	Lake Hylia Objects				chant
-214	0x00D6		Anubis & Fire Trap	Ice Cavern Objects				chant
-215	0x00D7		Item Model - Gerudo Card	Bottom of the Well Moat Water				kilimba
-216	0x00D8		Item Model - Arrows	Empty - (unused)				wind
-217	0x00D9		Item Model - Bombchu	Adult Malon (Stable & Lon Lon Ranch - Ingo Ousted)				bell
-218	0x00DA		Item Model - Pocket & Weird Eggs	Bombchu Field Model				unknown
-219	0x00DB		Item Model - Silver & Golden Scales	En_Horse_Game_Check				wind
-220	0x00DC		Item Model - Hylian Shield	Twinrova				wood_chime
-221	0x00DD		Item Model - Hookshot & Longshot	Like Like				noise
-222	0x00DE		Item Model - Ocarina of Time	Parasitic Tentacle				dodongo's_sound
-223	0x00DF		Item Model - Lon Lon Milk	Tentacle Obstruction				voice_pad
-224	0x00E0		Child Malon	Anubis				multipitch_flute
-225	0x00E1		Ganondorf (Boss)	Anubis-Killing Fire Trap				wood_chime
-226	0x00E2		Bongo Bongo	Forest Temple Dropdown Ladder				malon
-227	0x00E3		Spike Trap [Duplicate] (unused)	Forest Temple Rotating Lava Room Platforms				malon
-228	0x00E4		(unused)	Forest Temple Well Path Water				jazz_guitar
-229	0x00E5		Spike Trap	Death Mountain Cloud Ring				jazz_guitar_high
-230	0x00E6		Frog	Jabu-Jabu's Belly Switch				jazz_guitar_high
-231	0x00E7		Item Model - Fairy Slingshot	Child Malon				strings
-232	0x00E8		Item Model - Boomerang	Ganondorf				strings
-233	0x00E9		Item Model - Fairy Bow	Bongo Bongo				fiddle
-234	0x00EA		Item Model - Lens of Truth	Empty - (unused)				fiddle
-235	0x00EB		Item Model - Potions	Empty - (unused)				clocktown_bell
-236	0x00EC		Kakariko Rooftop Man	Spike Trap				bent_drum
-237	0x00ED		Chamber of the Sages Cutscene Objects	Frog				conga_hit_slap
-238	0x00EE		Item Model - Mirror Shield	Collectible Deku Shield				cuica_push_pull
-239	0x00EF		Item Model - Zelda's Letter	Meltable Ice Covering				kilimba
-240	0x00F0		Hyrule Castle Objects	Blue Fire				kilimba
-241	0x00F1		Spirit Temple Objects	Collectible Ocarina of Time				pan_flute
-242	0x00F2		Item Model - Tunics	Empty - (unused)				oboe
-243	0x00F3		Item Model - Magic Bean	Empty - (unused)				clarinet
-244	0x00F4		Item Model - Fish	Nayru's Love Effect				bassoon
-245	0x00F5		Item Model - Poacher's Saw	Sage Light Orbs				horn
-246	0x00F6		Item Model - Megaton Hammer	Anubis Spawner				glockenspiel
-247	0x00F7		Item Model - Reed Whistle (unused)	Bg_Haka_Gate				strings
-248	0x00F8		Item Model - Giant's Knife & Biggoron's Sword	Hyrule Castle Gate				strings
-249	0x00F9		Kakariko Village Objects (Shared)	Rolling Boulder (Spirit Temple)				pizz_strings
-250	0x00FA		Mido [Duplicate] (unused)	Spirit Temple Shifting Wall				harpsicord
-251	0x00FB		Mido	Empty - (unused)				harp
-252	0x00FC		Red-Haired Kokiri Boy	Snake Statue				marimba
-253	0x00FD		Red-Haired Kokiri Girl	Mesh Bridge				voice_pad
-254	0x00FE		Zora	Fishing Pond & Proprietor				synth_strings
-255	0x00FF		King Zora	Pushblock				ethnic_flute
-256	0x0100		Horse-Jumping Fence	Gate to Death Mountain Trail				conga_hit_slap
-257	0x0101		Kokiri Shop Proprietor Animations	Dust Particles				synth_strings
-258	0x0102		Kokiri Shop Proprietor's Head	Kakariko Village Windmill Blades				ethnic_flute
-259	0x0103		Goron Shop Proprietor Animations	Kakariko Village Well Crossbeam				banjo
-260	0x0104		Zora Shop Proprietor Animations	Kakariko Village Well Water				banjo
-261	0x0105		Dog Lady	Torch Stand (Poe Sisters)				acoustic_bass
-262	0x0106		Iron Knuckle	Ganondorf's Lair Floor Tile				harmonica
-263	0x0107		Hylian Men I	Lon Lon Milk Crate				acoutsic_guitar
-264	0x0108		Young Hylian Women	Horse Jumping Fence				fiddle
-265	0x0109		Item Model - Cuccos	Empty - (unused)				fiddle
-266	0x010A		Skull Kid	Collectible Fire Arrows				harp
-267	0x010B		Item Model - Ruto's Letter	Collectible Ice Arrows				harp
-268	0x010C		Old Hylian Men	Collectible Light Arrows				strings
-269	0x010D		Old Hylian Woman	Empty - (unused)				ocarina
-270	0x010E		Item Model - Fairy Ocarina (unused)	Empty - (unused)				glockenspiel
-271	0x010F		Potion Shop Granny	Collectible Quest Items				strings
-272	0x0110		Cucco Lady	Small Wooden Crate				strings
-273	0x0111		Hylian Men II	Pot				pizz_strings
-274	0x0112		Zora's River Objects	Collectible Field Items (Invisible)				choir
-275	0x0113		Zora's Domain Objects	Iron Knuckle (Field Enemy)				choir
-276	0x0114		Freezard	Iron Knuckle (Cutscenes)				harp
-277	0x0115		Carpenter Boss's Wife	Skullkid				glockenspiel
-278	0x0116		Gerudo in White	Skullkid's Needle				pan_flute
-279	0x0117		Minigame Points	Silver Rupee				clarinet
-280	0x0118		Item Model - Iron Boots	Kotake & Koume's Portal				clarinet
-281	0x0119		Item Model - Deku Seeds	Bongo Bongo's Shadow				accordion
-282	0x011A		Ganondorf's Magic Blast	Business Scrub (Surrendered)				glockenspiel
-283	0x011B		Stone Elevator Pillar (unused)	Navi Message (Automatically Triggered)				steel_drum
-284	0x011C		Hookshot Pillar & Wall Target	Flame-Shooting Eye Switch				voice_pad
-285	0x011D		Stone Moving Deku Tree Platform	Flying Pot				guitar
-286	0x011E		Magic Bean Objects	Obj_Ice_Poly				guitar
-287	0x011F		Rolling Boulder	Zora's River Waterfall				accordion
-288	0x0120		(unused)	Zora's Domain Waterfall				acoustic_bass
-289	0x0121		Carpenter Boss	Freezard				trombone
-290	0x0122		Carpenters	Dampé's Ghost				trumpet
-291	0x0123		(unused)	Dampé's Relay Objects				drum
-292	0x0124		Cucco Chick (unused)	Diving Game Zora				bell_pad
-293	0x0125		Dark Link's Illusion Room	Grass Clump & Regenerating Grass				bell_pad
-294	0x0126		Medigoron Animations	Bean Planting Spot				wind
-295	0x0127		Magic Bean Seller	Bombable Boulder				bell_pad
-296	0x0128		Carpenter Boss's Son	Empty - (unused)				drum
-297	0x0129		Ingo's Ranch Gate	Empty - (unused)				wind
-298	0x012A		Sun Switch	Bronze, Diamond, Eye Switch				sound_effects
-299	0x012B		Grass	Stone Elevator				male_choir
-300	0x012C		Pot	Deku Tree Elevator				female_choir
-301	0x012D		Item Model - Silver & Golden Gauntlets	Hookshot Target Pillar				chant
-302	0x012E		Item Model - N Coins (unused)	Ocarina Spot				sound_effects
-303	0x012F		Square Signpost	En_Yabusame_Mark				harpsichord
-304	0x0130		Ganon's Castle Exterior Objects	Rolling Boulder (Generic)				flute
-305	0x0131		Kaepora Gaebora	Deku Target Game Rupee				wind_chimes
-306	0x0132		Lake Scientist	Carpenter Boss				bell_pad
-307	0x0133		Windmill Man	Carpenter (Thieves' Hideout & Carpenters' Tent)				wood_chime
-308	0x0134		Item Model - Keaton Mask	Empty - (unused)				voice_pad
-309	0x0135		Item Model - Redead Mask	Cucco Chick				koto
-310	0x0136		Item Model - Spooky Mask	Dark Link's Illusion Room				piano
-311	0x0137		Item Model - Bunny Hood	Item_Inbox				piano
-312	0x0138		Item Model - Mask of Truth	Gerudo in White				trombone
-313	0x0139		Ganon's Tower Objects	Obj_Blockstop				trombone
-314	0x013A		Water Spout (Small)	Dynamic Shadow				guitar
-315	0x013B		Water Spout (Large)	Arwing (unused)				guitar
-316	0x013C		Running Man	Cucco Lady				acoustic_bass
-317	0x013D		Fado	Medigoron				guitar
-318	0x013E		Happy Mask Salesman	Magic Bean Seller				clap
-319	0x013F		Item Model - Eyedrops	Carpenter Boss's Son (Lost Woods)				clap
-320	0x0140		Item Model - Odd Potion	Gate to Ingo's Ranch				koto
-321	0x0141		Item Model - Odd Mushroom	Square Sign				drum
-322	0x0142		Item Model - Claim Check	Soldier (Hyrule Castle)				drum
-323	0x0143		Item Model - Broken Goron's Sword & Giant's Knife	En_Syateki_Niw				gong_windchimes
-324	0x0144		Carpet Merchant	Cucco (Attacking)				koto
-325	0x0145		Graveyard Boy	Well Stopper				drum
-326	0x0146		Item Model - Prescription	Saria (Gameplay)				flute
-327	0x0147		Item Model - Goron Bracelet	Checkable Green Navi Spot				flute
-328	0x0148		Item Model - SOLD OUT	Rainbow Bridge				strings
-329	0x0149		Item Model - Eyeball Frog	Potion Shop Granny				strings
-330	0x014A		Title Logo	Lake Scientist				organ_upper
-331	0x014B		Thieves' Hideout Cell Door	Bombchu Bowling Alley Employee				organ_lower
-332	0x014C		Ganon's Tower Exterior (Collapsing) Objects	En_Bom_Bowl_Pit				organ_pedals
-333	0x014D		Death Mountain Eruption Effects	Kaepora Gaebora				horn
-334	0x014E		Adult Zelda Animations I	Silver Gauntlets Boulder				wind
-335	0x014F		Adult Zelda Animations II	Graveyard Flower, Rock & Grass Pulled by Kokiri				sound_effects
-336	0x0150		Item Model - Goron Mask	Sun Switch				choir
-337	0x0151		Item Model - Zora Mask	Groups of Rocks & Grass Clumps				piano
-338	0x0152		Item Model - Gerudo Mask	Generic Goron [Early]				piano
-339	0x0153		Ganon	Windmill Man				sound_effects
-340	0x0154		Pierre & Bonooru	Empty - (unused)				flute
-341	0x0155		Treasure Chest Shop Proprietor	Treasure Chest (Treasure Chest Shop)				choir
-342	0x0156		Ganon's Tower Door Bars	Goddess Statue				choir
-343	0x0157		Item Model - Hover Boots	Ceiling Elevator				horn
-344	0x0158		Item Model - Magic Arrows	Ceiling Mirror				trumpet
-345	0x0159		Potion Shop Proprietor	Bombable Bombchu Boulder				trombone
-346	0x015A		Ending Cutscene Animations	Hookshot Grate				tuba
-347	0x015B		Fishing Pond Objects	Bg_Jya_Bombiwa				strings
-348	0x015C		Item Model - Gold Skulltula Token	Spinning Goron Vase				strings
-349	0x015D		Item Model - Goddess Spells	Empty - (unused)				piano
-350	0x015E		Skulltula House Residents	Ganondorf's Organ				marimba
-351	0x015F		Big Octo	Small Water Spout				malon
-352	0x0160		Bombchu Bowling Employee	Big Water Spout				malon
-353	0x0161		Sacred Forest Meadow Objects	Empty - (unused)				clarinet
-354	0x0162		Gerudo's Fortress Objects	Running Man (Hyrule Field & Ending)				horn
-355	0x0163		Bombable Boulder	Kokiri Spawner				oboe
-356	0x0164		Hint-Giving Deku Scrub	King Zora				harp
-357	0x0165		Bombchu Shop Proprietor	Weather-Changing Tag				violin
-358	0x0166		Hyrule Field Objects (Adult)	Bongo Bongo's Drum Head				glockenspiel
-359	0x0167		Gerudo in Purple	Man on Kakariko Rooftop				strings
-360	0x0168		Business Scrub	Bombchu Bowling Prizes				strings
-361	0x0169		Gerudo Fighter & Second-in-Command	Iron Knuckle Throne & Columns				bell
-362	0x016A		Cucco-Chasing Girl	Carpet Merchant				harp
-363	0x016B		Dog	Carpet Merchant's Magic Carpet				choir
-364	0x016C		Destructable Iron Knuckle Objects	Graveyard Boy				koto
-365	0x016D		Spirit Temple Door & Iron Bars	Mido				ocarina
-366	0x016E		(unused)	Hylian Spawner				bassoon
-367	0x016F		Desert Colossus Objects	Ganondorf's Cape				oboe
-368	0x0170		Large Wooden Crate	Song of Storms Effect				choir
-369	0x0171		Forest Stage Judge	Title Screen Overlay				tamourine
-370	0x0172		Forest Stage Patron	Thieves' Hideout Cell Door				harp
-371	0x0173		Item Model - Blue Fire	Navi Message (Targetable)				glockenspiel
-372	0x0174		Item Model - Bug	Ganon's Tower Exterior (Collapsing) Objects				malon
-373	0x0175		Item Model - Butterfly (unused)	Big Poe				strings
-374	0x0176		Item Model - Poe Soul	Death Mountain Eruption Effects				strings
-375	0x0177		Item Model - Fairy's Spirit	Gate Barring Escape From Ganon's Tower				pizz_strings
-376	0x0178		Bombchu Bowling Alley Barriers	Soldier (Hyrule Castle Town & Kakariko Village)				horn
-377	0x0179		Inside Ganon's Castle Objects	Adult Zelda (Normal Gameplay)				choir
-378	0x017A		Death Mountain Cloud Rings	Ganon				cuica_push_pull
-379	0x017B		Item Model - Bullet Bags	Pierre (Lake Hylia)				trumpet
-380	0x017C		Ganondorf Animations I	Treasure Chest Shop Proprietor				trombone
-381	0x017D		Ganondorf Animations II	Make Pushblock				tuba
-382	0x017E		Ganondorf Animations III	Sun's Song Effect				gockenspiel
-383	0x017F		Item Model - Rupees	Ending Overlays				strings
-384	0x0180		Kakariko Village Objects (Adult)	Empty - (unused)				strings
-385	0x0181		Kakariko Village Objects (Child)	Grotto Treasure Chest				harp
-386	0x0182		Honey & Darling, Haggling Townspeople	Ending Cutscene NPCs				oboe
-387	0x0183		Wolfos	Shot_Sun				bassoon
-388	0x0184		Stalchild	Great Fairy's Healing Beam				strings
-389	0x0185		Ganon's Lair Destructable Rubble	Checkable Spot				strings
-390	0x0186		Ganon's Lair Destructable Rubble Fragment	Patrolling Gerudo in Purple				pizz_strings
-391	0x0187		Shadow Temple Door & Shutter	Obj_Roomtimer				harp
-392	0x0188		Gossip Stone	Skulltula House Resident (Cursed)				blank
-393	0x0189		Poe Collector	Skulltula House Resident (Curse Lifted)				
-394	0x018A		Dodongo's Cavern Bombable Wall	Song of Time Effect				
-395	0x018B		Cow	Song of Storms Effect				
-396	0x018C		Fat Woman in Blue & Yellow Vest	Stinger (Water)				
-397	0x018D		Item Model - Kokiri Sword	Sacred Forest Meadow Pond Bottom				
-398	0x018E		Door Mimic	Spirit Temple Entrance Room Elevator				
-399	0x018F		Royal Family's Tomb Door	Iron Knuckle Debris				
-400	0x0190		Time Block	Gate to the Haunted Wasteland				
-401	0x0191		Child Zelda	Gate to the Gerudo Training Ground				
-402	0x0192			Deku Scrub (Inside the Deku Tree)				
-403	0x0193			Deku Scrub Projectile				
-404	0x0194			Broken Drawbridge				
-405	0x0195			Business Scrub (Attacking)				
-406	0x0196			Collectable Grave-Digging Game Items				
-407	0x0197			Gerudo Fighter				
-408	0x0198			Epona's Song Effect				
-409	0x0199			Saria's Song Effect				
-410	0x019A			Cucco-Chasing Girl				
-411	0x019B			Dog				
-412	0x019C			Gold Skulltula Token				
-413	0x019D			Kakariko Village Objects				
-414	0x019E			Beehive				
-415	0x019F			Bombable Wall (Desert Colossus)				
-416	0x01A0			Large Wooden Crate				
-417	0x01A1			Forest Stage Actor Spawner				
-418	0x01A2			Forest Stage Judge				
-419	0x01A3			Deku Scrub (Deku Target Game)				
-420	0x01A4			Happy Mask Shop Customer				
-421	0x01A5			Bombchu Bowling Alley Walls				
-422	0x01A6			Carpenter Boss's Son (Kakariko Village)				
-423	0x01A7			Ganon's Castle Barrier				
-424	0x01A8			Zora's Fountain Bombable Wall				
-425	0x01A9			Death Mountain Crater Bombable Wall				
-426	0x01AA			Empty - (unused)				
-427	0x01AB			Group of Rupees				
-428	0x01AC			Honey & Darling				
-429	0x01AD			Haggling Shoppers				
-430	0x01AE			Generic Goron & Biggoron				
-431	0x01AF			Wolfos				
-432	0x01B0			Stalchild				
-433	0x01B1			Ganon's Lair Rubble				
-434	0x01B2			Ganon's Lair Rubble Fragment				
-435	0x01B3			Fire Trial Sinking Zig-Zag Platform				
-436	0x01B4			Shadow Trial Invisible Path				
-437	0x01B5			Bg_Gnd_Soulmeiro				
-438	0x01B6			Ganon's Castle Fake Wall				
-439	0x01B7			Water Trial Ice Pushblock				
-440	0x01B8			Poe Collector				
-441	0x01B9			Gossip Stone				
-442	0x01BA			Water Temple Bombable Wall				
-443	0x01BB			Water Temple Gate				
-444	0x01BC			Kakariko Village - Carpenter				
-445	0x01BD			Bombchu Bowling Alley Walls				
-446	0x01BE			En_Wall_Tubo				
-447	0x01BF			Poe Guide				
-448	0x01C0			Guay				
-449	0x01C1			Door Mimic				
-450	0x01C2			Oasis Water				
-451	0x01C3			Spinning Goron Vase Lid				
-452	0x01C4			Door to Darunia's Room				
-453	0x01C5			Adult Malon (Day)				
-454	0x01C6			Cow				
-455	0x01C7			Icicle				
-456	0x01C8			Ice Cavern Bars				
-457	0x01C9			Pierre (Wandering)				
-458	0x01CA			Bonooru				
-459	0x01CB			Scarecrow's Song Effect				
-460	0x01CC			En_Eg				
-461	0x01CD			Gerudo Training Ground Fake Wall				
-462	0x01CE			Zora				
-463	0x01CF			Gold Skulltula Spawner				
-464	0x01D0			Nabooru's Second-in-Command				
-465	0x01D1			Time Block				
-466	0x01D2			Breakable Bronze Boulder				
-467	0x01D3			Child Zelda (Gameplay & Cutscene 04)				
-468	0x01D4			Running Man (Carpenters' Tent & Race)				
-469	0x01D5			Silver Gauntlets Pushblock [todo]				
-470	0x01D6			Time Block				
+index	inhex	scene	object	actor	particle (TODO)	sequence	audiobank	instruments	drums-sfx
+0	0x0000	Dungeon - Inside the Deku Tree	(intentionally blank)	Player		master_sequence	master_bank	step_ground	tambo-drum
+1	0x0001	Dungeon - Dodongo's Cavern	gameplay_keep - Global Gameplay Objects	Empty - (unused)		nature_ambiance	actor_sounds	step_sand	high_tambo
+2	0x0002	Dungeon - Inside Jabu-Jabu's Belly	gameplay_field_keep - Global Field Objects	Stalfos		hyrule_field_master	nature_sounds	step_concrete	heavy_rain
+3	0x0003	Dungeon - Forest Temple	gameplay_dangeon_keep - Global Dungeon Objects	Empty - (unused)		hyrule_field_day_one	main_orchestra	step_dirt	heavy_rain
+4	0x0004	Dungeon - Fire Temple	(unused)	Shop Inventory Data		hyrule_field_day_two	deku_tree	step_water	adult_slash_one
+5	0x0005	Dungeon - Water Temple	(unused)	Empty - (unused)		hyrule_field_day_three	hylian_troupe	step_carpet	adult_slash_two
+6	0x0006	Dungeon - Spirit Temple	Aria (unused)	Empty - (unused)		hyrule_field_day_four	title_screen	step_iron	adult_slash_three
+7	0x0007	Dungeon - Shadow Temple	Octorok	En_Part		hyrule_field_day_five	jabujabus_belly	step_grass	adult_slash_four
+8	0x0008	Dungeon - Bottom of the Well	Guay	Flame		hyrule_field_day_six	kakariko_guitar	synth_pad	adult_slash_long
+9	0x0009	Dungeon - Ice Cavern	Poe	Wooden Door		hyrule_field_day_seven	harp_strings	slide	adult_slash_long_alt
+10	0x000A	Dungeon - Ganon's Tower	Great Fairy	Treasure Chest		hyrule_field_day_eight	fire_temple	drop	adult_hang
+11	0x000B	Dungeon - Gerudo Training Ground	Floormaster & Wallmaster	Great Fairy		hyrule_field_day_nine	dodongos_cavern	tap_wood	adult_climb_edge
+12	0x000C	Dungeon - Thieves' Hideout	Dodongo	Proximity-Activated Firewall		hyrule_field_day_ten	forest_temple	ice_slide	adult_catch_edge
+13	0x000D	Dungeon - Inside Ganon's Castle	Keese	Graveyard Poe & Composer Brothers		hyrule_field_day_eleven	lon_lon_ranch	ice_slide_loop	adult_hurt_one
+14	0x000E	Misc - Tower Escape Interior	Treasure Chest	Octorok		hyrule_field_day_twelve	goron_city	slide_loop	adult_hurt_two
+15	0x000F	Misc - Tower Escape Interior (Second Phase)	Dancing Flame (unused)	Spiderweb		hyrule_field_battle_one	kokiri_forest	high_howling_wind	adult_hurt_three
+16	0x0010	Game - Treasure Box Shop	(unused)	Bomb Field Model		hyrule_field_battle_two	spirit_temple	water_running	adult_hurt_gasp
+17	0x0011	Boss - Gohma	(unused)	Wallmaster		hyrule_field_battle_three	horse_race	water_turn_on	adult_knocked_back
+18	0x0012	Boss - King Dodongo	Shabom	Dodongo		hyrule_field_battle_four	warp_songs	water_stop	adult_hurt_gasp_alt
+19	0x0013	Boss - Barinade	Cucco	Keese		hyrule_field_battle_five	legend_of_hyrule	water_splash	adult_fall
+20	0x0014	Boss - Phantom Ganon	Adult Link	Adult Epona		hyrule_field_sunset_one	minigame_shop	water_bubble	adult_fall_alt
+21	0x0015	Boss - Volvagia	Child Link	Collectible Items (Visible)		hyrule_field_sunset_two	zoras_domain	drop_underwater	adult_gasp
+22	0x0016	Boss - Morpha	Tektites	En_Arrow		hyrule_field_sunset_three	shop_theme	land_wood	adult_gasp_alt
+23	0x0017	Boss - Twinrova	Leever	Empty - (unused)		hyrule_field_sunset_four	ice_cavern	land_grass	adult_sigh
+24	0x0018	Boss - Bongo Bongo	Peahat	Navi & Healing Fairy		dodongos_cavern	shadow_temple	sword_hit	adult_wince
+25	0x0019	Boss - Ganondorf	King Dodongo	Friendly Cucco		kakariko_village_strings	water_temple	cut_plant	adult_hit_horse
+26	0x001A	Misc - Tower Escape Exterior	Epona	Empty - (unused)		battle_theme	piano_unused	swort_hit	adult_hit_horse_alt
+27	0x001B	PR - Market Entrance Day	Lizalfos & Dinolfos	Tektite		boss_battle	gerudo_valley	high_cut	adult_sigh_alt
+28	0x001C	PR - Market Entrance Night	Gohma	Leever		inside_the_deku_tree_and_grottos	potion_shop	put_away	adult_fall_damage
+29	0x001D	PR - Market Entrance Ruins	Child Zelda	Peahat		castletown_market	koume_and_kotakes_theme	draw_sword	adult_catch_edge_alt
+30	0x001E	PR - Back Alley Day	Gohma Larva	Butterfly		opening	organ	swing_stick	adult_quick_hup
+31	0x001F	PR - Back Alley Night	Baby Dodongo	Empty - (unused)		inside_a_house	inside_ganons_castle	swing_sword	adult_push
+32	0x0020	PR - Market Day	Dark Link	Bug		game_over	battle_2	sword_hit	child_slash_one
+33	0x0021	PR - Market Night	Biri	Fish		boss_clear	ending_orchestra_1	pull_bow	child_slash_two
+34	0x0022	PR - Market Ruins	Tailpasaran	Empty - (unused)		item_get	ending_orchestra_2	spend_money	child_slash_three
+35	0x0023	PR - Temple of Time Exterior Day	Kakariko Rooftop Man [Early] (unused)	Room Transition Plane		ganondorf_appears	fanfare_orchestra	water_sound	child_slash_four
+36	0x0024	PR - Temple of Time Exterior Night	Skulltulas	En_Scene_Change		get_heart_container	kaepora_gaebora	drop_crate	child_slash_long
+37	0x0025	PR - Temple of Time Exterior Ruins	Torch Slug	Lizalfos & Dinalfos		prelude_of_light	extra_space_unsupported	chomp	child_slash_long_alt
+38	0x0026	House - Know-It-All	Stingers	Flagpole		jabu_jabus_belly		empty_bow	child_catch_edge
+39	0x0027	House - Twins	Generic Horse	King Dodongo		kakariko_village_guiltar		poe_disappear	child_climb_edge
+40	0x0028	House - Mido	Bazaar Proprietor [Early] (unused)	Gohma		fairy_fountain		step_stone	child_climb_edge_alt
+41	0x0029	House - Saria	NPC Animations I	Child Zelda (Cutscene 05 & 06)		zeldas_theme		whip	child_hurt_
+42	0x002A	House - Carpenter Boss	Kokiri Forest Objects	En_Viewer		fire_temple		magic	child_hurt_alt
+43	0x002B	House - Alley Green Man	Dodongo's Cavern Objects	Gohma Larva		open_treasure_chest		stop_carpet	child_cringe
+44	0x002C	Shop - Bazaar	Fire Temple Objects	Bg_Pushbox		forest_temple		disonant_harp	child_hurt_gasp
+45	0x002D	Shop - Kokiri	Ganondorf's Horse	Shabom		castle_courtyard		door_open	child_hurt_big_gasp
+46	0x002E	Shop - Goron	Zora [Early] (unused)	Door Shutter		ganons_organ		bell_synth	child_hurt_hit
+47	0x002F	Shop - Zora	Hyrule Field Objects (Child)	Baby Dodongo		lon_lon_ranch		explosion	child_fall
+48	0x0030	Shop - Potion Kakariko	Moblins	King Dodongo's Fire		goron_city		gallop	child_fall_alt
+49	0x0031	Shop - Potion Market	Bomb Flower	Empty - (unused)		hyrule_field_morning_day_one		naying	child_gasp
+50	0x0032	Shop - Bombchu	Stalfos	Boomerang Field Model		spiritual_stone_get		creek	child_gasp_alt
+51	0x0033	Shop - Mask	Mido I [Early] (unused)	Dark Link		bolero_of_fire		ocarina	child_pant
+52	0x0034	House - Link	NPC Animations II	Biri		minuet_of_forest		ocarina	child_pant_alt
+53	0x0035	House - Alley Dog Lady	Red-Haired Kokiri Girl [Early]	Tailpasaran		serenade_of_water		heavy_slide	child_fall_damage
+54	0x0036	House - Stable	Inside the Deku Tree Objects	Empty - (unused)		requiem_of_spirit		dirt_slide	child_catch_edge_alt
+55	0x0037	House - Impa	Phantom Ganon	Skulltula		nocturne_of_shadow		explosion	child_drink
+56	0x0038	House - Laboratory	Armos	Torch Slug		miniboss_battle		drawbridge	child_surface_water
+57	0x0039	House - Tent	Deku Babas	Directional Sign & Square Sign [Early]		heart_piece_get		high_laugh	child_hop
+58	0x003A	House - Dampe	(unused)	Land Stinger		temple_of_time		empty_bow	child_hop_alt
+59	0x003B	Fountain - Great Fairy Upgrades	Impa's Masked Head [Early] (unused)	Sound Effects I		escape_the_ranch		howling_wind	child_thud
+60	0x003C	Fountain - Normal	Laughing Man [Early] (unused)	Generic Horse		kokiri_forest		wolfos_cry	adult_surface_water
+61	0x003D	Fountain - Great Fairy Spells	Hylian Woman in Purple Dress [Early] (unused)	En_Ossan		learn_new_song		water_splash	navi_watchout
+62	0x003E	Misc - Grottos	Hylian Man in Blue Shirt & Orange Pants [Early] (unused)	Deku Tree's Jaw		lost_woods		step_dirt	navi_look
+63	0x003F	Grave - Redead	Hylian Woman in White Shirt & Orange Pants [Early] (unused)	Dead Dodongo's Jaw		spirit_temple		sparkle_bell	navi_hey
+64	0x0040	Grave - Fountain	Jabu-Jabu	Fire Temple Breakable Hammer Block		horse_race		heavy_land	adult_grunt
+65	0x0041	Grave - Royal Family's Tomb	Old Hylian Man [Early] (unused)	Fire Temple Hammer-Activated Elevator Pillar		horse_race_goal		creaky_door	adult_cast_magic
+66	0x0042	Game - Shooting Gallery	Old Hylian Man's Head [Early] (unused)	Ganondorf's Horse		ingo_loses		squishy_slash	child_lift
+67	0x0043	World - Temple of Time	Hylian Man in Purple Shirt & Green Pants [Early] (unused)	Fire Temple Fire-Powered Elevator Block		get_medalion		blue_light	child_shout
+68	0x0044	World - Chamber of Sages	Carpenter Boss's Wife [Early] (unused)	Fire Temple Rotating Fire Spinner		ocarina_sarias_song		teleport	child_hurt
+69	0x0045	World - Castle Maze Day	Hylian Woman in Blue Shirt & White Dress [Early] (unused)	Fire Temple Flame-Spouting Statue		ocarina_eponas_song		electric_shock	poe_short
+70	0x0046	World - Castle Maze Night	Zelda's Horse	Fire Temple Clover Platform		ocarina_zeldas_lullaby		water_drips	child_gasp_alt
+71	0x0047	Misc - Cutscene Map	Opening Cutscene Animations	Fire Temple Fire-Powered Mini-Boss Room Face Elevator		ocarina_suns_song		underwater_bubble	child_cold
+72	0x0048	World - Windmill & Dampe's Grave	Warp Circle & Rupee Prism	Sheik		ocarina_song_of_time		fire_crackle	unknown
+73	0x0049	World - Fishing Pond	Heart Container [Early] (unused)	Circle of Flames		ocarina_song_of_storms		ice_blow	child_sneeze
+74	0x004A	World - Zelda's Courtyard	Mad Scrub	Drawbridge		flying_theme		loud_noise	child_snore
+75	0x004B	Game - Bombchu Bowling	Saria [Early] (unused)	Moblin		great_deku_trees_theme		shutting_door	child_breath_deep
+76	0x004C	House - Ranch & Silo	Red-Haired Kokiri Boy I [Early] (unused)	Bomb Flower		windmill_hut		fire	child_grunt
+77	0x004D	House - Guard	Gerudo Training Ground Objects	Adult Zelda (Cutscenes)		legend_of_hyrule_long_version		roll_noise	child_stretch
+78	0x004E	House - Witch	Fado [Early] (unused)	Hookshot Elevator		minigame_shop		town_chatter	child_wake
+79	0x004F	Boss - Beast Ganon	Kokiri Girl in Brown Band's Head [Early] (unused)	Kokiri Girl [Early] (unused)		sheiks_theme		high_electricity	child_stretch_wake
+80	0x0050	House - Skulltula	Kokiri Boy in Green Cap's Head [Early] (unused)	Bg_Ydan_Hasi		zoras_domain		dodongo_cry	child_yawn_wake
+81	0x0051	World - Hyrule Field	Kokiri Girl in Green Band's Head [Early] (unused)	Deku Tree Spiked Log & Dropdown Ladder		zelda_turns_around		pan_flute	child_shock_grunt
+82	0x0052	World - Kakariko Village	Kokiri Boy in Mint Cap's Head [Early] (unused)	Phantom Ganon		zeldas_theme_orchestra		accordion	adult_shock_hurt
+83	0x0053	World - Graveyard	Kokiri Shop Proprietor's Head [Early] (unused)	Empty - (unused)		master_sword		harp	child_hurt_tired
+84	0x0054	World - Zora's River	Kokiri Girl in Green Cap's Head [Early] (unused)	Armos		ganondorfs_theme		malon	adult_suprise_gasp
+85	0x0055	World - Kokiri Forest	Fado's Head [Early] (unused)	Deku Baba		shop_theme		faded_ocarina	adult_hurt_tired
+86	0x0056	World - Sacred Forest Meadow	Bari	Deku Nut Effect		legend_of_hyrule_short_version		bell	adult_sneeze_drama
+87	0x0057	World - Lake Hylia	Soldier [Early] (unused)	Spin Attack Effects		pointer_to_fairy_fountain_title_screen		chirp	adult_sigh_one
+88	0x0058	World - Zora's Domain	Soldier (Courtyard) [Early] (unused)	Dodongo's Cavern Elevator Platform		ice_cavern		harp	adult_sigh_two
+89	0x0059	World - Zora's Fountain	Water Temple Objects	Bombable Wall		door_of_time		swoosh	adult_sigh_three
+90	0x005A	World - Gerudo Valley	Phantom Ganon's Horse & Objects	Jabu-Jabu		kaepora_gaebora		heavy_drop	adult_lift_heavy
+91	0x005B	World - Lost Woods	Shooting Gallery & Bazaar Proprietors	Zelda's Horse		shadow_temple		knock	adult_stretch
+92	0x005C	World - Desert Colossus	Forest Temple Room 13 (Twisted)	Dodongo's Cavern Bombable Stairs		water_temple		dodongo_cry	adult_stretch_release
+93	0x005D	World - Gerudo's Fortress	Bubbles	Blue Warp & Rupee-Shaped Prism		ganons_rainbow_bridge		ice_blow	snore
+94	0x005E	World - Haunted Wasteland	Temple of Time Objects	Torch Stand (Generic)		seal_of_the_six_sages		monster_growl	old_man_suprise
+95	0x005F	World - Hyrule Castle	Flying Floor Tile	Heart Container		gerudo_valley		money_sound	old_man_curious
+96	0x0060	World - Death Mountain Trail	Adult Zelda	Mad Scrub		potion_shop		chomp	old_man_scared
+97	0x0061	World - Death Mountain Crater	Warp Pad Base	Rotating Ring		koume_&_kotakes_theme		damage	ingo_scream
+98	0x0062	World - Goron City	Light Warp Pad	Statue Eye Targets		castle_collapsing		frog	ingo_cah
+99	0x0063	World - Lon Lon Ranch	Shadow Warp Pad	Bari		inside_ganons_castle		magic_cry	ingo_hit_horse
+100	0x0064	World - Ganon's Tower	Fire Warp Pad	Bg_Mizu_Movebg		ganondorf_battle		magic_charge	ingo_laugh
+101	0x0065	Test - Jungle Gym	Water Warp Pad	Water Temple Water		ganons_last_stand		flutter	fairy_laugh_enter
+102	0x0066	Test - Strongbox Warp	Spirit Warp Pad	Hookshot Field Model		ending_ocarina_of_time		monster_cry	fairy_laugh_calm
+103	0x0067	Test - Depth Test	Forest Warp Pad	Phantom Ganon's Horse		end_credits_one		tap	zelda_gasp
+104	0x0068	Test - Stalfos Miniboss	Ocarina Pedestal [Early] (unused)	Forest Temple Twisting Corridor		end_credits_two		voice_fast	girl_scream
+105	0x0069	Test - Stalfos Boss	Shadow Temple Objects	Bubble		end_credits_three		laughing	goron_curious
+106	0x006A	Test - Obsolete	Lake Hylia Objects	Temple of Time Window Light Rays		end_credits_four		deku_scare	navi_watchout
+107	0x006B	Test - Hedge Maze	Ice Cavern Objects	Flying Floor Tile		boss_battle_two		deku_caught	navi_look_alt
+108	0x006C	Test - SRD Grass Test	Dampé's Relay Race Objects	Master Sword		timed_minigame		broken_pot	navi_hey_alt
+109	0x006D	Test - Treasure Room	Big Poe & Poe Guide	Phantom Ganon's Lightning		blank_end		fire	weird_kid_noise
+110	0x006E		Sharp & Flat	Warp Pad & Ocarina Pedestal				monster_shriek	girl_shocked
+111	0x006F		Forest Temple Room 13 (Straight)	Metal Bars				step_dirt	girl_scream_alt
+112	0x0070		Forest Temple Room 14 (Straight)	Door of Time Collision Model				dirty_step	girl_giggle
+113	0x0071		Forest Temple Room 14 (Twisted)	Hammer-Activated Steps				howling_wind	girl_surprised
+114	0x0072		Forest Temple Objects	Brown Bird (unused)				witch_hurt	girl_surprised_alt
+115	0x0073		Forest Temple Textures	Empty - (unused)				motor_sound	girl_upset
+116	0x0074		Zora's Fountain Objects	Empty - (unused)				lizalfos_attack	man_super_upset
+117	0x0075		[Blank] (unused)	Empty - (unused)				ice_monster_hit	man_angry
+118	0x0076		Flagpole	Empty - (unused)				ganondorf_laugh	girl_quiet_sigh
+119	0x0077		Brown Bird (unused)	Trees & Bushes				attack_shout	girl_caught_offguard
+120	0x0078		(unused)	Empty - (unused)				magic_strong	girl_curious_surprise
+121	0x0079		(unused)	Empty - (unused)				electric_shock	girl_sigh_tone
+122	0x007A		(unused)	Empty - (unused)				ganondorf_flying	girl_laugh_high
+123	0x007B		(unused)	Empty - (unused)				magic_charging	girl_shocked_scared
+124	0x007C		Bushes & Trees	Grey Rectangular Block (unused)				disonant_harp	girl_hurt
+125	0x007D		(unused)	Grey Rectangular Stone Block (unused)				thunder	girl_pushed_away
+126	0x007E		(unused)	Empty - (unused)				crazy_wail	girl_pushed_far
+127	0x007F		(unused)	Empty - (unused)				attack_hah	girl_hurt_alt
+128	0x0080		(unused)	Blade Trap				annoyed_moan	navi_listen_alt
+129	0x0081		Rectangular Stone Blocks (Light Grey) (unused)	Arrow-Deflecting Trap (unused)				water_splash	kid_slash
+130	0x0082		Rectangular Stone Blocks (Dark Grey) (unused)	Orange Pot (unused)				step_water	girl_shreak_cry_short
+131	0x0083		(unused)	Empty - (unused)				explosion	girl_shreak_cry
+132	0x0084		(unused)	Talon				big_monster_cry	girl_sigh_noisey
+133	0x0085		Blade Trap	Dampé				worried_crying	girl_quick_suprised
+134	0x0086		Orange Pot (unused)	Forest Temple Bow Room Platform				scary_laugh	girl_worried_suprised
+135	0x0087		Impa	Forest Temple Sun Elevator				underwater_bubble	funny_mwink
+136	0x0088		Talon	Forest Temple Rotating Pre-Boss Room				annoyed_groan	navi_hello
+137	0x0089		Dampé & Ghost	Forest Temple Collapsing Checkerboard Ceiling				goron_sound	unknown_alt
+138	0x008A		Sheik	Beamos				ice_slide_loop	adult_link_gasp_alt
+139	0x008B		Beamos	Demo_Effect				bongo	child_link_gasp_intense
+140	0x008C		Barinade	Demo_Kankyo				wolfos_cry	witch_laugh
+141	0x008D		Bottom of the Well Objects	Fire Temple Big Fire Wall				deku_cry	witch_laugh_alt
+142	0x008E		[todo]	Floormaster				chirp	witch_hurt
+143	0x008F		Goddesses' Flame of Creation	Soldier (Castle Hedge Maze)				tap	witch_attack
+144	0x0090		[Blank] (unused)	Redead & Gibdo				chirp_alt	witch_hit
+145	0x0091		Goddess Light Dome	En_Po_sisters				cricket	witch_cry
+146	0x0092		Light Beam & Rubble	Golden Gauntlets Rock				chirp_strong	witch_shudder
+147	0x0093		Golden Goddesses	Bg_Po_Event				crow_caw	witch_gasp
+148	0x0094		Jagged-Edged Light Ring	Group of Bugs, Fish, Butterflies				cucco_sound	lady_hurt
+149	0x0095		Triforce & Beam of Light	Skullwalltula				cucco_high	lady_laugh
+150	0x0096		Inside Jabu-Jabu's Belly Objects	Volvagia (Flying)				bird_sing	lady_scream
+151	0x0097		Soldiers	Object_Kankyo				cucco_sing	disbelieving_grunt
+152	0x0098		Redead & Gibdo	Darunia				owl	finger_snap
+153	0x0099		Poe Sisters & Objects	Flare Dancer				hawk	ganondorf_strike
+154	0x009A		Golden Gauntlets Boulder	Child Epona				chirp_tiny	ganondorf_recoil
+155	0x009B		Ganondorf (Cutscenes)	Grotto Hole				wolfos_cry	ganondorf_angry
+156	0x009C		Volvagia (Flying)	Graveyard Objects				rushing_water	ganondorf_pain
+157	0x009D		Darunia	Gravestone				howling_wind	ganondorf_grunt
+158	0x009E		Flare Dancer	Farore's Wind Effect				high_howling_wind	ganondorf_chuckle
+159	0x009F		Medallions [Early] (unused)	Din's Fire Effect				heavy_rain	kid_attack
+160	0x00A0		Child Epona	Empty - (unused)				deep_thunder	kid_hurt
+161	0x00A1		Graveyard Objects	Child Ruto				ice_blow	kid_scream
+162	0x00A2		Gravestone	Volvagia (Whack-a-Mole)				flute	kid_gasp
+163	0x00A3		Child Ruto	Flare Dancer's Fireball				oboe	ganondorf_evil_laugh
+164	0x00A4		Torches	Dead Hand				clarinet	ganondorf_attack
+165	0x00A5		Volvagia (Whack-a-Mole)	Dead Hand's Hands				bassoon	ganondorf_throw_energy
+166	0x00A6		Dead Hand & Hands	Rauru				horn	ganondorf_hit
+167	0x00A7		Rauru	Enemy Spawner				trumpet	ganondorf_hit_strong
+168	0x00A8		Time Block Disappearance Effect	Darunia				trombone	ganondorf_hurt
+169	0x00A9		[Blank] (unused)	Impa				tuba	ganondorf_hurt_strong
+170	0x00AA		Item Model - Small Key	Treasure Chest Glow				glockenspiel	ganondorf_pant
+171	0x00AB		Mirror Shield's Light Reflection	Flare Dancer Core				strings	ganondorf_strike
+172	0x00AC		Jelly Platform	Volvagia's Sinking Platform				strings	ganondorf_hurt_bad
+173	0x00AD		Item Model - Spiritual Stones	Volvagia's Rock Attack				pizzicato	ganondorf_deep_pant
+174	0x00AE		Gerudo Valley Objects	Bg_Haka_Megane				piano	ganondorf_hurt_bad_alt
+175	0x00AF		Goron City Objects	Invisible Wall				harp	ganondorf_charging
+176	0x00B0		Boss Doors	Charon's Boat				marimba	ganondorf_releasing
+177	0x00B1		Death Mountain Crater Objects	Spinning Scythes				pad	ganondorf_charge_fast
+178	0x00B2		Shop Shelves	Empty - (unused)				pad	ganondorf_chucke_alt
+179	0x00B3		Nabooru	Soldier (Castle Gate, Zelda's Courtyard, Kakariko Village)				koto	gooey_slash_noise
+180	0x00B4		Morpha	Falling Boulder Spawner				ocarina	zombie_scream
+181	0x00B5		Shellblade	Flaming Debris				bassoon	low_timpani
+182	0x00B6		Item Model - Music Notes (unused)	Stunnable Jelly Platform				oboe	snare
+183	0x00B7		Item Model - Recovery Heart	Reflectable Ray of Light				pizz_strings	crash
+184	0x00B8		Item Model - Compass	Gerudo Valley Objects				ocarina	mid_timpani
+185	0x00B9		Item Model - Big Key	Goron City Objects				strings	tambo-drum
+186	0x00BA		Item Model - Medallions	Barinade				strings	tambo-tap
+187	0x00BB		Item Model - Deku Nut	Shadow Temple Flaming Skull Vase				piano	tambo-hit
+188	0x00BC		Saria	Shadow Temple Guillotine				piano	kick
+189	0x00BD		Item Model - Heart Container & Piece of Heart	Shadow Temple Coffin Lid				wind	snare_rim_electric
+190	0x00BE		Item Model - Quivers	Bg_Haka_Zou				synth_strings	tambo-drum
+191	0x00BF		Item Model - Bomb Bags	Death Mountain Crater Smoke Plume				creeking	tambo-hit
+192	0x00C0		Ingo	Shooting Gallery Items				creeking	timpani-low
+193	0x00C1		Kotake & Koume	Shooting Gallery Proprietor				harmonica	crash
+194	0x00C2		Death Mountain Trail Objects	Shop Shelves				guitar	timpani-mid
+195	0x00C3		Mido II [Early] (unused)	Nabooru				guitar	khoto-drum
+196	0x00C4		Red-Haired Kokiri Boy II [Early] (unused)	Morpha				ocarina	khoto-drum-alt
+197	0x00C5		NPC Animations III	Shellblade				glockenspiel	gong
+198	0x00C6		Item Model - Empty Bottle	Big Octorok				accordion	chimes
+199	0x00C7		Item Model - Deku Stick	Wilted Deku Baba				accordion	timpani-low
+200	0x00C8		Item Model - Dungeon Map & Stone of Agony	Inside Jabu-Jabu's Belly Objects				harp	snare
+201	0x00C9		Goron, Medigoron, Biggoron	Saria (Cutscenes)				harp	crash
+202	0x00CA		Adult Ruto	Generic Goron (Cutscenes)				harp	timpani-mid
+203	0x00CB		Item Model - Deku Shield	Ingo				harp	unknown
+204	0x00CC		Deku Tree Sprout	Kotake & Koume				strings	timpani-low
+205	0x00CD		Item Model - Magic Jars	Dodongo's Cavern Boulder Blockade				ocarina	snare
+206	0x00CE		Item Model - Bomb	Empty - (unused)				choir	crash
+207	0x00CF		Goron [Early] (unused)	Bombable Wall & Cracked Floor (Fire Temple)				choir	timpani-mid
+208	0x00D0		Adult Malon	Bombable Wall (Death Mountain Trail)				glockenspiel	high-tom
+209	0x00D1		Item Model - Wallets	Drifting Ice Platform				strings	goron_drum
+210	0x00D2		Ingo's Horse & Archery Range Horse	Adult Ruto				strings	reverb_hand_drum
+211	0x00D3		Twinrova	Deku Tree Sprout				pizz_strings	shaker
+212	0x00D4		Like Like	Water Current				chants	high-tom
+213	0x00D5		Parasitic Tentacle & Tentacle Obstruction	Lake Hylia Objects				chant	goron_drum
+214	0x00D6		Anubis & Fire Trap	Ice Cavern Objects				chant	reverb_hand_drum
+215	0x00D7		Item Model - Gerudo Card	Bottom of the Well Moat Water				kilimba	shaker
+216	0x00D8		Item Model - Arrows	Empty - (unused)				wind	gong
+217	0x00D9		Item Model - Bombchu	Adult Malon (Stable & Lon Lon Ranch - Ingo Ousted)				bell	chimes
+218	0x00DA		Item Model - Pocket & Weird Eggs	Bombchu Field Model				unknown	timpani-low
+219	0x00DB		Item Model - Silver & Golden Scales	En_Horse_Game_Check				wind	snare
+220	0x00DC		Item Model - Hylian Shield	Twinrova				wood_chime	crash
+221	0x00DD		Item Model - Hookshot & Longshot	Like Like				noise	timpani-mid
+222	0x00DE		Item Model - Ocarina of Time	Parasitic Tentacle				dodongo's_sound	timpani-low
+223	0x00DF		Item Model - Lon Lon Milk	Tentacle Obstruction				voice_pad	snare
+224	0x00E0		Child Malon	Anubis				multipitch_flute	crash
+225	0x00E1		Ganondorf (Boss)	Anubis-Killing Fire Trap				wood_chime	timpani-mid
+226	0x00E2		Bongo Bongo	Forest Temple Dropdown Ladder				malon	timpani-low
+227	0x00E3		Spike Trap [Duplicate] (unused)	Forest Temple Rotating Lava Room Platforms				malon	snare
+228	0x00E4		(unused)	Forest Temple Well Path Water				jazz_guitar	crash
+229	0x00E5		Spike Trap	Death Mountain Cloud Ring				jazz_guitar_high	timpani-mid
+230	0x00E6		Frog	Jabu-Jabu's Belly Switch				jazz_guitar_high	timpani-low
+231	0x00E7		Item Model - Fairy Slingshot	Child Malon				strings	snare
+232	0x00E8		Item Model - Boomerang	Ganondorf				strings	crash
+233	0x00E9		Item Model - Fairy Bow	Bongo Bongo				fiddle	timpani-mid
+234	0x00EA		Item Model - Lens of Truth	Empty - (unused)				fiddle	
+235	0x00EB		Item Model - Potions	Empty - (unused)				clocktown_bell	
+236	0x00EC		Kakariko Rooftop Man	Spike Trap				bent_drum	
+237	0x00ED		Chamber of the Sages Cutscene Objects	Frog				conga_hit_slap	
+238	0x00EE		Item Model - Mirror Shield	Collectible Deku Shield				cuica_push_pull	
+239	0x00EF		Item Model - Zelda's Letter	Meltable Ice Covering				kilimba	
+240	0x00F0		Hyrule Castle Objects	Blue Fire				kilimba	
+241	0x00F1		Spirit Temple Objects	Collectible Ocarina of Time				pan_flute	
+242	0x00F2		Item Model - Tunics	Empty - (unused)				oboe	
+243	0x00F3		Item Model - Magic Bean	Empty - (unused)				clarinet	
+244	0x00F4		Item Model - Fish	Nayru's Love Effect				bassoon	
+245	0x00F5		Item Model - Poacher's Saw	Sage Light Orbs				horn	
+246	0x00F6		Item Model - Megaton Hammer	Anubis Spawner				glockenspiel	
+247	0x00F7		Item Model - Reed Whistle (unused)	Bg_Haka_Gate				strings	
+248	0x00F8		Item Model - Giant's Knife & Biggoron's Sword	Hyrule Castle Gate				strings	
+249	0x00F9		Kakariko Village Objects (Shared)	Rolling Boulder (Spirit Temple)				pizz_strings	
+250	0x00FA		Mido [Duplicate] (unused)	Spirit Temple Shifting Wall				harpsicord	
+251	0x00FB		Mido	Empty - (unused)				harp	
+252	0x00FC		Red-Haired Kokiri Boy	Snake Statue				marimba	
+253	0x00FD		Red-Haired Kokiri Girl	Mesh Bridge				voice_pad	
+254	0x00FE		Zora	Fishing Pond & Proprietor				synth_strings	
+255	0x00FF		King Zora	Pushblock				ethnic_flute	
+256	0x0100		Horse-Jumping Fence	Gate to Death Mountain Trail				conga_hit_slap	
+257	0x0101		Kokiri Shop Proprietor Animations	Dust Particles				synth_strings	
+258	0x0102		Kokiri Shop Proprietor's Head	Kakariko Village Windmill Blades				ethnic_flute	
+259	0x0103		Goron Shop Proprietor Animations	Kakariko Village Well Crossbeam				banjo	
+260	0x0104		Zora Shop Proprietor Animations	Kakariko Village Well Water				banjo	
+261	0x0105		Dog Lady	Torch Stand (Poe Sisters)				acoustic_bass	
+262	0x0106		Iron Knuckle	Ganondorf's Lair Floor Tile				harmonica	
+263	0x0107		Hylian Men I	Lon Lon Milk Crate				acoutsic_guitar	
+264	0x0108		Young Hylian Women	Horse Jumping Fence				fiddle	
+265	0x0109		Item Model - Cuccos	Empty - (unused)				fiddle	
+266	0x010A		Skull Kid	Collectible Fire Arrows				harp	
+267	0x010B		Item Model - Ruto's Letter	Collectible Ice Arrows				harp	
+268	0x010C		Old Hylian Men	Collectible Light Arrows				strings	
+269	0x010D		Old Hylian Woman	Empty - (unused)				ocarina	
+270	0x010E		Item Model - Fairy Ocarina (unused)	Empty - (unused)				glockenspiel	
+271	0x010F		Potion Shop Granny	Collectible Quest Items				strings	
+272	0x0110		Cucco Lady	Small Wooden Crate				strings	
+273	0x0111		Hylian Men II	Pot				pizz_strings	
+274	0x0112		Zora's River Objects	Collectible Field Items (Invisible)				choir	
+275	0x0113		Zora's Domain Objects	Iron Knuckle (Field Enemy)				choir	
+276	0x0114		Freezard	Iron Knuckle (Cutscenes)				harp	
+277	0x0115		Carpenter Boss's Wife	Skullkid				glockenspiel	
+278	0x0116		Gerudo in White	Skullkid's Needle				pan_flute	
+279	0x0117		Minigame Points	Silver Rupee				clarinet	
+280	0x0118		Item Model - Iron Boots	Kotake & Koume's Portal				clarinet	
+281	0x0119		Item Model - Deku Seeds	Bongo Bongo's Shadow				accordion	
+282	0x011A		Ganondorf's Magic Blast	Business Scrub (Surrendered)				glockenspiel	
+283	0x011B		Stone Elevator Pillar (unused)	Navi Message (Automatically Triggered)				steel_drum	
+284	0x011C		Hookshot Pillar & Wall Target	Flame-Shooting Eye Switch				voice_pad	
+285	0x011D		Stone Moving Deku Tree Platform	Flying Pot				guitar	
+286	0x011E		Magic Bean Objects	Obj_Ice_Poly				guitar	
+287	0x011F		Rolling Boulder	Zora's River Waterfall				accordion	
+288	0x0120		(unused)	Zora's Domain Waterfall				acoustic_bass	
+289	0x0121		Carpenter Boss	Freezard				trombone	
+290	0x0122		Carpenters	Dampé's Ghost				trumpet	
+291	0x0123		(unused)	Dampé's Relay Objects				drum	
+292	0x0124		Cucco Chick (unused)	Diving Game Zora				bell_pad	
+293	0x0125		Dark Link's Illusion Room	Grass Clump & Regenerating Grass				bell_pad	
+294	0x0126		Medigoron Animations	Bean Planting Spot				wind	
+295	0x0127		Magic Bean Seller	Bombable Boulder				bell_pad	
+296	0x0128		Carpenter Boss's Son	Empty - (unused)				drum	
+297	0x0129		Ingo's Ranch Gate	Empty - (unused)				wind	
+298	0x012A		Sun Switch	Bronze, Diamond, Eye Switch				sound_effects	
+299	0x012B		Grass	Stone Elevator				male_choir	
+300	0x012C		Pot	Deku Tree Elevator				female_choir	
+301	0x012D		Item Model - Silver & Golden Gauntlets	Hookshot Target Pillar				chant	
+302	0x012E		Item Model - N Coins (unused)	Ocarina Spot				sound_effects	
+303	0x012F		Square Signpost	En_Yabusame_Mark				harpsichord	
+304	0x0130		Ganon's Castle Exterior Objects	Rolling Boulder (Generic)				flute	
+305	0x0131		Kaepora Gaebora	Deku Target Game Rupee				wind_chimes	
+306	0x0132		Lake Scientist	Carpenter Boss				bell_pad	
+307	0x0133		Windmill Man	Carpenter (Thieves' Hideout & Carpenters' Tent)				wood_chime	
+308	0x0134		Item Model - Keaton Mask	Empty - (unused)				voice_pad	
+309	0x0135		Item Model - Redead Mask	Cucco Chick				koto	
+310	0x0136		Item Model - Spooky Mask	Dark Link's Illusion Room				piano	
+311	0x0137		Item Model - Bunny Hood	Item_Inbox				piano	
+312	0x0138		Item Model - Mask of Truth	Gerudo in White				trombone	
+313	0x0139		Ganon's Tower Objects	Obj_Blockstop				trombone	
+314	0x013A		Water Spout (Small)	Dynamic Shadow				guitar	
+315	0x013B		Water Spout (Large)	Arwing (unused)				guitar	
+316	0x013C		Running Man	Cucco Lady				acoustic_bass	
+317	0x013D		Fado	Medigoron				guitar	
+318	0x013E		Happy Mask Salesman	Magic Bean Seller				clap	
+319	0x013F		Item Model - Eyedrops	Carpenter Boss's Son (Lost Woods)				clap	
+320	0x0140		Item Model - Odd Potion	Gate to Ingo's Ranch				koto	
+321	0x0141		Item Model - Odd Mushroom	Square Sign				drum	
+322	0x0142		Item Model - Claim Check	Soldier (Hyrule Castle)				drum	
+323	0x0143		Item Model - Broken Goron's Sword & Giant's Knife	En_Syateki_Niw				gong_windchimes	
+324	0x0144		Carpet Merchant	Cucco (Attacking)				koto	
+325	0x0145		Graveyard Boy	Well Stopper				drum	
+326	0x0146		Item Model - Prescription	Saria (Gameplay)				flute	
+327	0x0147		Item Model - Goron Bracelet	Checkable Green Navi Spot				flute	
+328	0x0148		Item Model - SOLD OUT	Rainbow Bridge				strings	
+329	0x0149		Item Model - Eyeball Frog	Potion Shop Granny				strings	
+330	0x014A		Title Logo	Lake Scientist				organ_upper	
+331	0x014B		Thieves' Hideout Cell Door	Bombchu Bowling Alley Employee				organ_lower	
+332	0x014C		Ganon's Tower Exterior (Collapsing) Objects	En_Bom_Bowl_Pit				organ_pedals	
+333	0x014D		Death Mountain Eruption Effects	Kaepora Gaebora				horn	
+334	0x014E		Adult Zelda Animations I	Silver Gauntlets Boulder				wind	
+335	0x014F		Adult Zelda Animations II	Graveyard Flower, Rock & Grass Pulled by Kokiri				sound_effects	
+336	0x0150		Item Model - Goron Mask	Sun Switch				choir	
+337	0x0151		Item Model - Zora Mask	Groups of Rocks & Grass Clumps				piano	
+338	0x0152		Item Model - Gerudo Mask	Generic Goron [Early]				piano	
+339	0x0153		Ganon	Windmill Man				sound_effects	
+340	0x0154		Pierre & Bonooru	Empty - (unused)				flute	
+341	0x0155		Treasure Chest Shop Proprietor	Treasure Chest (Treasure Chest Shop)				choir	
+342	0x0156		Ganon's Tower Door Bars	Goddess Statue				choir	
+343	0x0157		Item Model - Hover Boots	Ceiling Elevator				horn	
+344	0x0158		Item Model - Magic Arrows	Ceiling Mirror				trumpet	
+345	0x0159		Potion Shop Proprietor	Bombable Bombchu Boulder				trombone	
+346	0x015A		Ending Cutscene Animations	Hookshot Grate				tuba	
+347	0x015B		Fishing Pond Objects	Bg_Jya_Bombiwa				strings	
+348	0x015C		Item Model - Gold Skulltula Token	Spinning Goron Vase				strings	
+349	0x015D		Item Model - Goddess Spells	Empty - (unused)				piano	
+350	0x015E		Skulltula House Residents	Ganondorf's Organ				marimba	
+351	0x015F		Big Octo	Small Water Spout				malon	
+352	0x0160		Bombchu Bowling Employee	Big Water Spout				malon	
+353	0x0161		Sacred Forest Meadow Objects	Empty - (unused)				clarinet	
+354	0x0162		Gerudo's Fortress Objects	Running Man (Hyrule Field & Ending)				horn	
+355	0x0163		Bombable Boulder	Kokiri Spawner				oboe	
+356	0x0164		Hint-Giving Deku Scrub	King Zora				harp	
+357	0x0165		Bombchu Shop Proprietor	Weather-Changing Tag				violin	
+358	0x0166		Hyrule Field Objects (Adult)	Bongo Bongo's Drum Head				glockenspiel	
+359	0x0167		Gerudo in Purple	Man on Kakariko Rooftop				strings	
+360	0x0168		Business Scrub	Bombchu Bowling Prizes				strings	
+361	0x0169		Gerudo Fighter & Second-in-Command	Iron Knuckle Throne & Columns				bell	
+362	0x016A		Cucco-Chasing Girl	Carpet Merchant				harp	
+363	0x016B		Dog	Carpet Merchant's Magic Carpet				choir	
+364	0x016C		Destructable Iron Knuckle Objects	Graveyard Boy				koto	
+365	0x016D		Spirit Temple Door & Iron Bars	Mido				ocarina	
+366	0x016E		(unused)	Hylian Spawner				bassoon	
+367	0x016F		Desert Colossus Objects	Ganondorf's Cape				oboe	
+368	0x0170		Large Wooden Crate	Song of Storms Effect				choir	
+369	0x0171		Forest Stage Judge	Title Screen Overlay				tamourine	
+370	0x0172		Forest Stage Patron	Thieves' Hideout Cell Door				harp	
+371	0x0173		Item Model - Blue Fire	Navi Message (Targetable)				glockenspiel	
+372	0x0174		Item Model - Bug	Ganon's Tower Exterior (Collapsing) Objects				malon	
+373	0x0175		Item Model - Butterfly (unused)	Big Poe				strings	
+374	0x0176		Item Model - Poe Soul	Death Mountain Eruption Effects				strings	
+375	0x0177		Item Model - Fairy's Spirit	Gate Barring Escape From Ganon's Tower				pizz_strings	
+376	0x0178		Bombchu Bowling Alley Barriers	Soldier (Hyrule Castle Town & Kakariko Village)				horn	
+377	0x0179		Inside Ganon's Castle Objects	Adult Zelda (Normal Gameplay)				choir	
+378	0x017A		Death Mountain Cloud Rings	Ganon				cuica_push_pull	
+379	0x017B		Item Model - Bullet Bags	Pierre (Lake Hylia)				trumpet	
+380	0x017C		Ganondorf Animations I	Treasure Chest Shop Proprietor				trombone	
+381	0x017D		Ganondorf Animations II	Make Pushblock				tuba	
+382	0x017E		Ganondorf Animations III	Sun's Song Effect				gockenspiel	
+383	0x017F		Item Model - Rupees	Ending Overlays				strings	
+384	0x0180		Kakariko Village Objects (Adult)	Empty - (unused)				strings	
+385	0x0181		Kakariko Village Objects (Child)	Grotto Treasure Chest				harp	
+386	0x0182		Honey & Darling, Haggling Townspeople	Ending Cutscene NPCs				oboe	
+387	0x0183		Wolfos	Shot_Sun				bassoon	
+388	0x0184		Stalchild	Great Fairy's Healing Beam				strings	
+389	0x0185		Ganon's Lair Destructable Rubble	Checkable Spot				strings	
+390	0x0186		Ganon's Lair Destructable Rubble Fragment	Patrolling Gerudo in Purple				pizz_strings	
+391	0x0187		Shadow Temple Door & Shutter	Obj_Roomtimer				harp	
+392	0x0188		Gossip Stone	Skulltula House Resident (Cursed)				blank	
+393	0x0189		Poe Collector	Skulltula House Resident (Curse Lifted)					
+394	0x018A		Dodongo's Cavern Bombable Wall	Song of Time Effect					
+395	0x018B		Cow	Song of Storms Effect					
+396	0x018C		Fat Woman in Blue & Yellow Vest	Stinger (Water)					
+397	0x018D		Item Model - Kokiri Sword	Sacred Forest Meadow Pond Bottom					
+398	0x018E		Door Mimic	Spirit Temple Entrance Room Elevator					
+399	0x018F		Royal Family's Tomb Door	Iron Knuckle Debris					
+400	0x0190		Time Block	Gate to the Haunted Wasteland					
+401	0x0191		Child Zelda	Gate to the Gerudo Training Ground					
+402	0x0192			Deku Scrub (Inside the Deku Tree)					
+403	0x0193			Deku Scrub Projectile					
+404	0x0194			Broken Drawbridge					
+405	0x0195			Business Scrub (Attacking)					
+406	0x0196			Collectable Grave-Digging Game Items					
+407	0x0197			Gerudo Fighter					
+408	0x0198			Epona's Song Effect					
+409	0x0199			Saria's Song Effect					
+410	0x019A			Cucco-Chasing Girl					
+411	0x019B			Dog					
+412	0x019C			Gold Skulltula Token					
+413	0x019D			Kakariko Village Objects					
+414	0x019E			Beehive					
+415	0x019F			Bombable Wall (Desert Colossus)					
+416	0x01A0			Large Wooden Crate					
+417	0x01A1			Forest Stage Actor Spawner					
+418	0x01A2			Forest Stage Judge					
+419	0x01A3			Deku Scrub (Deku Target Game)					
+420	0x01A4			Happy Mask Shop Customer					
+421	0x01A5			Bombchu Bowling Alley Walls					
+422	0x01A6			Carpenter Boss's Son (Kakariko Village)					
+423	0x01A7			Ganon's Castle Barrier					
+424	0x01A8			Zora's Fountain Bombable Wall					
+425	0x01A9			Death Mountain Crater Bombable Wall					
+426	0x01AA			Empty - (unused)					
+427	0x01AB			Group of Rupees					
+428	0x01AC			Honey & Darling					
+429	0x01AD			Haggling Shoppers					
+430	0x01AE			Generic Goron & Biggoron					
+431	0x01AF			Wolfos					
+432	0x01B0			Stalchild					
+433	0x01B1			Ganon's Lair Rubble					
+434	0x01B2			Ganon's Lair Rubble Fragment					
+435	0x01B3			Fire Trial Sinking Zig-Zag Platform					
+436	0x01B4			Shadow Trial Invisible Path					
+437	0x01B5			Bg_Gnd_Soulmeiro					
+438	0x01B6			Ganon's Castle Fake Wall					
+439	0x01B7			Water Trial Ice Pushblock					
+440	0x01B8			Poe Collector					
+441	0x01B9			Gossip Stone					
+442	0x01BA			Water Temple Bombable Wall					
+443	0x01BB			Water Temple Gate					
+444	0x01BC			Kakariko Village - Carpenter					
+445	0x01BD			Bombchu Bowling Alley Walls					
+446	0x01BE			En_Wall_Tubo					
+447	0x01BF			Poe Guide					
+448	0x01C0			Guay					
+449	0x01C1			Door Mimic					
+450	0x01C2			Oasis Water					
+451	0x01C3			Spinning Goron Vase Lid					
+452	0x01C4			Door to Darunia's Room					
+453	0x01C5			Adult Malon (Day)					
+454	0x01C6			Cow					
+455	0x01C7			Icicle					
+456	0x01C8			Ice Cavern Bars					
+457	0x01C9			Pierre (Wandering)					
+458	0x01CA			Bonooru					
+459	0x01CB			Scarecrow's Song Effect					
+460	0x01CC			En_Eg					
+461	0x01CD			Gerudo Training Ground Fake Wall					
+462	0x01CE			Zora					
+463	0x01CF			Gold Skulltula Spawner					
+464	0x01D0			Nabooru's Second-in-Command					
+465	0x01D1			Time Block					
+466	0x01D2			Breakable Bronze Boulder					
+467	0x01D3			Child Zelda (Gameplay & Cutscene 04)					
+468	0x01D4			Running Man (Carpenters' Tent & Race)					
+469	0x01D5			Silver Gauntlets Pushblock [todo]					
+470	0x01D6			Time Block					

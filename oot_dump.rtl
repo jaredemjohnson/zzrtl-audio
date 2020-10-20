@@ -228,7 +228,6 @@ enum bool
 	, compress = 1
 };
 
-//}
 
 /* helper function that writes lui, addiu pair into rom; hi and lo
    must be rom offsets of lui and addiu opcodes, respectively */
@@ -842,7 +841,6 @@ dumppredictors(struct rom *rom, int file, int bankpointer)
 	}
 	/*return to starting position*/
 	rom.seek(start);
-
 }
 
 void
@@ -900,6 +898,8 @@ audiobank(struct rom *rom)
 	int drums;
 	int sfx;
 	int nameindex;
+	int nameindex2;
+	int oldsample;
 	int instrumentpointer;
 	int name;
 	int name2;
@@ -935,6 +935,8 @@ audiobank(struct rom *rom)
 	/*dump all the audiobanks until index is at the last bank*/ 
 	index = 0;
 	nameindex =0;
+	oldsample = -1;
+	nameindex2 =0;
 	while (index < numberofbanks - 1)
 	{
 		/*display progress*/
@@ -1113,6 +1115,7 @@ audiobank(struct rom *rom)
 			/*count up the instruments*/
 			instrumentindex++;
 		}
+		oldsample = -1;
 		/*checks if there are drums and then writes them*/
 		if (drums>0 && index !=1)
 		{
@@ -1177,8 +1180,12 @@ audiobank(struct rom *rom)
 				samplelength = rom.read16();
 				sample = rom.read32()+sampleoffset;	
 				fprintf(configfile, "%X\t%X\t%X\t\t\t\n",sample,pitch1,pitch2);
+				if (sample != oldsample)
+				{nameindex2++;}
+				oldsample = sample;
+				sscanf(tsv_col_row(g_tsv,"drums-sfx",nameindex2), "%s", name2);
 
-				dosample(rom, sample, samplelength, &samplelist, &samplenum, "drumsample", bankpointer);
+				dosample(rom, sample, samplelength, &samplelist, &samplenum, name2, bankpointer);
 			
 				var = var + 16;
 			}
@@ -1229,7 +1236,9 @@ audiobank(struct rom *rom)
 					sample = rom.read32()+sampleoffset;
 					fprintf(configfile, "%X\t%X\n",sample, pitch1);
 
-					dosample(rom, sample, samplelength, &samplelist, &samplenum, "soundeffectsample", bankpointer);
+					nameindex2++;
+					sscanf(tsv_col_row(g_tsv,"drums-sfx",nameindex2), "%s", name2);
+					dosample(rom, sample, samplelength, &samplelist, &samplenum, name2, bankpointer);
 			
 				}
 				else
