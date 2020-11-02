@@ -4,26 +4,29 @@
  * message(), entrancecutscene(), and mapselect() by Jared Johnson   *
  *********************************************************************/
 /*USE THE CONFIG.TSV FILE TO SELECT YOUR ROM*/
-/* global variables */
-char *g_tsv;
-int ACTOR_FOLDER; int VROM_CODE_SIZE; int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE;int VANILLA;int TBL_OBJECT;int TBL_OBJECT_ENTRIES;int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
-int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOTABLE_FILE;int TBL_AUDIOTABLE_FILE_SIZE;
-int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;
-int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE; int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;
-int TBL_DMA;int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;
-int VROM_PLAYER; int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;
-int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR;int DMA_OVL_MAP_MARK_DATA;int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;int DMA_OBJECT_FIRST;
-int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;int DMA_SKYBOX_FIRST;int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;int DMA_PRERENDER_LAST;
-int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;int DMA_UNUSED_LAST;int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;int DMA_BLANK_LAST;int ACTID_LINK;
-int OFS_OVL_PLAYER_ACTOR_INIT_HI;int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PLAYER_ACTOR_DEST_HI;int OFS_OVL_PLAYER_ACTOR_DEST_LO;
-int OFS_OVL_PLAYER_ACTOR_MAIN_HI;int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;
-int OFS_OVL_KALEIDO_SCOPE_INIT_HI;int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
+/* global variables are initialized before they are set based on each rom, this makes it possible to set debug/1.0 in the config file*/
+	char *g_tsv;
+	int IS_DEBUG; int ACTOR_FOLDER; int VROM_CODE_SIZE; int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE;int VANILLA;int TBL_OBJECT;int TBL_OBJECT_ENTRIES;
+	int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES; int TBL_ROUTE;int TBL_ROUTE_ENTRIES;
+	int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;int TBL_AUDIOTABLE_FILE;int TBL_AUDIOTABLE_FILE_SIZE;
+	int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;
+	int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE; int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;int TBL_MESSAGE_DATA_SIZE; int TBL_RESTRICTIONFLAG;
+	int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;int TBL_OVL_MAPMARK;int TITLECARD_W;
+	int TITLECARD_H;int VRAM_CODE;int VROM_CODE;int VROM_PLAYER; int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;int DMA_OVL_TITLE;
+	int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR;int DMA_OVL_MAP_MARK_DATA;
+	int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;int DMA_OBJECT_FIRST;int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;int DMA_SKYBOX_FIRST;
+	int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;int DMA_PRERENDER_LAST;int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;int DMA_UNUSED_LAST;
+	int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;int DMA_BLANK_LAST;int ACTID_LINK;int OFS_OVL_PLAYER_ACTOR_INIT_HI;int OFS_OVL_PLAYER_ACTOR_INIT_LO;
+	int OFS_OVL_PLAYER_ACTOR_DEST_HI;int OFS_OVL_PLAYER_ACTOR_DEST_LO;int OFS_OVL_PLAYER_ACTOR_MAIN_HI;int OFS_OVL_PLAYER_ACTOR_MAIN_LO;
+	int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;int OFS_OVL_KALEIDO_SCOPE_INIT_HI;int OFS_OVL_KALEIDO_SCOPE_INIT_LO;
+	int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
 
 /*OoT debug */
 void
 debugvariables() 
 {
-	TBL_OBJECT              		 = 0x00B9E6C8  // object table
+	IS_DEBUG						 = 1   //a friendly way to check if we are in debug
+	;TBL_OBJECT              		 = 0x00B9E6C8  // object table
 	; N_ROGO 						 = 0x01AA1000 //0938			
 	; N_ROGO_SIZE					 = 0x00002DC0	
 	; N_ROGO_DMA					 = 938
@@ -118,16 +121,17 @@ debugvariables()
 void
 ocarinaoftimevariables()
 {
-	TBL_OBJECT               = 0x00B6EF58  // object table
-	; TBL_OBJECT_ENTRIES     = 402         // object count
-	; TBL_ACTOR              = 0x00B5E490  // actor overlay table
-	; TBL_ACTOR_ENTRIES      = 471         // actor overlay count
-	; TBL_PARTICLE           = 0x00B5DBA0  // particle overlay table
-	; TBL_PARTICLE_ENTRIES   = 37          // particle overlay count
-	; TBL_SCENE              = 0x00B71440  // scene table
-	; TBL_SCENE_ENTRIES      = 101         // scene count
-	; TBL_ROUTE              = 0x00B6FBF0  // route table
-	; TBL_ROUTE_ENTRIES      = 1556        // route count
+	IS_DEBUG				 		 = 0 //a friendly way to check for 1.0
+	;TBL_OBJECT              		 = 0x00B6EF58  // object table
+	; TBL_OBJECT_ENTRIES     		 = 402         // object count
+	; TBL_ACTOR              		 = 0x00B5E490  // actor overlay table
+	; TBL_ACTOR_ENTRIES      		 = 471         // actor overlay count
+	; TBL_PARTICLE           		 = 0x00B5DBA0  // particle overlay table
+	; TBL_PARTICLE_ENTRIES   		 = 37          // particle overlay count
+	; TBL_SCENE              		 = 0x00B71440  // scene table
+	; TBL_SCENE_ENTRIES      		 = 101         // scene count
+	; TBL_ROUTE              		 = 0x00B6FBF0  // route table
+	; TBL_ROUTE_ENTRIES      		 = 1556        // route count
 	; TBL_MAP_SELECT				 = 0x000013D0  // map select table relative to ovl_select file
 	; TBL_MAP_SELECT_ENTRIES		 = 115		   // number of map select entries	
 	; TBL_AUDIOSAMPLE				 = 0x00B8A1D0  //audiosample table
@@ -135,13 +139,14 @@ ocarinaoftimevariables()
 	; TBL_AUDIOBANK_FILE 			 = 0x0000D390  //audiobank file
 	; TBL_SEQUENCEINSTRUMENTSET		 = 0x00B89910  // instrument set table
 	; TBL_SEQUENCE_FILE 		     = 0x00029DE0  // sequence file offset
-	;TBL_AUDIOTABLE_FILE			 = 0x00079470  // pointer to the audiotable
+	; TBL_AUDIOTABLE_FILE			 = 0x00079470  // pointer to the audiotable
 	; TBL_AUDIOSEQ 		    		 = 0x00B89AD0  // sequence pointer table
 	; TBL_ENTRANCECUTSCENE 		     = 0x00B65C64  // entrancecutscene table
 	; TBL_ENTRANCECUTSCENE_ENTRIES   = 33          // entrancecutscene count	
-	; TBL_MESSAGE 					 = 0x00B808AC  // offset for message table
-	; TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
+	; TBL_MESSAGE 					 = 0x00B849EC  // offset for message table
+	; TBL_MESSAGE_ENTRIES  		     = 2116       // entrancecutscene count
 	; TBL_MESSAGE_DATA			     = 0x0092D000  //offset for english text
+	; TBL_MESSAGE_DATA_SIZE			 = 0x00038120
 	; TBL_RESTRICTIONFLAG   		 = 0x00B6D2B0  //offset for restricitonflag table
 	; TBL_RESTRICTIONFLAG_ENTRIES    = 73	       //restrictionflag count
 	; TBL_DMA                = 0x00007430  // dma table
@@ -1591,16 +1596,32 @@ message(struct rom *rom)
 	dir_enter(VANILLA);
 	
 	/*extract tables for both text editors */
-	rom.extract("table.bin",TBL_MESSAGE, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);
+	if (IS_DEBUG)
+	{rom.extract("table.bin",TBL_MESSAGE, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);}
+	else
+	{	/*we have to extract the japanese table in 1.0 to be compatible with zelda's letter*/
+		rom.extract("table.bin",TBL_MESSAGE - 0x4140, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);
+	}
+
 	rom.extract("MessageTable.tbl",TBL_MESSAGE, TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8);
 	
 	/*find the length of the english data*/
 	rom.seek(TBL_MESSAGE + TBL_MESSAGE_ENTRIES*8 - 3);
 	message_data_end   = rom.read24();
+	if (!strcmp(VANILLA, "_vanilla-1.0"))
+	{message_data_end = 0x38130;}
 
 	/*extract the data*/
-	rom.extract("0_message_data_static.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
-    rom.extract("StringData.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
+	if (IS_DEBUG)
+	{
+		rom.extract("0_message_data_static.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
+	    rom.extract("StringData.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + message_data_end);
+	}
+	else
+	{
+		rom.extract("1_message_data_static.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + TBL_MESSAGE_DATA_SIZE);
+	    rom.extract("StringData.bin",TBL_MESSAGE_DATA, TBL_MESSAGE_DATA + TBL_MESSAGE_DATA_SIZE);
+	}
 
 	/*exit the directory*/
 	dir_leave();

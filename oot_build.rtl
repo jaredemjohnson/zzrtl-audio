@@ -5,28 +5,30 @@
  * audio-file asm hack by Zel   									 *
  *********************************************************************/
 /*USE THE CONFIG.TSV FILE TO SELECT YOUR ROM*/
-/* global variables are initialized before they are set based on each rom*/
+/* global variables are initialized before they are set based on each rom, this makes it possible to set debug/1.0 in the config file*/
 	char *g_tsv;
-	int ACTOR_FOLDER; int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE; int DMA_RAM; int AUDIOBANK_PTR; int AUDIOSEQ_PTR; int AUDIOTABLE_PTR;int VANILLA;int USE_CACHED_AUDIO; int TBL_OBJECT;int TBL_OBJECT_ENTRIES;
-	int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;int TBL_SCENE;int TBL_SCENE_ENTRIES;
-	int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT_FILE;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;int TBL_AUDIOSAMPLE;
-	int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_AUDIOBANK_SIZE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;
-	int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE;int TBL_MESSAGE_TOOL;int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA;
-	int TBL_RESTRICTIONFLAG;int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;int TBL_AUDIOTABLE_FILE; int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER;
-	int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;int VROM_PLAYER;int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED;int DMA_CODE;
-	int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;int DMA_OVL_FILE_CHOOSE;int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR;
-	int DMA_OVL_MAP_MARK_DATA;int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;int DMA_OBJECT_FIRST;int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;
-	int DMA_SKYBOX_FIRST;int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;int DMA_PRERENDER_LAST;int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;
-	int DMA_UNUSED_LAST;int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;int DMA_BLANK_LAST;int ACTID_LINK;int OFS_OVL_PLAYER_ACTOR_INIT_HI;
-	int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PLAYER_ACTOR_DEST_HI;int OFS_OVL_PLAYER_ACTOR_DEST_LO;int OFS_OVL_PLAYER_ACTOR_MAIN_HI;
-	int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;int OFS_OVL_PLAYER_ACTOR_DRAW_LO;int OFS_OVL_KALEIDO_SCOPE_INIT_HI;
-	int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
+	int IS_DEBUG; int ACTOR_FOLDER; int N_ROGO; int N_ROGO_DMA; int N_ROGO_SIZE; int DMA_RAM; int AUDIOBANK_PTR; int AUDIOSEQ_PTR; int AUDIOTABLE_PTR;int VANILLA;
+	int USE_CACHED_AUDIO; int TBL_OBJECT;int TBL_OBJECT_ENTRIES;int TBL_ACTOR;int TBL_ACTOR_ENTRIES;int TBL_PARTICLE;int TBL_PARTICLE_ENTRIES;
+	int TBL_SCENE;int TBL_SCENE_ENTRIES;int TBL_ROUTE;int TBL_ROUTE_ENTRIES;int TBL_MAP_SELECT_FILE;int TBL_MAP_SELECT;int TBL_MAP_SELECT_ENTRIES;
+	int TBL_AUDIOSAMPLE; int TBL_AUDIOBANK;int TBL_AUDIOBANK_FILE;int TBL_AUDIOBANK_SIZE;int TBL_SEQUENCEINSTRUMENTSET;int TBL_SEQUENCE_FILE;
+	int TBL_AUDIOSEQ;int TBL_ENTRANCECUTSCENE;int TBL_ENTRANCECUTSCENE_ENTRIES;int TBL_MESSAGE; int TBL_MESSAGE_DATA_SIZE; int TBL_MESSAGE_TOOL;
+	int TBL_MESSAGE_ENTRIES;int TBL_MESSAGE_DATA; int TBL_RESTRICTIONFLAG; int TBL_RESTRICTIONFLAG_ENTRIES;int TBL_DMA;int TBL_AUDIOTABLE_FILE; 
+	int TBL_DMA_ENTRIES;int TBL_OVL_GAMESTATE;int TBL_OVL_PLAYER; int TBL_OVL_MAPMARK;int TITLECARD_W;int TITLECARD_H;int VRAM_CODE;int VROM_CODE;
+	int VROM_PLAYER;int DMA_ITEM_FIELD;int DMA_ITEM_LOCALIZED; int DMA_CODE;int DMA_OVL_TITLE;int DMA_OVL_SELECT;int DMA_OVL_OPENING;
+	int DMA_OVL_FILE_CHOOSE;int DMA_OVL_KALEIDO_SCOPE;int DMA_OVL_PLAYER_ACTOR; int DMA_OVL_MAP_MARK_DATA;int DMA_ACTOR_FIRST;int DMA_ACTOR_LAST;
+	int DMA_OBJECT_FIRST;int DMA_OBJECT_LAST;int DMA_G_PN_FIRST;int DMA_G_PN_LAST;int DMA_SKYBOX_FIRST;int DMA_SKYBOX_LAST;int DMA_PRERENDER_FIRST;
+	int DMA_PRERENDER_LAST;int DMA_SCENE_FIRST;int DMA_SCENE_LAST;int DMA_UNUSED_FIRST;int DMA_UNUSED_LAST;int DMA_SOFTSPRITE;int DMA_BLANK_FIRST;
+	int DMA_BLANK_LAST;int ACTID_LINK;int OFS_OVL_PLAYER_ACTOR_INIT_HI;int OFS_OVL_PLAYER_ACTOR_INIT_LO;int OFS_OVL_PLAYER_ACTOR_DEST_HI;
+	int OFS_OVL_PLAYER_ACTOR_DEST_LO;int OFS_OVL_PLAYER_ACTOR_MAIN_HI;int OFS_OVL_PLAYER_ACTOR_MAIN_LO;int OFS_OVL_PLAYER_ACTOR_DRAW_HI;
+	int OFS_OVL_PLAYER_ACTOR_DRAW_LO;int OFS_OVL_KALEIDO_SCOPE_INIT_HI;int OFS_OVL_KALEIDO_SCOPE_INIT_LO;int OFS_OVL_KALEIDO_SCOPE_DRAW_HI;
+	int OFS_OVL_KALEIDO_SCOPE_DRAW_LO;
 	
 /* OoT debug variables*/
 void
 debugvariables()
 {
-	TBL_OBJECT              		 = 0x00B9E6C8  // object table
+	IS_DEBUG						 = 1
+	; TBL_OBJECT              		 = 0x00B9E6C8  // object table
 	; N_ROGO 						 = 0x01AA1000  // N_Rogo location			
 	; N_ROGO_SIZE					 = 0x00002DC0  // size of N_Rogo file
 	; N_ROGO_DMA					 = 938		   // n rogo dma index
@@ -53,7 +55,7 @@ debugvariables()
 	; TBL_ENTRANCECUTSCENE_ENTRIES   = 34          // entrancecutscene count	
 	; TBL_MESSAGE 					 = 0x00BC24C0  // offset for message table
 	; TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
-	; TBL_MESSAGE_DATA			     = 0x008C6000  // offset for english text
+	; TBL_MESSAGE_DATA			     = 0x008C6000  //offset for english text
 	; TBL_RESTRICTIONFLAG   		 = 0x00B9CA10  // offset for restricitonflag table
 	; TBL_RESTRICTIONFLAG_ENTRIES    = 73	       // restrictionflag count
 	; TBL_DMA               		 = 0x00012F70  // dma table
@@ -126,7 +128,8 @@ debugvariables()
 void
 ocarinaoftimevariables()
 {
-	TBL_OBJECT               		 = 0x00B6EF58  // object table
+	IS_DEBUG						 = 0
+	;TBL_OBJECT               		 = 0x00B6EF58  // object table
 	;TBL_OBJECT_ENTRIES     		 = 402         // object count
 	;TBL_ACTOR              		 = 0x00B5E490  // actor overlay table
 	;TBL_ACTOR_ENTRIES      		 = 471         // actor overlay count
@@ -149,9 +152,10 @@ ocarinaoftimevariables()
 	;TBL_AUDIOSEQ 		    		 = 0x00B89AD0  // sequence pointer table
 	;TBL_ENTRANCECUTSCENE 		     = 0x00B65C64  // entrancecutscene table
 	;TBL_ENTRANCECUTSCENE_ENTRIES    = 33          // entrancecutscene count	
-	;TBL_MESSAGE 					 = 0x00B808AC  // offset for message table
-	;TBL_MESSAGE_ENTRIES  		     = 2116        // entrancecutscene count
-	;TBL_MESSAGE_DATA			     = 0x0092D000  // offset for english text
+	; TBL_MESSAGE 					 = 0x00B849EC  // offset for message table
+	; TBL_MESSAGE_ENTRIES  		     = 2116       // entrancecutscene count
+	; TBL_MESSAGE_DATA			     = 0x0092D000  //offset for english text
+	; TBL_MESSAGE_DATA_SIZE			 = 0x00038120
 	;TBL_RESTRICTIONFLAG   		 	 = 0x00B6D2B0  // offset for restricitonflag table
 	;TBL_RESTRICTIONFLAG_ENTRIES     = 73	       // restrictionflag count
 	;TBL_DMA                		 = 0x00007430  // dma table
@@ -2138,7 +2142,10 @@ message(struct rom *rom)
 	if (TBL_MESSAGE_TOOL == 1)
 	{
 		tablename = "table.bin";
-		dataname = "0_message_data_static.bin";
+		if (IS_DEBUG)
+		{dataname = "0_message_data_static.bin";}
+		else
+		{dataname = "1_message_data_static.bin";}
 	}
 	else
 	{
@@ -2158,6 +2165,8 @@ message(struct rom *rom)
 
 	/*seek and write the table into the rom*/
 	rom.seek(TBL_MESSAGE);
+	if (!IS_DEBUG && TBL_MESSAGE_TOOL == 1)
+	{rom.seek(TBL_MESSAGE-0x4140);}
 	rom.write(data, sz);
 	free(data);
 
@@ -2178,22 +2187,25 @@ message(struct rom *rom)
 
 
 	/*this updates the typface offsets in the code file, the offset is different for zelda's letter and ocarina text editor*/
-	if (TBL_MESSAGE_TOOL == 0 && get32(&data[0]) == 0x30313233)
-	{sz = 72;}
-	put24(typelocation, sz-72);
-	rom.seek(VROM_CODE + 0x520B4);
-	rom.write24(0x3C0807);
-	rom.write8(get8(&typelocation[0]));
-	rom.seek(VROM_CODE + 0x520B8);
-	rom.write16(0x3508);
-	rom.write16(get16(&typelocation[1]));
-	put24(typelocation, sz);
-	rom.seek(VROM_CODE + 0x520C4);
-	rom.write24(0x3C0F07);
-	rom.write8(get8(&typelocation[0]));
-	rom.seek(VROM_CODE + 0x520F0);
-	rom.write16(0x35EF);
-	rom.write16(get16(&typelocation[1]));
+	if (IS_DEBUG)
+	{
+		if (TBL_MESSAGE_TOOL == 0 && get32(&data[0]) == 0x30313233)
+		{sz = 72;}
+		put24(typelocation, sz-72);
+		rom.seek(VROM_CODE + 0x520B4);
+		rom.write24(0x3C0807);
+		rom.write8(get8(&typelocation[0]));
+		rom.seek(VROM_CODE + 0x520B8);
+		rom.write16(0x3508);
+		rom.write16(get16(&typelocation[1]));
+		put24(typelocation, sz);
+		rom.seek(VROM_CODE + 0x520C4);
+		rom.write24(0x3C0F07);
+		rom.write8(get8(&typelocation[0]));
+		rom.seek(VROM_CODE + 0x520F0);
+		rom.write16(0x35EF);
+		rom.write16(get16(&typelocation[1]));
+	}
 	
 	free(data);
 
@@ -2202,7 +2214,7 @@ message(struct rom *rom)
 	{dir_leave();}
 
 	/*if there's multiple languages from zelda's letter we write them in*/
-	if (TBL_MESSAGE_TOOL == 1)
+	if (TBL_MESSAGE_TOOL == 1 && IS_DEBUG)
 	{
 		rom.seek(TBL_MESSAGE_DATA + sz);
 		if (!file_exists("1_message_data_static.bin"))
@@ -3171,7 +3183,7 @@ main(int argc, char **argv)
 	g_tsv = loadfile("oot_names.tsv", 0, true/*file is optional*/);
 	
 	/* construct rom */
-		if (!strcmp(tsv_col_row(config, "setting",4), "true"))
+	if (!strcmp(tsv_col_row(config, "setting",4), "true"))
 	{mapselect(rom);}
 	systemdir(rom);
 	actor(rom);
