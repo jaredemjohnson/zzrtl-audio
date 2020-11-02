@@ -2149,6 +2149,7 @@ message(struct rom *rom)
 	}
 	else
 	{
+		printf("\nWEEHEERREE\n");
 		tablename = "MessageTable.tbl";
 		dataname = "StringData.bin";
 	}
