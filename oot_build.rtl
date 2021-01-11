@@ -631,6 +631,9 @@ system_overlay(struct rom *rom)
 	arr = Oarr;
 	while (i < 7)
 	{
+		if (!dir_exists(substring(filename, i)))
+			{die(new_string("Missing overlay: ", substring(filename, i),".zovl",0));}
+
 		/* enter overlay name directory */
 		dir_enter(substring(filename, i));
 		
@@ -641,8 +644,12 @@ system_overlay(struct rom *rom)
 		if (!file_exists(new_string(substring(filename, i),".zovl",0)) && dir_exists(VANILLA))
 		{dir_enter(VANILLA);}
 
+		
 		/* inject file */
 		ovl = rom.inject("*.zovl", compress);
+
+		if (!ovl)
+			{die(new_string("Missing overlay: ", substring(filename, i),".zovl",0));}
 
 		/* get overlay vram size */
 		vram_sz = ovl_vram_sz(ovl, rom.file_sz());
@@ -2149,7 +2156,6 @@ message(struct rom *rom)
 	}
 	else
 	{
-		printf("\nWEEHEERREE\n");
 		tablename = "MessageTable.tbl";
 		dataname = "StringData.bin";
 	}
@@ -2737,6 +2743,7 @@ actor(struct rom *rom)
 		/* overlay loaded successfully */
 		if (ovl)
 		{
+			
 			/* calculate overlay size */
 			vram_end = ovl_vram_sz(ovl, rom.file_sz());
 			
@@ -2771,6 +2778,7 @@ actor(struct rom *rom)
 		/* no overlay found */
 		else
 		{
+			//printf(new_string("Missing overlay: ", ovl,"\n",0));
 			vram_end = 0;
 			ivar = 0;
 		}
@@ -2922,6 +2930,7 @@ particle(struct rom *rom)
 		/* no overlay found */
 		else
 		{
+			//printf(new_string("Missing overlay: ", ovl,"\n",0));
 			vram = 0;
 			vram_end = 0;
 			unk = 0;
