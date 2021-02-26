@@ -941,7 +941,7 @@ dopredictors(struct rom *buildfile, int *predictordata, int *looppredictordata,i
 				index ++;
 			}
 		}
-		free(dat2);
+		
 	}
 
 	/*returns to the starting pointer and writes gets offsets depending on the test above*/
@@ -995,6 +995,7 @@ dopredictors(struct rom *buildfile, int *predictordata, int *looppredictordata,i
 		*looppredictordata = new_string(*looppredictordata, name, "\t","what","\n", 0);	
 		*looppredictornumber = *looppredictornumber + 1;
 		buildfile.write(dat2, sz2);
+		free(dat2);
 	}
 	free(dat1);
 	free(dat3);
